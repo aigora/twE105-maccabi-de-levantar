@@ -4,7 +4,7 @@ Descripción breve del proyecto a realizar (2-3 frases).
 
 ## Integrantes del equipo
 
-David Abad Pérez @davidabadp
+David Abad Pérez @davidabadp .
 Alejandro Sacristán Jiménez @asacristanj
 Raúl Herranz Rodríguez @raulherranzrodriguez
 
