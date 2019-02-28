@@ -1,7 +1,7 @@
 # Título del trabajo
-En
-¿Encontrarás  el número secreto 
-En
+
+¿Encontrarás  el número secreto
+
 ## Integrantes del equipo
 
 David Abad Pérez   @davidabadp <br/>
