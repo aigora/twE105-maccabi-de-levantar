@@ -1,6 +1,6 @@
 # Título del trabajo
 
-¿Encontrarás  el número secreto
+¿Encontrarás  el número secreto?
 
 ## Integrantes del equipo
 
