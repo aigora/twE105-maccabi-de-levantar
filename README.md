@@ -1,6 +1,6 @@
 # Título del trabajo
 
-¿Encontrarás  el número secreto?
+¿Eres capaz  de sobrevivir a esta jungla de intelecto?
 
 ## Integrantes del equipo
 
