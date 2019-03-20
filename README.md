@@ -10,6 +10,4 @@ Raúl Herranz Rodríguez   @raulherranzrodriguez <br/>
 
 ## Objetivos del trabajo
 
-El objetivo será programar un  juego de acertar un numero aleatorio generado por el programa a partir  de un intervalo
-introducido por el propio  usuario. Habrá variables como el tiempo, número de jugadores... También habrá una serie de normas que
-deberás cumplir. ¿Serás capaz de encontrar el número secreto?.
+El objetivo será programar un simulador de juegos  en el que podremos elegir entre tres juegos clásicos para divertirnos. En primer lugar, el  juego de televisión cifras y letras en el que tendremos que adivinar  la palabra oculta o el numero oculto. En segundo lugar, hundir la flota, el divertido juego en el que tendremos que adivinar la posición de los barcos del rival antes de él adivine la posicion de los nuestros0
