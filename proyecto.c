@@ -4,13 +4,21 @@
 #include <math.h>
 #include <conio.h>
 #include <windows.h>
+#include <time.h>
+typedef struct
+{
+	char pregunta[80];
+	char respuesta[20];
+}inicio;
 
 int main ()
 {
   //VARIABLES Y FUNCIONES GLOBALES:
   int imprime(char frase[]); //funcion imprimir frase con animacion
   int salto(int s); //imprimir \n
-  int espacio(int e);
+  int espacio(int e); // imprimir \t
+  int numal(int num1,int num2); //Genera numeros aleatorios 
+  void semilla(); //Genera semilla
   
   int juego = 0;
   
@@ -18,8 +26,9 @@ int main ()
  
   //VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
   int tableroconsola[6][6],filacons, columcons,i,j;
-  //VARIABLES Y FUNCIONES TRIVIAL:	
-  
+  //VARIABLES Y FUNCIONES TRIVIAL:
+   void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
+   int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
   while (juego == 0) //preguntar al jugador a que juego quiere jugar
   {
   	 salto(1);
@@ -94,19 +103,159 @@ break;
 }
 
     case 3: //JUEGO 3
+    {	
+    int i,j,dado,puntuacion=0;
+	int numpreg[6];
+	char tirar;
+	char solucion[20];
+	inicio geografia[]={{"Que pais está entre Peru y Colombia?","ECUADOR"},{"Cual es la capital de Marruecos?","RABAT"},{"Cual es el pais mas visitado del mundo","FRANCIA"},{"En que pais se encuentra el rio Po","ITALIA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual es el oceano que bana las aguas de Sri Lanka?","INDIC"},{"Que nombre recibe un cowboy argentino?","GAUCHO"},{"Cual es la montaña más alta del mundo?","EVEREST"},{"Cual es el idioma mas hablado en Suiza?","ALEMAN"},{"En que hemisferio se encuentra Jamaica?","NORTE"}};
+	inicio historia[]={{"De que pais europeo fue colonia Mozambique?","PORTUGAL"},{"Quienes conquistaron Constantinopla (fin delI mperio Bizantino) en 1453?","TURCOS"},{"De que pais se independizo Eslovenia?","YUGOSLAVIA"},{"Que moneda se usaba en España antes de la llegada del euro?","PESETA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual era la ciudad hogar de Marco Polo?","VENECIA"},{"Quien fue el primer presidente de los Estados Unidos??","GEORGE WASHINGTON"},{"Como se llamaba el famoso dictador italiano?","MUSSOLINI"},{"Que pais fue llamado la Galia por los romanos?","FRANCIA"},{"En que ciudad española se realizo el famoso bombardeo de La Legion Condor?","GUERNICA"}};
+	inicio deporte[]={{"Que pieza de ajedrez puede hacer un movimiento en forma de L?","CABALLO"},{"Que seleccion de futbol gano el Mundial de Brasil de 2014?","ALEMANIA"},{"Cual es el estilo de natacion mas rapido?","CROL"},{"De donde es el jugador Alexis Sanchez?","CHILE"},{"Cómo se llama el estadio del Betis?","BENITO VILLAMARIN"},{"Como se llama la liga española de balonmano?","ASOBAL"},{"Que pais fue el ganador de baloncesto en los Juegos Olimpicos de Londres 2012?","ESTADOS UNIDOS"},{"Cual es la ultima cinta en las artes marciales?","NEGRA"},{"Que le arrojaba antiguamente un caballero a otro para desafiarlo en duelo?","GUANTE"},{"Como se llama el palo utilizado en hockey?","STICK"}};
+    system ("cls");
+    imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.");
+    salto(2);
+    imprime("Para ello, deberas responder un conjunto de de 6 preguntas (+1 plus) y obtener la maxima puntuacion posible.\n\nSeras capaz de conseguir la casi inalcanzable puntuacion de 100 puntos?");
+	salto(2);
+	imprime("Adelante y buena suerte");
+	salto(2);
+    espacio(4);
+	printf("Instrucciones:");
+	salto(2);
+	espacio(3);
+	imprime("-Antes de cada pregunta lanzaras un dado pulsando cualquier tecla para elegir aleatoriamente el tema de la pregunta");
+	salto(1);
+	espacio(4);
+	imprime("+El numero 1 corresponde a la categoria de Geografia");
+	salto(1);
+	espacio(4);
+	imprime("+El numero 2 corresponde a la categoria de Historia");
+	salto(1);
+	espacio(4);
+	imprime("+El numero 3 corresponde a la categoria de Deporte");
+	salto(1);
+	espacio(4);
+	imprime("+El numero 4 corresponde a la categoria de Ciencias y Naturaleza");
+	salto(1);
+	espacio(4);
+	imprime("+El numero 5 corresponde a la categoria de Arte y Literatura");
+	salto(1);
+	espacio(4);
+	imprime("+El numero 6 corresponde a la categoria de Entretenimiento");
+	salto(1);
+	espacio(3);
+	imprime("-Tendras 20 segundos para responder la pregunta");
+	salto(1);
+	espacio(3);
+	imprime("-No pongas preposiciones en las respuestas");
+	salto(1);
+	espacio(3);
+	imprime("-Es indiferente si la respuesta esta escrita en mayusculas o minusculas");
+	salto(1);
+	espacio(3);
+	imprime("-No debes poner tildes en las respuestas");
+	salto(2);
+    espacio(4);
+	printf("Puntuacion:");
+	salto(2);
+	espacio(3);
+	imprime("-Cada respuesta acertada sumara un total de 10 puntos");
+	salto(1);
+	espacio(3);
+	imprime("-Cada respuesta incorrecta restara un total de 5 puntos");
+	salto(1);
+	espacio(3);
+	imprime("-Cada respuesta no contestada ni sumara ni restara puntos");
+	salto(1);
+	espacio(3);
+	imprime("BONUS: Por cada racha de preguntas acertadas que consigas se le sumara una pequena cantidad de puntos a tu respuesta");
+	salto(1);
+	espacio(4);
+	imprime("-La racha de 2 respuestas acertadas le suma un bonus de 2 puntos");
+	salto(1);
+	espacio(4);
+	imprime("-La racha de 3 respuestas acertadas le suma un bonus de 4 puntos");
+	salto(1);
+	espacio(4);
+	imprime("-La racha de 4 respuestas acertadas le suma un bonus de 6 puntos");
+	salto(1);
+	espacio(4);
+	imprime("-La racha de 5 respuestas acertadas le suma un bonus de 8 puntos");
+	salto(1);
+	espacio(4);
+	imprime("-La racha de 6 respuestas acertadas le suma un bonus de 10 puntos");
+	salto(3);
+    espacio(5);
+    imprime("Presione cualquier tecla para comenzar el juego...");
+    salto(1);
+    getch();
+    system("cls");
+    imprime("Bienvenido concursante.");
+    salto(2);
+    for(i=0;i<6;i++)
     {
-	
-printf("¡BIENVENIDO AL JUEGO 3!");
-
-break;
+    	imprime("Tire el dado:\n");
+    	scanf("%c",&tirar);
+    	dado=numal(1,6);
+    	printf("El dado ha sacado el numero %d.\n\n",dado);
+    	switch(dado)
+    	{
+    		case 1:
+    			imprime("Pregunta sobre Geografia:\n\n");
+    			semilla(); // Generamos una semilla para los numeros aleatorios que despues vamos a utlizar
+    			numpreg[i]=numal(0,9);
+    			/*for(j=1;j<=i+1;j++)
+    			{
+    				if(numpreg[j-1]==numpreg[i])
+    				{
+    					numpreg[i]=numal(0,9);
+    					j=0;
+					}
+				}*/
+				comprobaSiHaSalidoPregunta(numpreg,i,0,9);
+				puntuacion=comprobarRespuesta(geografia,numpreg[i],puntuacion);
+			/*	printf("%s\n",geografia[numpreg[i]].pregunta);
+				gets(solucion);
+				if(strcmp(solucion,geografia[numpreg[i]].respuesta)==0)
+				{
+					imprime("La respuesta es...\n");
+					imprime("CORRECTA\n");
+					puntuacion+=10;
+					printf("Puntuacion actual: %d puntos\n",puntuacion);
+				}
+				else
+				{
+					imprime("La respuesta es...\n");
+					imprime("INCORRECTA\n");
+					puntuacion-=5;
+					printf("Puntuacion actual: %d puntos\n",puntuacion);
+				}*/
+    			break;
+    		case 2:
+    			imprime("Pregunta sobre Historia:\n\n");
+    			numpreg[i]=numal(10,19);
+    			break;
+    		case 3:
+    			imprime("Pregunta sobre Deporte:\n\n");
+    			numpreg[i]=numal(20,29);
+    			break;
+    		case 4:
+    			imprime("Pregunta sobre Ciencia y Naturaleza:\n\n");
+    			numpreg[i]=numal(30,39);
+    			break;
+    		case 5:
+    			imprime("Pregunta sobre Arte y Literatura:\n\n");
+    			numpreg[i]=numal(40,49);
+    			break;
+    		case 6:
+    			imprime("Pregunta sobre Entretenimiento:\n\n");
+    			numpreg[i]=numal(50,59);
+    			break;
+	     }
+     }
+   }
 }
-
+return 0;
 }
-  
-   return 0;
-}
-
-
 
 //FUNCIONES GLOBALES
 
@@ -135,9 +284,56 @@ int espacio(int e){
 	for (i=0;i<e;i++) 
      printf(" ");
 }
+ // Genera una semilla para generar un numero aleatorio
+ void semilla()
+ {
+ 	srand(time(NULL));
+ }
+ // Genera numeros aleatorios en el intervalo deseado
+ int numal(int num1,int num2)
+ {
+ 	int numero;
+ 	numero= rand() % (num2-num1+1) + num1;
+ 	return numero;
+ }
 
 //FUNCIONES CIFRAS Y LETRAS:
  
 //FUNCIONES HUNDIR LA FLOTA:
   
 //FUNCIONES TRIVIAL:
+int comprobarRespuesta(inicio tabla[],int pos,int puntuacion)
+{
+	char solucion[20];
+	printf("%s\n",tabla[pos].pregunta);
+				gets(solucion);
+				if(strcmp(solucion,tabla[pos].respuesta)==0)
+				{
+					imprime("La respuesta es...\n");
+					imprime("CORRECTA\n");
+					puntuacion+=10;
+					printf("Puntuacion actual: %d puntos\n",puntuacion);
+				}
+				else
+				{
+					imprime("La respuesta es...\n");
+					imprime("INCORRECTA\n");
+					puntuacion-=5;
+					printf("Puntuacion actual: %d puntos\n",puntuacion);
+				}
+				return puntuacion;
+}
+void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der)
+{
+	int j;
+	numpreg[i]=numal(iz,der);
+    		for(j=0;j<i;j++)
+    		{
+    			
+    			if(numpreg[j]==numpreg[i])
+    			{
+    				numpreg[i]=numal(iz,der);
+    				j=-1;
+				}
+			}
+}
