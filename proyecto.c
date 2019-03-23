@@ -68,7 +68,7 @@ int main ()
   
   switch (juego)
 {
-	case 1: //JUEGO 2
+	case 1: //JUEGO 1
 	{
 	
 printf("¡BIENVENIDO AL JUEGO 1!"); 
@@ -76,16 +76,17 @@ printf("¡BIENVENIDO AL JUEGO 1!");
     break;
 }
 
-    case 2 : //JUEGO HUNDIR LA FLOTA
-    {
+    	case 2 : //JUEGO HUNDIR LA FLOTA
+{
 	
-    system("cls");
+	system("cls");
+	
 //Instrucciones
     salto(1);
     espacio(3);
     imprime("Bienvenido camarada, le deseo mucha suerte en su mision");
     salto(2);
-    espacio(4);
+	espacio(4);
 	printf("Instrucciones:");
 	salto(2);
 	espacio(3);
@@ -97,35 +98,33 @@ printf("¡BIENVENIDO AL JUEGO 1!");
     espacio(3);
     imprime("-Al jugador se le pide primero la fila (letra), seguido de la columna (numero)");
     salto(3);
-    espacio(5);
+	espacio(5);
     imprime("Presione cualquier tecla para continuar...");
     salto(1);
     getch();
     system("cls");
-//Generar barcos consola 
-	//llenar de 0 las matriz
-for (i=0; i<6; i++)
-{
-	for (j=0; j<6; j++)
-	{
-		matrizcons[i][j] = 0; 
-		matrizjug[i][j] = 0;
-	}
-}
-
-   srand (time(NULL)); 
-	//portaviones
-  generarbarco(5, matrizcons, 5);
-  	//destructor
-  generarbarco(4, matrizcons, 4);
-  	//acorazado
-  generarbarco(3, matrizcons, 3);
-  	//submarino
-  generarbarco(2, matrizcons, 2);
-	//matriz que representa los barcos del oponente
-  imprimematriz(matrizcons);
-  salto(3);
-  imprimematriz(matrizjug);
+    
+//llenar de 0 las matriz
+	for (i=0; i<6; i++)
+		{
+			for (j=0; j<6; j++)
+				{
+				matrizcons[i][j] = 0; 
+				matrizjug[i][j] = 0;
+				}
+		}
+	srand (time(NULL)); 
+	
+//Generar barcos consola 	
+	generarbarco(5, matrizcons, 5);	//portaviones
+	generarbarco(4, matrizcons, 4);	//destructor
+	generarbarco(3, matrizcons, 3);	//acorazado
+  	generarbarco(2, matrizcons, 2);	//submarino
+  	
+	imprimematriz(matrizcons);
+	salto(3);
+	imprimematriz(matrizjug);
+	
 //Colocacion de barcos por parte del jugador
 	
 
@@ -290,29 +289,31 @@ return 0;
 //FUNCIONES GLOBALES
 
   //Imprime una frase letra por letra con un delay entre ellas
-int imprime(char frase[]){
-	int i= 0;
- while (frase[i] != '\0') 
+int imprime(char frase[])
 {
-   printf("%c", frase[i]);
-   Sleep(0);
-   i++;
-}
+	int i= 0;
+	while (frase[i] != '\0') 
+		{
+   		printf("%c", frase[i]);
+   		Sleep(30);
+   		i++;
+		}
 }
 
   //Imprime los saltos de linea deseados
-int salto(int s){
+int salto(int s)
+{
 	int i= 0;
 	for (i=0;i<s;i++) 
      printf("\n");
 }
 
   //Imprime los espacios deseados
-int espacio(int e){
-	
+int espacio(int e)
+{
 	int i= 0;
 	for (i=0;i<e;i++) 
-     printf(" ");
+    printf(" ");
 }
  // Genera una semilla para generar un numero aleatorio
  void semilla()
@@ -336,12 +337,10 @@ int generarbarco(int n, int mat[6][6], int barco)
 	
 while(exito==0)
 {
-	
-  fila = rand() % (5+1);
-  colum = rand() % (5+1);
-  dir = rand () % (4-1+1) + 1;
-  okupa=0;
-  //printf("fila: %i columna: %i dir: %i\n", fila, colum, dir);
+	fila = rand() % (5+1);
+	colum = rand() % (5+1);
+	dir = rand () % (4-1+1) + 1;
+	okupa=0;
  
 if(dir==1)							//direccion arriba
 {
@@ -349,36 +348,19 @@ if(dir==1)							//direccion arriba
   	{ 
 	  for(i=fila;i>=(fila-n+1);i--)  
 	      	{
-	      		if(mat[i][colum]!=0)
-	    			{
-	    				//printf("Ya esta ocupada esa posicion\n");
-	    				okupa++;
-					}
+	      	if(mat[i][colum]!=0)
+	    		{
+	    		okupa++;
+				}
 	      	}
-	      	
-	   if(okupa == 0)
+	    if(okupa == 0)
 	   {
-	   //	printf("fila valida\n");
-  	  		   			 for(i=fila;i>=(fila-n+1);i--)  
-	      					{
-	    						mat[i][colum]=barco;
-	      					}
-	      
-	    			//imprimematriz(mat);
-	   			    exito++;
+  	  		for(i=fila;i>=(fila-n+1);i--)  
+	      		{
+	    		mat[i][colum]=barco;
+	      		}
+	   		exito++;
 	   }
-	   	else 
-			{
-			//printf("fila no valida\n");
-			//imprimematriz(mat);
-	   		}
-	}
-	  
-	else 
-	{
-		//printf("fila no valida\n");
-		//imprimematriz(mat);
-	   
 	}
 }
 
@@ -388,36 +370,19 @@ if(dir==2)							//direccion derecha
   	{ 
 	  for(i=colum;i<=(colum+n-1);i++)  
 	      	{
-	      		if(mat[fila][i]!=0)
-	    			{
-	    			//printf("Ya esta ocupada esa posicion\n");
-	    				okupa++;
-					}
+	      	if(mat[fila][i]!=0)
+	    		{
+	    		okupa++;
+				}
 	      	}
-	      	
-	   if(okupa == 0)
+	    if(okupa == 0)
 	   {
-	   	//printf("columna valida\n");
-  	  		   			 for(i=colum;i<=(colum+n-1);i++)  
-	      					{
-	    						mat[fila][i]=barco;
-	      					}
-	      
-	    			//imprimematriz(mat);
-	   			    exito++;
+  	  		for(i=colum;i<=(colum+n-1);i++)  
+	      		{
+	    		mat[fila][i]=barco;
+	      		}
+	   		exito++;
 	   }
-	   	else 
-			{
-			//printf("columna no valida\n");
-			//imprimematriz(mat);
-	   		}
-	}
-	  
-	else 
-	{
-		//printf("columna no valida\n");
-		//imprimematriz(mat);
-	   
 	}
 }
 	  
@@ -426,37 +391,20 @@ if(dir==3)							//direccion abajo
   if(fila + n <= 6)
   	{ 
 	  for(i=fila;i<=fila+n-1;i++)  
-	      	{
-	      		if(mat[i][colum]!=0)
-	    			{
-	    				//printf("Ya esta ocupada esa posicion\n");
-	    				okupa++;
-					}
-	      	}
-	      	
-	   if(okupa == 0)
-	   {
-	   	//printf("fila valida\n");
-  	  		   			 for(i=fila;i<=fila+n-1;i++)  
-	      					{
-	    						mat[i][colum]=barco;
-	      					}
-	      
-	    			//imprimematriz(mat);
-	   			    exito++;
-	   }
-	   	else 
 			{
-			//printf("fila no valida\n");
-			//imprimematriz(mat);
+	    	if(mat[i][colum]!=0)
+	    		{
+	    		okupa++;
+				}
+	   	    }
+	    if(okupa == 0)
+	   		{
+  	  		for(i=fila;i<=fila+n-1;i++)  
+	      		{
+	    		mat[i][colum]=barco;
+	      		}
+	   		exito++;
 	   		}
-	}
-	  
-	else 
-	{
-		//printf("fila no valida\n");
-		//imprimematriz(mat);
-	   
 	}
 }
 
@@ -468,34 +416,17 @@ if(dir==4)							//direccion izquierda
 	      	{
 	      		if(mat[fila][i]!=0)
 	    			{
-	    				//printf("Ya esta ocupada esa posicion\n");
 	    				okupa++;
 					}
 	      	}
-	      	
-	   if(okupa == 0)
-	   {
-	   	//printf("columna valida\n");
-  	  		   			 for(i=colum;i>=(colum-n+1);i--)  
-	      					{
-	    						mat[fila][i]=barco;
-	      					}
-	      
-	    			//imprimematriz(mat);
-	   			    exito++;
-	   }
-	   	else 
-			{
-			//printf("columna no valida\n");
-			//imprimematriz(mat);
+	    if(okupa == 0)
+	   		{
+			   for(i=colum;i>=(colum-n+1);i--)  
+	      			{
+	    			mat[fila][i]=barco;
+	      			}
+	   			exito++;
 	   		}
-	}
-	  
-	else 
-	{
-		//printf("columna no valida\n");
-		//imprimematriz(mat);
-	   
 	}
 }
 }
