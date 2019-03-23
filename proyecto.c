@@ -202,7 +202,7 @@ break;
 	printf("Instrucciones:");
 	salto(2);
 	espacio(3);
-	imprime("-Antes de cada pregunta lanzaras un dado pulsando cualquier tecla para elegir aleatoriamente el tema de la pregunta");
+	imprime("-Antes de cada pregunta lanzaras un dado pulsando enter para elegir aleatoriamente el tema de la pregunta");
 	salto(1);
 	espacio(4);
 	imprime("+El numero 1 corresponde a la categoria de Geografia");
