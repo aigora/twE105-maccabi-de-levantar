@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+
 typedef struct
 {
 	char pregunta[80];
@@ -25,10 +26,16 @@ int main ()
   //VARIABLES Y FUNCIONES CIFRAS Y LETRAS:
  
   //VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
-  int tableroconsola[6][6],filacons, columcons,i,j;
+  int imprimematriz(int mat[6][6]);	
+  int generarbarco(int n, int mat[6][6], int barco);
+  
+  int matrizcons[6][6], i, j; //matriz que representa los barcos del cpu
+  int matrizjug[6][6];		  //matriz que representa los barcos del jugador
+  
   //VARIABLES Y FUNCIONES TRIVIAL:
    void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
    int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
+   
   while (juego == 0) //preguntar al jugador a que juego quiere jugar
   {
   	 salto(1);
@@ -82,7 +89,7 @@ printf("¡BIENVENIDO AL JUEGO 1!");
 	printf("Instrucciones:");
 	salto(2);
 	espacio(3);
-	imprime("-El objetivo consiste en acabar con los 4 barcos enemigos (portaviones, destructor, bombardero y submarino)");
+	imprime("-El objetivo consiste en acabar con los 4 barcos enemigos (portaviones, destructor, acorazado y submarino)");
     salto(1);
     espacio(3);
     imprime("-Los barcos del enemigo se generan aleatoriamente");
@@ -95,8 +102,31 @@ printf("¡BIENVENIDO AL JUEGO 1!");
     salto(1);
     getch();
     system("cls");
-//Generar barcos consola    
+//Generar barcos consola 
+	//llenar de 0 las matriz
+for (i=0; i<6; i++)
+{
+	for (j=0; j<6; j++)
+	{
+		matrizcons[i][j] = 0; 
+		matrizjug[i][j] = 0;
+	}
+}
+
+   srand (time(NULL)); 
 	//portaviones
+  generarbarco(5, matrizcons, 5);
+  	//destructor
+  generarbarco(4, matrizcons, 4);
+  	//acorazado
+  generarbarco(3, matrizcons, 3);
+  	//submarino
+  generarbarco(2, matrizcons, 2);
+	//matriz que representa los barcos del oponente
+  imprimematriz(matrizcons);
+  salto(3);
+  imprimematriz(matrizjug);
+//Colocacion de barcos por parte del jugador
 	
 
 break;
@@ -265,7 +295,7 @@ int imprime(char frase[]){
  while (frase[i] != '\0') 
 {
    printf("%c", frase[i]);
-   Sleep(30);
+   Sleep(0);
    i++;
 }
 }
@@ -300,6 +330,189 @@ int espacio(int e){
 //FUNCIONES CIFRAS Y LETRAS:
  
 //FUNCIONES HUNDIR LA FLOTA:
+int generarbarco(int n, int mat[6][6], int barco)
+{
+	int fila, colum, dir, exito = 0, okupa, i;
+	
+while(exito==0)
+{
+	
+  fila = rand() % (5+1);
+  colum = rand() % (5+1);
+  dir = rand () % (4-1+1) + 1;
+  okupa=0;
+  //printf("fila: %i columna: %i dir: %i\n", fila, colum, dir);
+ 
+if(dir==1)							//direccion arriba
+{
+  if(fila >= (n-1))
+  	{ 
+	  for(i=fila;i>=(fila-n+1);i--)  
+	      	{
+	      		if(mat[i][colum]!=0)
+	    			{
+	    				//printf("Ya esta ocupada esa posicion\n");
+	    				okupa++;
+					}
+	      	}
+	      	
+	   if(okupa == 0)
+	   {
+	   //	printf("fila valida\n");
+  	  		   			 for(i=fila;i>=(fila-n+1);i--)  
+	      					{
+	    						mat[i][colum]=barco;
+	      					}
+	      
+	    			//imprimematriz(mat);
+	   			    exito++;
+	   }
+	   	else 
+			{
+			//printf("fila no valida\n");
+			//imprimematriz(mat);
+	   		}
+	}
+	  
+	else 
+	{
+		//printf("fila no valida\n");
+		//imprimematriz(mat);
+	   
+	}
+}
+
+if(dir==2)							//direccion derecha
+{
+  if(colum + n <= 6)
+  	{ 
+	  for(i=colum;i<=(colum+n-1);i++)  
+	      	{
+	      		if(mat[fila][i]!=0)
+	    			{
+	    			//printf("Ya esta ocupada esa posicion\n");
+	    				okupa++;
+					}
+	      	}
+	      	
+	   if(okupa == 0)
+	   {
+	   	//printf("columna valida\n");
+  	  		   			 for(i=colum;i<=(colum+n-1);i++)  
+	      					{
+	    						mat[fila][i]=barco;
+	      					}
+	      
+	    			//imprimematriz(mat);
+	   			    exito++;
+	   }
+	   	else 
+			{
+			//printf("columna no valida\n");
+			//imprimematriz(mat);
+	   		}
+	}
+	  
+	else 
+	{
+		//printf("columna no valida\n");
+		//imprimematriz(mat);
+	   
+	}
+}
+	  
+if(dir==3)							//direccion abajo
+{
+  if(fila + n <= 6)
+  	{ 
+	  for(i=fila;i<=fila+n-1;i++)  
+	      	{
+	      		if(mat[i][colum]!=0)
+	    			{
+	    				//printf("Ya esta ocupada esa posicion\n");
+	    				okupa++;
+					}
+	      	}
+	      	
+	   if(okupa == 0)
+	   {
+	   	//printf("fila valida\n");
+  	  		   			 for(i=fila;i<=fila+n-1;i++)  
+	      					{
+	    						mat[i][colum]=barco;
+	      					}
+	      
+	    			//imprimematriz(mat);
+	   			    exito++;
+	   }
+	   	else 
+			{
+			//printf("fila no valida\n");
+			//imprimematriz(mat);
+	   		}
+	}
+	  
+	else 
+	{
+		//printf("fila no valida\n");
+		//imprimematriz(mat);
+	   
+	}
+}
+
+if(dir==4)							//direccion izquierda
+{
+  if(colum + 1 >= n)
+  	{ 
+	  for(i=colum;i>=(colum-n+1);i--)  
+	      	{
+	      		if(mat[fila][i]!=0)
+	    			{
+	    				//printf("Ya esta ocupada esa posicion\n");
+	    				okupa++;
+					}
+	      	}
+	      	
+	   if(okupa == 0)
+	   {
+	   	//printf("columna valida\n");
+  	  		   			 for(i=colum;i>=(colum-n+1);i--)  
+	      					{
+	    						mat[fila][i]=barco;
+	      					}
+	      
+	    			//imprimematriz(mat);
+	   			    exito++;
+	   }
+	   	else 
+			{
+			//printf("columna no valida\n");
+			//imprimematriz(mat);
+	   		}
+	}
+	  
+	else 
+	{
+		//printf("columna no valida\n");
+		//imprimematriz(mat);
+	   
+	}
+}
+}
+
+}
+int imprimematriz(int mat[6][6])
+{
+    int i,j;
+	for(i=0;i<6;i++)  
+	      {
+	      	for(j=0;j<6;j++)
+	      	{
+	      		printf("%i ",mat[i][j]);
+			  }
+			    printf("\n",i);
+	      }	
+}
   
 //FUNCIONES TRIVIAL:
 int comprobarRespuesta(inicio tabla[],int pos,int puntuacion)
