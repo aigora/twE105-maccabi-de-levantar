@@ -24,7 +24,7 @@ int main ()
   int juego = 0;
   
   //VARIABLES Y FUNCIONES CIFRAS Y LETRAS:
- 
+	char eleccion;
   //VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
   int imprimematriz(int mat[6][6]);	
   int generarbarco(int n, int mat[6][6], int barco);
@@ -70,8 +70,80 @@ int main ()
 {
 	case 1: //JUEGO 1
 	{
+system("cls");
+	//Introduccion del juego
+	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapdidez");
+	salto(1);
+	imprime("Instrucciones:");
+	salto(1);
+	imprime("El juego consiste en elegir Cifras (pulsa c) o Letras (pulsa l).");
+	salto(1);
+	//Instrucciones juego de cifras
+	espacio(2);
+	imprime("El juego de cifras consiste en generar 6 cifras al azar y hallar un numero (o un numero lo mas aproximado posible a ese numero) tambien generado al azar con operaciones. Pero ojo, hay ciertas normas:");
+	salto(1);
+	espacio(5);
+	imprime("-No puedes repetir ninguna de las 6 cifras");
+	salto(1);
+	espacio(5);
+	imprime("-Solo puedes usar las operaciones:'+','*','-','/'.");
+	salto(1);
+	espacio(5);
+	imprime("-Tienes 45 segundos para pensar tu respuesta");
+	salto(1);
+	espacio(5);
+	imprime("-Tienes que escribir las operaciones correspondientes acompañados del resultado final para ver si no has hecho trampas o has cometido algun error");
+	salto(1);
+	espacio(5);
+	imprime("-¡Sobre todo disfrutar y pasar un buen rato!");
+	//Instrucciones juego de letras
+	salto(3);
+	espacio(2);
+	imprime("El juego de letras consiste en general 10 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:");
+	salto(1);
+	espacio(5);
+	imprime("-No puede repetir ninguna letra, aunque las letras si se pueden repetir a la hora de salir al azar.");
+	salto(1);
+	espacio(5);
+	imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no serán considerados como validos");
+	salto(1);
+	espacio(5);
+	imprime("-Puede escribir en mayusculas o en minusculas indiferentemente");
+	salto(1);
+	espacio(5);
+	imprime("-El usuario tendra 45 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera");
+	salto(1);
+	espacio(5);
+	imprime("-¡Sobre todo disfrutar y pasar un buen rato!");
+	salto(2);
+	//Elección de cifras o letras
+	do{
 	
-printf("¡BIENVENIDO AL JUEGO 1!"); 
+	imprime("Pulse C para jugar cifras o pulse L si quiere jugar letras");
+	salto(1);
+	scanf(" %c",&eleccion);
+	switch (eleccion)
+{
+	case 'C':
+	case 'c':
+		{
+			imprime("Bienvenido amante de los numeros. Has elegido cifras.");
+			break;
+		}
+	case 'L':
+	case'l':
+		{
+			imprime("Bienvenido fan de la palabra. Has elegido letras");
+			break;
+		}
+	default:
+		{
+			imprime("Tu respuesta no se corresponde con ningun juego. Vuelve a introducirlo");
+			salto(1);
+			break;
+		}
+}
+} while(eleccion!='c'&&eleccion!='C'&&eleccion!='l'&&eleccion!='L');
 
     break;
 }
