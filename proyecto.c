@@ -125,12 +125,14 @@ system("cls");
 	case 'C':
 	case 'c':
 		{
+			system("cls");
 			imprime("Bienvenido amante de los numeros. Has elegido cifras.");
 			break;
 		}
 	case 'L':
 	case'l':
 		{
+			system("cls");
 			imprime("Bienvenido fan de la palabra. Has elegido letras");
 			break;
 		}
