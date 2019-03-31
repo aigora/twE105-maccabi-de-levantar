@@ -24,8 +24,13 @@ int main ()
   
   //VARIABLES Y FUNCIONES CIFRAS Y LETRAS:
 	char eleccion;
+	
   //VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
-  int tableroconsola[6][6],filacons, columcons,i,j;
+  int imprimematriz(int mat[6][6]);	
+  int generarbarco(int n, int mat[6][6], int barco);
+  int matrizcons[6][6], i, j; //matriz que representa los barcos del cpu
+  int matrizjug[6][6];		  //matriz que representa los barcos del jugador
+  
   //VARIABLES Y FUNCIONES TRIVIAL:
    void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
    int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
@@ -61,7 +66,7 @@ int main ()
   
   switch (juego)
 {
-	case 1: //JUEGO 2
+	case 1: //JUEGO 1
 	{
 system("cls");
 	//Introduccion del juego
@@ -143,12 +148,11 @@ system("cls");
 
     case 2 : //JUEGO HUNDIR LA FLOTA
     {
-	
-    system("cls");
+	system("cls");
 //Instrucciones
     salto(1);
     espacio(3);
-    imprime("Bienvenido camarada, le deseo mucha suerte en su mision");
+    imprime("Bienvenido almirante, la flota espera sus ordenes");
     salto(2);
     espacio(4);
 	printf("Instrucciones:");
@@ -167,8 +171,26 @@ system("cls");
     salto(1);
     getch();
     system("cls");
-//Generar barcos consola    
-	//portaviones
+//llenar de 0 las matriz
+	for (i=0; i<6; i++)
+		{
+			for (j=0; j<6; j++)
+				{
+				matrizcons[i][j] = 0; 
+				matrizjug[i][j] = 0;
+				}
+		}
+	srand (time(NULL)); 
+//Generar barcos consola 	
+	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5
+	generarbarco(4, matrizcons, 4);	//destructor rellena la matriz de 4
+	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
+  	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
+  	imprimematriz(matrizcons);
+	salto(3);
+	imprimematriz(matrizjug);
+	
+//Colocacion de barcos por parte del jugador
 	
 
 break;
@@ -183,7 +205,7 @@ break;
 	inicio deporte[]={{"Que pieza de ajedrez puede hacer un movimiento en forma de L?","CABALLO"},{"Que seleccion de futbol gano el Mundial de Brasil de 2014?","ALEMANIA"},{"Cual es el estilo de natacion mas rapido?","CROL"},{"De donde es el jugador Alexis Sanchez?","CHILE"},{"Cómo se llama el estadio del Betis?","BENITO VILLAMARIN"},{"Como se llama la liga espanola de balonmano?","ASOBAL"},{"Que pais fue el ganador de baloncesto en los Juegos Olimpicos de Londres 2012?","ESTADOS UNIDOS"},{"Cual es la ultima cinta en las artes marciales?","NEGRA"},{"Que le arrojaba antiguamente un caballero a otro para desafiarlo en duelo?","GUANTE"},{"Como se llama el palo utilizado en hockey?","STICK"}};
     inicio ciencia[]={{"Como se llaman las celulas nerviosas?","NEURONAS"},{"Que elemento contienen todos los componentes organicos?","CARBONO"},{"Como se llaman las lineas que unen los puntos de igual temperatura?","ISOBARAS"},{"Cual es el pajaro simbolo de la paz?","PALOMA"},{"En que mes el sol esta mas cerca de la Tierra?","DICIEMBRE"},{"En que parte del cuerpo se encuentra la piel mas gruesa?","ESPALDA"},{"Como se llama la ciencia que estudia la sangre?","HEMATOLOGIA"},{"Cual de los cinco sentidos se desarrolla el primero?","OLFATO"},{"Cual es el dedo mas sensible de la mano?","INDICE"},{"Que fabrico Alessandro Volta, por primera vez, en 1800?","PILA"}};
 	inicio arte[]={{"Que escribia un testador?","TESTAMENTOS"},{"Quien escribio Poeta en Nueva York?","FEDERICO GARCIA LORCA"},{"En que ciudad comenzo y termino Phileas Fogg su viaje alrededor del mundo?","LONDRES"},{"Quien era el campanero jorobado de Notre Dame?","QUASIMODO"},{"A que tipo de instrumento pertenece la citara?","CUERDA"},{"En que ciudad espanola se encuentra La casa de las conchas?","SALAMNCA"},{"Quien vivia en el 221B de Backer Street?","SHERLOCK HOLMES"},{"Cual fue el genero mas cultivado por los autores de la generación del 27?","POESIA"},{"Como se llama a la gente que no posee magia en la saga Harry Potter?","MUGGLES"},{"Cual es el genero teatral intermedio entre la comedia y la tragedia ?","DRAMA"}};
-	inicio entretenimiento[]={{"Que pelicula creo la palabra magica supercalifragilisticoespialidoso?","MARY POPPINS"},{"Como se llama la ciudad en la que vivia el Mago de Oz?","ESMERALDA"},{"Como se llama el oso mas famoso del parque nacional de Yellowstone?","YOGUI"},{"Cual de los Siete Enanitos no tenia barba?","MUDITO"},{"Que actor espanol protagonizo “La máscara del Zorro” en 1998?","ANTONIO BANDERAS"},{"Quien fue la primera voz de Mickey Mouse?","WALT DISNEY"},{"Que cancion de Los Beatles ha sido la mas grabada?","YESTERDAY"},{"Quien es la mascota de SEGA?","SONIC"},{"Que actor interpretaba a Hache en la pelicula 3MSC?","MARIO CASAS"},{"Como se llama el protagonista de la saga Indiana Jones?","HARRISON FORD"}};
+	inicio entretenimiento[]={{"Que pelicula creo la palabra magica supercalifragilisticoespialidoso?","MARY POPPINS"},{"Como se llama la ciudad en la que vivia el Mago de Oz?","ESMERALDA"},{"Como se llama el oso mas famoso del parque nacional de Yellowstone?","YOGUI"},{"Cual de los Siete Enanitos no tenia barba?","MUDITO"},{"Que actor espanol protagonizo ?La máscara del Zorro? en 1998?","ANTONIO BANDERAS"},{"Quien fue la primera voz de Mickey Mouse?","WALT DISNEY"},{"Que cancion de Los Beatles ha sido la mas grabada?","YESTERDAY"},{"Quien es la mascota de SEGA?","SONIC"},{"Que actor interpretaba a Hache en la pelicula 3MSC?","MARIO CASAS"},{"Como se llama el protagonista de la saga Indiana Jones?","HARRISON FORD"}};
 	int imprime(char frase[]); //funcion imprimir frase con animacion
     int salto(int s); //imprimir \n
     int espacio(int e); //imprimir \t
@@ -418,7 +440,119 @@ int espacio(int e){
 //FUNCIONES CIFRAS Y LETRAS:
  
 //FUNCIONES HUNDIR LA FLOTA:
-  
+int generarbarco(int n, int mat[6][6], int barco)
+{
+	int fila, colum, dir, exito = 0, okupa, i;
+	
+while(exito==0)
+{
+	fila = rand() % (5+1);
+	colum = rand() % (5+1);
+	dir = rand () % (4-1+1) + 1;
+	okupa=0;
+ 
+if(dir==1)							//direccion arriba
+{
+  if(fila >= (n-1))
+  	{ 
+	  for(i=fila;i>=(fila-n+1);i--)  
+	      	{
+	      	if(mat[i][colum]!=0)
+	    		{
+	    		okupa++;
+				}
+	      	}
+	    if(okupa == 0)
+	   {
+  	  		for(i=fila;i>=(fila-n+1);i--)  
+	      		{
+	    		mat[i][colum]=barco;
+	      		}
+	   		exito++;
+	   }
+	}
+}
+
+if(dir==2)							//direccion derecha
+{
+  if(colum + n <= 6)
+  	{ 
+	  for(i=colum;i<=(colum+n-1);i++)  
+	      	{
+	      	if(mat[fila][i]!=0)
+	    		{
+	    		okupa++;
+				}
+	      	}
+	    if(okupa == 0)
+	   {
+  	  		for(i=colum;i<=(colum+n-1);i++)  
+	      		{
+	    		mat[fila][i]=barco;
+	      		}
+	   		exito++;
+	   }
+	}
+}
+	  
+if(dir==3)							//direccion abajo
+{
+  if(fila + n <= 6)
+  	{ 
+	  for(i=fila;i<=fila+n-1;i++)  
+			{
+	    	if(mat[i][colum]!=0)
+	    		{
+	    		okupa++;
+				}
+	   	    }
+	    if(okupa == 0)
+	   		{
+  	  		for(i=fila;i<=fila+n-1;i++)  
+	      		{
+	    		mat[i][colum]=barco;
+	      		}
+	   		exito++;
+	   		}
+	}
+}
+
+if(dir==4)							//direccion izquierda
+{
+  if(colum + 1 >= n)
+  	{ 
+	  for(i=colum;i>=(colum-n+1);i--)  
+	      	{
+	      		if(mat[fila][i]!=0)
+	    			{
+	    				okupa++;
+					}
+	      	}
+	    if(okupa == 0)
+	   		{
+			   for(i=colum;i>=(colum-n+1);i--)  
+	      			{
+	    			mat[fila][i]=barco;
+	      			}
+	   			exito++;
+	   		}
+	}
+}
+}
+
+}
+int imprimematriz(int mat[6][6])
+{
+    int i,j;
+	for(i=0;i<6;i++)  
+	      {
+	      	for(j=0;j<6;j++)
+	      	{
+	      		printf("%i ",mat[i][j]);
+			  }
+			    printf("\n",i);
+	      }	
+}
 //FUNCIONES TRIVIAL:
 int Solucion(inicio tabla[],int pos,int puntuacion)
 {
