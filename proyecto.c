@@ -11,7 +11,7 @@ typedef struct
 	char respuesta[25];
 }inicio;
 
-int main ()
+void main ()
 {
   //VARIABLES Y FUNCIONES GLOBALES:
   int imprime(char frase[]); //funcion imprimir frase con animacion
@@ -20,7 +20,7 @@ int main ()
   int numal(int num1,int num2); //Genera numeros aleatorios 
   void semilla(); //Genera semilla
   
-  int juego = 0;
+  int juego,salida=0;
   
   //VARIABLES Y FUNCIONES CIFRAS Y LETRAS:
 	char eleccion;
@@ -34,43 +34,34 @@ int main ()
   //VARIABLES Y FUNCIONES TRIVIAL:
    void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
    int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
-  while (juego == 0) //preguntar al jugador a que juego quiere jugar
+  while (juego !=4) //preguntar al jugador a que juego quiere jugar
   {
   	 salto(1);
   	 espacio(2);
   	 imprime("BIENVENIDO JUGADOR!");
   	 salto(3);
   	 espacio(3);
-  	 imprime("Escriba 1 para jugar a Cifras y Letras");
+  	 imprime("1: Para jugar a Cifras y Letras");
   	 salto(2);
   	 espacio(3);
-  	 imprime("Escriba 2 para jugar a Hundir La Flota");
+  	 imprime("2: Para jugar a Hundir La Flota");
   	 salto(2);
   	 espacio(3);
-  	 imprime("Escriba 3 para jugar al Trivial");
+  	 imprime("3: Para jugar al Trivial");
   	 salto(2);
   	 espacio(3);
-  	 
+  	 imprime("4: Para salir del programa");
+  	 salto(2);
+  	 espacio(3);
      scanf("%d", &juego);
-     
-     if (juego != 1 && juego != 2 && juego != 3)
-     {
-     	salto(2);
-  	    espacio(6);
-     	printf("ERROR: JUEGO NO VALIDO\n");
-     	Sleep(700);
-     	system("cls");
-     	juego = 0;
-	 }
-  }
-  
   switch (juego)
 {
 	case 1: //JUEGO 1
 	{
-system("cls");
+	do{
+    system("cls");
 	//Introduccion del juego
-	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapdidez");
+	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez");
 	salto(1);
 	imprime("Instrucciones:");
 	salto(1);
@@ -115,8 +106,6 @@ system("cls");
 	imprime("-¡Sobre todo disfrutar y pasar un buen rato!");
 	salto(2);
 	//Elección de cifras o letras
-	do{
-	
 	imprime("Pulse C para jugar cifras o pulse L si quiere jugar letras");
 	salto(1);
 	scanf(" %c",&eleccion);
@@ -126,32 +115,36 @@ system("cls");
 	case 'c':
 		{
 			system("cls");
-			imprime("Bienvenido amante de los numeros. Has elegido cifras.");
+			imprime("Bienvenido amante de los numeros. Has elegido cifras.\n");
 			break;
 		}
 	case 'L':
 	case'l':
 		{
 			system("cls");
-			imprime("Bienvenido fan de la palabra. Has elegido letras");
+			imprime("Bienvenido fan de la palabra. Has elegido letras.\n");
 			break;
 		}
 	default:
 		{
-			imprime("Tu respuesta no se corresponde con ningun juego. Vuelve a introducirlo");
+			imprime("Tu respuesta no se corresponde con ninguna de las opciones.\n");
 			salto(1);
 			break;
 		}
 }
-} while(eleccion!='c'&&eleccion!='C'&&eleccion!='l'&&eleccion!='L');
-
+    salto(3);
+    imprime("Pulsa 0 para volver a jugar o pulsa cualquier otra numero para salir del juego");
+	salto(2);
+	scanf("%d",&salida);
+    system("cls");
+} while(salida==0);
     break;
 }
-
     case 2 : //JUEGO HUNDIR LA FLOTA
     {
+    do{
 	system("cls");
-//Instrucciones
+    //Instrucciones
     salto(1);
     espacio(3);
     imprime("Bienvenido almirante, la flota espera sus ordenes");
@@ -193,11 +186,14 @@ system("cls");
 	imprimematriz(matrizjug);
 	
 //Colocacion de barcos por parte del jugador
-	
-
+    salto(3);
+	imprime("Pulsa 0 para volver a jugar o pulse cualquier otra numero para salir del juego");
+	salto(2);
+	scanf("%d",&salida);
+    system("cls");
+}while(salida==0);
 break;
 }
-
     case 3: //JUEGO 3
     {	
     int i,j,dado[6],numpreg[6],puntuacion=0,salida=0;
@@ -293,8 +289,7 @@ break;
     salto(1);
     getch();
     system("cls");
-    while(salida==0)
-    {
+    do{
     imprime("Bienvenido concursante.");
     salto(2);
     for(i=0;i<6;i++)
@@ -393,12 +388,24 @@ break;
 		scanf("%d",&salida);
 	}
 	system("cls");
-	}
+}while(salida==0);
+break;
    }
+   case 4:
+	salto(2);
+  	espacio(3);
+	imprime("Has cerrado el programa, hasta la proxima!\n");
+    break;
+   default:
+	salto(2);
+  	espacio(6);
+    printf("ERROR: JUEGO NO VALIDO\n");
+    Sleep(700);
+    system("cls");
+    break;
    }
-return 0;
 }
-
+}
 //FUNCIONES GLOBALES
 
   //Imprime una frase letra por letra con un delay entre ellas
