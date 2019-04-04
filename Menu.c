@@ -55,6 +55,7 @@ void main()
 		{
 			system("cls");
 			imprime("Bienvenido amante de los numeros. Has elegido cifras.\n");
+			//Juego de cifras
 			break;
 		}
 	case 'L':
@@ -62,6 +63,7 @@ void main()
 		{
 			system("cls");
 			imprime("Bienvenido fan de la palabra. Has elegido letras.\n");
+			//Juego de letras
 			break;
 		}
 	default:
