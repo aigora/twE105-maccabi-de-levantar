@@ -5,49 +5,89 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+
+//ESTRUCTURA TRIVIAL
 typedef struct
 {
 	char pregunta[80];
 	char respuesta[25];
 }inicio;
 
+//VARIABLES Y FUNCIONES GLOBALES:
+int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
+int numal(int num1,int num2); //Genera numeros aleatorios 
+void semilla(); //Genera semilla
+int salida = 0;
+char juego = '0';
+  
 void main ()
 {
-  //VARIABLES Y FUNCIONES GLOBALES:
-  int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
-  int numal(int num1,int num2); //Genera numeros aleatorios 
-  void semilla(); //Genera semilla
-  
-  int salida=0;
-  char juego = '0';
-  
-  //VARIABLES Y FUNCIONES CIFRAS Y LETRAS:
-	char eleccion;
-	
-  //VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
-  int imprimematriz(int mat[6][6]);	
-  int generarbarco(int n, int mat[6][6], int barco);
-  int matrizcons[6][6], i, j; //matriz que representa los barcos del cpu
-  int matrizjug[6][6];		  //matriz que representa los barcos del jugador
-  
-  //VARIABLES Y FUNCIONES TRIVIAL:
-   void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
-   int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
+	void cifrasyletras();
+	void hundirlaflota();
+	void trivial();
+
   while (juego != '1' && juego != '2' && juego != '3' && juego != '4') //preguntar al jugador a que juego quiere jugar
   {
   	 imprime("",1,2);
-  	 imprime("\n  BIENVENIDO JUGADOR!",3,3);
+  	 imprime("BIENVENIDO JUGADOR!",3,3);
+  	 imprime("Pulsa:",2,3);
   	 imprime("1: Para jugar a Cifras y Letras",2,3);
   	 imprime("2: Para jugar a Hundir La Flota",2,3);
   	 imprime("3: Para jugar al Trivial",2,3);
   	 imprime("4: Para salir del programa",2,3);
      scanf(" %c", &juego);
+     
   switch (juego)
 {
+	
 	case '1': //JUEGO 1
-	{
-	do{
+{
+	do
+		{
+    cifrasyletras();
+		}while(salida==0);
+    break;
+}
+
+    case '2' : //JUEGO HUNDIR LA FLOTA
+{
+    do
+		{
+    hundirlaflota();
+   		}while(salida==0);
+	break;
+}
+    case '3': //JUEGO TRIVIAL
+{	
+    do
+		{
+    trivial();
+		}while(salida==0);
+break;
+}
+   
+   case '4':
+   	imprime("",2,3);
+	imprime("Has cerrado el programa, hasta la proxima!",1,0);
+    break;
+    
+   default:
+   	imprime("",2,6);
+    imprime("ERROR: JUEGO NO VALIDO",1,0);
+    Sleep(700);
     system("cls");
+    break;
+   }
+}
+}
+
+void cifrasyletras()
+{
+	//VARIABLES Y FUNCIONES:
+	char eleccion;
+	
+	//JUEGO:
+	system("cls");
 	//Introduccion del juego
 	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez",1,0);
 	imprime("Instrucciones:",1,0);
@@ -89,18 +129,25 @@ void main ()
 		{
 			imprime("Tu respuesta no se corresponde con ninguna de las opciones.",2,0);
 			break;
-		}
+		}	
+	
 }
 	imprime("",3,0);
-    imprime("Pulsa 0 para volver a jugar o pulsa cualquier otra numero para salir del juego",2,0);
+    imprime("Pulsa 0 para volver a jugar o pulsa cualquier otro numero para salir del juego",2,0);
 	scanf("%d",&salida);
     system("cls");
-} while(salida==0);
-    break;
 }
-    case '2' : //JUEGO HUNDIR LA FLOTA
-    {
-    do{
+
+void hundirlaflota()
+{
+	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
+	int i,j;
+	int imprimematriz(int mat[6][6]);	
+	int generarbarco(int n, int mat[6][6], int barco);
+	int matrizcons[6][6];//matriz que representa los barcos del cpu
+	int matrizjug[6][6];//matriz que representa los barcos del jugador
+	
+	//JUEGO:
 	system("cls");
     //Instrucciones
     imprime("",1,3);
@@ -112,7 +159,7 @@ void main ()
     imprime("Presione cualquier tecla para continuar...",1,0);
     getch();
     system("cls");
-//llenar de 0 las matriz
+//llenar de 0 las matrices
 	for (i=0; i<6; i++)
 		{
 			for (j=0; j<6; j++)
@@ -130,18 +177,22 @@ void main ()
   	imprimematriz(matrizcons);
 	imprime("",3,0);
 	imprimematriz(matrizjug);
+
 	
 //Colocacion de barcos por parte del jugador
-	imprime("",3,0);
+
+ 	imprime("",3,0);
 	imprime("Pulsa 0 para volver a jugar o pulse cualquier otra numero para salir del juego",2,0);
 	scanf("%d",&salida);
     system("cls");
-}while(salida==0);
-break;
 }
-    case '3': //JUEGO 3
-    {	
-    int i,j,dado[6],numpreg[6],puntuacion=0,salida=0;
+
+void trivial()
+{
+	//VARIABLES Y FUNCIONES:
+	void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
+	int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
+	int i,j,dado[6],numpreg[6],puntuacion=0,salida=0;
 	char solucion[20],tirar;
 	inicio geografia[]={{"Que pais está entre Peru y Colombia?","ECUADOR"},{"Cual es la capital de Marruecos?","RABAT"},{"Cual es el pais mas visitado del mundo","FRANCIA"},{"En que pais se encuentra el rio Po","ITALIA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual es el oceano que bana las aguas de Sri Lanka?","INDIC"},{"Que nombre recibe un cowboy argentino?","GAUCHO"},{"Cual es la montaña más alta del mundo?","EVEREST"},{"Cual es el idioma mas hablado en Suiza?","ALEMAN"},{"En que hemisferio se encuentra Jamaica?","NORTE"}};
 	inicio historia[]={{"De que pais europeo fue colonia Mozambique?","PORTUGAL"},{"Quienes conquistaron Constantinopla (fin del Imperio Bizantino) en 1453?","TURCOS"},{"De que pais se independizo Eslovenia?","YUGOSLAVIA"},{"Que moneda se usaba en España antes de la llegada del euro?","PESETA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual era la ciudad hogar de Marco Polo?","VENECIA"},{"Quien fue el primer presidente de los Estados Unidos?","GEORGE WASHINGTON"},{"Como se llamaba el famoso dictador italiano?","MUSSOLINI"},{"Que pais fue llamado la Galia por los romanos?","FRANCIA"},{"En que ciudad española se realizo el famoso bombardeo de La Legion Condor?","GUERNICA"}};
@@ -154,6 +205,8 @@ break;
     void semilla(); //Genera semilla
     void ComprobacionPregunta(int numpreg[],int dado[],int i,int iz,int der);
     int Solucion(inicio tabla[],int pos,int posicion);
+    
+    //JUEGO:
     system ("cls");
     imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,0);
     imprime("Para ello, deberas responder un conjunto de de 6 preguntas (+1 plus) y obtener la maxima puntuacion posible.\n\nSeras capaz de conseguir la casi inalcanzable puntuacion de 100 puntos?",2,0);
@@ -183,7 +236,6 @@ break;
     imprime("Presione cualquier tecla para comenzar el juego...",1,0);
     getch();
     system("cls");
-    do{
     imprime("Bienvenido concursante.",2,0);
     for(i=0;i<6;i++)
     {
@@ -273,24 +325,9 @@ break;
 		scanf("%d",&salida);
 	}
 	system("cls");
-}while(salida==0);
-break;
-   }
-   
-   case '4':
-   	imprime("",2,3);
-	imprime("Has cerrado el programa, hasta la proxima!",1,0);
-    break;
-    
-   default:
-   	imprime("",2,6);
-    imprime("ERROR: JUEGO NO VALIDO",1,0);
-    Sleep(700);
-    system("cls");
-    break;
-   }
+	
 }
-}
+
 //FUNCIONES GLOBALES
 
   //Imprime una frase letra por letra con un delay entre ellas
@@ -299,7 +336,7 @@ int imprime(char frase[], int s, int e){
  while (frase[i] != '\0') 
 {
    printf("%c", frase[i]);
-   Sleep(30);
+   Sleep(0);
    i++;
 }
 i= 0;
@@ -439,6 +476,7 @@ int imprimematriz(int mat[6][6])
 			    printf("\n",i);
 	      }	
 }
+
 //FUNCIONES TRIVIAL:
 int Solucion(inicio tabla[],int pos,int puntuacion)
 {
@@ -468,7 +506,6 @@ int Solucion(inicio tabla[],int pos,int puntuacion)
 				}
 				return puntuacion;
 }
-
 void ComprobacionPregunta(int numpreg[],int dado[],int i,int iz,int der)
 {
 	int j;
@@ -482,3 +519,5 @@ void ComprobacionPregunta(int numpreg[],int dado[],int i,int iz,int der)
 				}
 			}
 }
+
+
