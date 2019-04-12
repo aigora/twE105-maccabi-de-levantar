@@ -44,7 +44,7 @@ void main ()
 {
 	do
 		{
-    cifrasyletras();
+            cifrasyletras();
 		}while(salida==0);
     break;
 }
@@ -53,7 +53,7 @@ void main ()
 {
     do
 		{
-    hundirlaflota();
+            hundirlaflota();
    		}while(salida==0);
 	break;
 }
@@ -61,9 +61,9 @@ void main ()
 {	
     do
 		{
-    trivial();
+            trivial();
 		}while(salida==0);
-break;
+    break;
 }
    
    case '4':
@@ -192,14 +192,15 @@ void trivial()
 	//VARIABLES Y FUNCIONES:
 	void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
 	int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
-	int i,j,dado[6],numpreg[6],puntuacion=0,salida=0;
-	char solucion[20],tirar;
+	int i,j,dado[6],numpreg[6],puntuacion=0,salida=0,vuelta=0;
+	char solucion[20],tirar,basura,decision[3];
 	inicio geografia[]={{"Que pais está entre Peru y Colombia?","ECUADOR"},{"Cual es la capital de Marruecos?","RABAT"},{"Cual es el pais mas visitado del mundo","FRANCIA"},{"En que pais se encuentra el rio Po","ITALIA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual es el oceano que bana las aguas de Sri Lanka?","INDIC"},{"Que nombre recibe un cowboy argentino?","GAUCHO"},{"Cual es la montaña más alta del mundo?","EVEREST"},{"Cual es el idioma mas hablado en Suiza?","ALEMAN"},{"En que hemisferio se encuentra Jamaica?","NORTE"}};
 	inicio historia[]={{"De que pais europeo fue colonia Mozambique?","PORTUGAL"},{"Quienes conquistaron Constantinopla (fin del Imperio Bizantino) en 1453?","TURCOS"},{"De que pais se independizo Eslovenia?","YUGOSLAVIA"},{"Que moneda se usaba en España antes de la llegada del euro?","PESETA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual era la ciudad hogar de Marco Polo?","VENECIA"},{"Quien fue el primer presidente de los Estados Unidos?","GEORGE WASHINGTON"},{"Como se llamaba el famoso dictador italiano?","MUSSOLINI"},{"Que pais fue llamado la Galia por los romanos?","FRANCIA"},{"En que ciudad española se realizo el famoso bombardeo de La Legion Condor?","GUERNICA"}};
 	inicio deporte[]={{"Que pieza de ajedrez puede hacer un movimiento en forma de L?","CABALLO"},{"Que seleccion de futbol gano el Mundial de Brasil de 2014?","ALEMANIA"},{"Cual es el estilo de natacion mas rapido?","CROL"},{"De donde es el jugador Alexis Sanchez?","CHILE"},{"Cómo se llama el estadio del Betis?","BENITO VILLAMARIN"},{"Como se llama la liga espanola de balonmano?","ASOBAL"},{"Que pais fue el ganador de baloncesto en los Juegos Olimpicos de Londres 2012?","ESTADOS UNIDOS"},{"Cual es la ultima cinta en las artes marciales?","NEGRA"},{"Que le arrojaba antiguamente un caballero a otro para desafiarlo en duelo?","GUANTE"},{"Como se llama el palo utilizado en hockey?","STICK"}};
     inicio ciencia[]={{"Como se llaman las celulas nerviosas?","NEURONAS"},{"Que elemento contienen todos los componentes organicos?","CARBONO"},{"Como se llaman las lineas que unen los puntos de igual temperatura?","ISOBARAS"},{"Cual es el pajaro simbolo de la paz?","PALOMA"},{"En que mes el sol esta mas cerca de la Tierra?","DICIEMBRE"},{"En que parte del cuerpo se encuentra la piel mas gruesa?","ESPALDA"},{"Como se llama la ciencia que estudia la sangre?","HEMATOLOGIA"},{"Cual de los cinco sentidos se desarrolla el primero?","OLFATO"},{"Cual es el dedo mas sensible de la mano?","INDICE"},{"Que fabrico Alessandro Volta, por primera vez, en 1800?","PILA"}};
 	inicio arte[]={{"Que escribia un testador?","TESTAMENTOS"},{"Quien escribio Poeta en Nueva York?","FEDERICO GARCIA LORCA"},{"En que ciudad comenzo y termino Phileas Fogg su viaje alrededor del mundo?","LONDRES"},{"Quien era el campanero jorobado de Notre Dame?","QUASIMODO"},{"A que tipo de instrumento pertenece la citara?","CUERDA"},{"En que ciudad espanola se encuentra La casa de las conchas?","SALAMNCA"},{"Quien vivia en el 221B de Backer Street?","SHERLOCK HOLMES"},{"Cual fue el genero mas cultivado por los autores de la generación del 27?","POESIA"},{"Como se llama a la gente que no posee magia en la saga Harry Potter?","MUGGLES"},{"Cual es el genero teatral intermedio entre la comedia y la tragedia ?","DRAMA"}};
 	inicio entretenimiento[]={{"Que pelicula creo la palabra magica supercalifragilisticoespialidoso?","MARY POPPINS"},{"Como se llama la ciudad en la que vivia el Mago de Oz?","ESMERALDA"},{"Como se llama el oso mas famoso del parque nacional de Yellowstone?","YOGUI"},{"Cual de los Siete Enanitos no tenia barba?","MUDITO"},{"Que actor espanol protagonizo ?La máscara del Zorro? en 1998?","ANTONIO BANDERAS"},{"Quien fue la primera voz de Mickey Mouse?","WALT DISNEY"},{"Que cancion de Los Beatles ha sido la mas grabada?","YESTERDAY"},{"Quien es la mascota de SEGA?","SONIC"},{"Que actor interpretaba a Hache en la pelicula 3MSC?","MARIO CASAS"},{"Como se llama el protagonista de la saga Indiana Jones?","HARRISON FORD"}};
+	inicio final[]={{"De que arbol son las hojas de las cuales los koalas se alimentan?","EUCALIPTO"},{"Cual fue la primera pelicula de Walt Disney?","BLANCANIEVES"},{"Cual es la ciudad mas poblada del mundo?","TOKIO"},{"Quien pinto la ultima cena?","LEONARDO DA VINCI"},{"Que deporte practicaba Carl Lewis?","ATLETISMO"},{"Cual era la capital del Imperio Inca?","CUSCO"}};
 	int imprime(char frase[],int s, int e); //funcion imprimir frase con animacion
     int numal(int num1,int num2); //Genera numeros aleatorios 
     void semilla(); //Genera semilla
@@ -207,8 +208,9 @@ void trivial()
     int Solucion(inicio tabla[],int pos,int posicion);
     
     //JUEGO:
+    scanf("%c",&basura);
     system ("cls");
-    imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,0);
+    /*imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,0);
     imprime("Para ello, deberas responder un conjunto de de 6 preguntas (+1 plus) y obtener la maxima puntuacion posible.\n\nSeras capaz de conseguir la casi inalcanzable puntuacion de 100 puntos?",2,0);
 	imprime("Adelante y buena suerte",2,4);
 	imprime("Instrucciones:",2,3);
@@ -235,9 +237,9 @@ void trivial()
 	imprime("-La racha de 6 respuestas acertadas le suma un bonus de 10 puntos",3,5);
     imprime("Presione cualquier tecla para comenzar el juego...",1,0);
     getch();
-    system("cls");
+    system("cls");*/
     imprime("Bienvenido concursante.",2,0);
-    for(i=0;i<6;i++)
+    /*for(i=0;i<6;i++)
     {
     	semilla(); // Generamos una semilla para los numeros aleatorios que vamos a utlizar
     	imprime("Pregunta ",0,0);
@@ -247,7 +249,7 @@ void trivial()
     	scanf("%c",&tirar);
     	dado[i]=numal(1,6);
     	imprime("El dado ha sacado el numero ",0,0);
-    	scanf("%d",dado[i]);
+    	printf("%d",dado[i]);
     	imprime("",2,0);
     	switch(dado[i])
     	{
@@ -294,13 +296,55 @@ void trivial()
 				puntuacion=Solucion(entretenimiento,numpreg[i],puntuacion);
     			break;
 		}
+		imprime("",5,0);
 		imprime("Presione cualquier tecla para la siguiente pregunta",1,0);
         getch();
         system("cls");
 	}
 	imprime("Tu puntuacion final es de: ",0,0);
 	printf("%d",puntuacion);
-	imprime("puntos",3,0);
+	imprime(" puntos",3,0);*/
+	puntuacion=60;
+	if(puntuacion==60)
+	{
+		imprime("Has conseguido la extraordinaria puntuacion de 60 puntos, increible jugador!",2,0);
+		imprime("Por ello, tienes la gran oportunidad de conseguir entrar en el top mundial de trivial, sino simplemente conseguiras\nganar el juego. Aunque cuidado, esta pregunta sera un poco mas dificil que las anteriores",2,0);
+		imprime("Te atreves con ello?",2,0);
+		while(vuelta==0)
+		{
+		    imprime("Escribe si o no",2,0);
+		    scanf("%s",decision);
+		    _strupr(decision); //Pasamos la respuesta a mayusuculas para que de igual si el concursante a puesto la respuesta en mayusuculas o minusculas
+		    if(strcmp(decision,"SI")==0)
+		    {
+			    scanf("%c",&basura);
+			    vuelta=1;
+			    system("cls");
+			    imprime("Concursante atrevido, asi me gusta!",2,0);
+			    imprime("Ahi va la pregunta final:",2,0);
+			    semilla();
+			    puntuacion=Solucion(final,numal(0,5),puntuacion);
+			    imprime("",5,0);
+		        imprime("Presione cualquier tecla para continuar...",1,0);
+				getch();
+                system("cls");
+		    }
+		    else if(strcmp(decision,"NO")==0)
+		    {
+			    vuelta=1;
+		        imprime("",2,0);
+		        imprime("No pasa nada concursante, todos a veces hemos tenido un poco de miedo, aun asi has conseguido\nla gran puntuacion de 60 puntos, enhorabuena",2,0);
+		        imprime("Pulsa 0 para volver a jugar",2,0);
+		        imprime("Pulsa cualquier otra numero para salir del juego",2,0);
+		        scanf("%d",&salida);
+		    }
+		    else
+		    {
+			    imprime("Recuerda que tienes que escribir si o no",2,0);
+		    }
+	    }
+	}
+	system("cls");
 	if(puntuacion<30)
 	{
 		imprime("Has perdido, lo siento...",2,0);
@@ -336,7 +380,7 @@ int imprime(char frase[], int s, int e){
  while (frase[i] != '\0') 
 {
    printf("%c", frase[i]);
-   Sleep(0);
+   Sleep(30);
    i++;
 }
 i= 0;
@@ -481,43 +525,63 @@ int imprimematriz(int mat[6][6])
 int Solucion(inicio tabla[],int pos,int puntuacion)
 {
 	char solucion[20];
+	const int SEGUNDOS = 30; //Tiempo inicial
+	int horaActual;
+	int horaInicio=	time(NULL);
 	printf("%s\n\n",tabla[pos].pregunta);
-				gets(solucion);
-				_strupr(solucion);
-				if(strcmp(solucion,tabla[pos].respuesta)==0)
-				{
-					imprime("",1,0);
-					imprime("La respuesta es...",2,0);
-					imprime("CORRECTA",2,0);
-					puntuacion+=10;
-					imprime("Puntuacion actual: ",0,0);
-					printf("%d",puntuacion);
-					imprime(" puntos",2,0);
-				}
-				else
-				{
-					imprime("",1,0);
-					imprime("La respuesta es...",2,0);
-					imprime("INCORRECTA",2,0);
-					puntuacion-=5;
-					imprime("Puntuacion actual: ",0,0);
-					printf("%d",puntuacion);
-					imprime(" puntos",2,0);
-				}
-				return puntuacion;
+	gets(solucion);
+	_strupr(solucion);
+	horaActual=	time(NULL);	
+    if((horaActual-horaInicio)>SEGUNDOS)
+    {
+    	imprime("",2,0);
+		imprime("Oh lo siento, tu tiempo se ha acabado",10,0);
+		printf("Puntuacion actual: %d puntos\n\n",puntuacion);
+	}
+	else
+	{
+	    if(strcmp(solucion,tabla[pos].respuesta)==0)
+	    {
+		    imprime("",1,0);
+		    imprime("La respuesta es...",2,0);
+		    imprime("CORRECTA",2,0);
+		    if(puntuacion<60)
+		    puntuacion+=10;
+		    else
+			puntuacion+=40;
+		    imprime("Puntuacion actual: ",0,0);
+		    printf("%d",puntuacion);
+		    imprime(" puntos",2,0);
+	    }
+		else
+		{
+			imprime("",1,0);
+			imprime("La respuesta es...",2,0);
+			imprime("INCORRECTA",2,0);
+			printf("La respuesta correcta es:  %s",tabla[pos].respuesta); //Le mostramos al usuario la respuesta correcta
+			puntuacion-=5;
+			if(puntuacion<0) // Como en los trivials no suele haber puntuacion negativo hacemos este if
+			puntuacion=0;
+			imprime("",2,0);
+			imprime("Puntuacion actual: ",0,0);
+			printf("%d",puntuacion);
+			imprime(" puntos",2,0);
+	}
+    }
+	return puntuacion;
 }
 void ComprobacionPregunta(int numpreg[],int dado[],int i,int iz,int der)
 {
 	int j;
 	numpreg[i]=numal(iz,der);
-    		for(j=0;j<i;j++)
-    		{
-    			if(numpreg[j]==numpreg[i] && dado[i]==dado[j])
-    			{
-    				numpreg[i]=numal(iz,der);
-    				j=-1;
-				}
-			}
+    for(j=0;j<i;j++)
+    {
+    	if(numpreg[j]==numpreg[i] && dado[i]==dado[j])
+    	{
+    		numpreg[i]=numal(iz,der);
+    		j=-1;
+		}
+	}
 }
 
 
