@@ -138,10 +138,19 @@ void cifrasyletras()
     system("cls");
 }
 
+int fila,columna;
+int fila1, fila2, columna1, columna2;
+int barcojug=1;
+
 void hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
 	int i,j;
+	int colocacionjug=0;
+	int formatocoord=1,formatocoord2=1;
+	char coordport[2];
+	char coordport2[2];
+	int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n);
 	int imprimematriz(int mat[6][6]);	
 	int generarbarco(int n, int mat[6][6], int barco);
 	int matrizcons[6][6];//matriz que representa los barcos del cpu
@@ -170,20 +179,111 @@ void hundirlaflota()
 		}
 	srand (time(NULL)); 
 //Generar barcos consola 	
-	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5
+	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 portaviones
 	generarbarco(4, matrizcons, 4);	//destructor rellena la matriz de 4
 	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
   	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
-  	imprimematriz(matrizcons);
-	imprime("",3,0);
-	imprimematriz(matrizjug);
-
-	
 //Colocacion de barcos por parte del jugador
-
+	do{
+	system("cls");
+	if (formatocoord==0)
+		imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
+	if (formatocoord2==0)
+		imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
+	formatocoord=1;
+	formatocoord2=1;
+	imprimematriz(matrizjug);
+	imprime("\n\n  Introduzca el primer punto del ",0,0);
+	if (barcojug==1)
+	{
+		imprime("portaviones (5 casillas)",2,2);
+		scanf(" %s", coordport);
+		formatocoord = comprobarformatocoord(coordport);
+		fila1=fila;
+		columna1=columna;
+		if (formatocoord==1)
+		{
+			imprime("\n  Introduzca el segundo punto del portaviones:",2,2);
+			scanf(" %s", coordport2);
+			formatocoord2 = comprobarformatocoord(coordport2);
+			fila2=fila;
+			columna2=columna;
+			if (formatocoord2== 1)
+			{
+				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 5);
+			}
+		}
+	}
+	/*
+	if (barcojug==2)
+	{
+		imprime("destructor (4 casillas)",2,2);
+		scanf(" %s", coordport);
+		formatocoord = comprobarformatocoord(coordport);
+		fila1=fila;
+		columna1=columna;
+		if (formatocoord==1)
+		{
+			imprime("\n  Introduzca el segundo punto del destructor:",2,2);
+			scanf(" %s", coordport2);
+			formatocoord2 = comprobarformatocoord(coordport2);
+			fila2=fila;
+			columna2=columna;
+			if (formatocoord2== 1)
+			{
+				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 4);
+			}
+		}
+	}
+	if (barcojug==3)
+	{
+		imprime("acorazado (3 casillas)",2,2);
+		scanf(" %s", coordport);
+		formatocoord = comprobarformatocoord(coordport);
+		fila1=fila;
+		columna1=columna;
+		if (formatocoord==1)
+		{
+			imprime("\n  Introduzca el segundo punto del acorazado:",2,2);
+			scanf(" %s", coordport2);
+			formatocoord2 = comprobarformatocoord(coordport2);
+			fila2=fila;
+			columna2=columna;
+			if (formatocoord2== 1)
+			{
+				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 3);
+			}
+		}
+	}
+	if (barcojug==4)
+	{
+		imprime("submarino (2 casillas)",2,2);
+		scanf(" %s", coordport);
+		formatocoord = comprobarformatocoord(coordport);
+		fila1=fila;
+		columna1=columna;
+		if (formatocoord==1)
+		{
+			imprime("\n  Introduzca el segundo punto del submarino:",2,2);
+			scanf(" %s", coordport2);
+			formatocoord2 = comprobarformatocoord(coordport2);
+			fila2=fila;
+			columna2=columna;
+			if (formatocoord2== 1)
+			{
+				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 2);
+			}
+		}
+	}
+	*/
+	
+    }while(colocacionjug==0);
+	
+	
+//Salir del juego
  	imprime("",3,0);
-	imprime("Pulsa 0 para volver a jugar o pulse cualquier otra numero para salir del juego",2,0);
-	scanf("%d",&salida);
+	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir del juego",2,0);
+	scanf(" %d",&salida);
     system("cls");
 }
 
@@ -407,6 +507,140 @@ i= 0;
 //FUNCIONES CIFRAS Y LETRAS:
  
 //FUNCIONES HUNDIR LA FLOTA:
+int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
+{
+	int okupa=0, i;
+	okupa=0;
+	if(f1==f2)
+				{
+					if((c1<c2)&&((c2+1)-c1==n)) //direccion derecha
+					{
+						if(c1 + n <= 6)
+  						{ 
+	  					for(i=c1;i<=(c1+n-1);i++)  
+	      				{
+	      					if(mat[f1][i]!=0)
+	    					{
+	    					okupa++;
+							}
+	      				}
+	   					 if(okupa == 0)
+	  						{
+  	  						for(i=c1;i<=(c1+n-1);i++)  
+	      						{
+	    					mat[f1][i]= 5;
+	    					barcojug++;
+	      						}
+	  		 				}
+						}	
+					}
+					if(c1>2&&((c1+1-c2)==n)) //direccion izquierda
+					{
+						if(c1 + 1 >= n)
+  						{ 
+	 					 for(i=c1;i>=(c1-n+1);i--)  
+	      				{
+	      					if(mat[f1][i]!=0)
+	    					{
+	    					okupa++;
+							}
+	      				}
+	   					 if(okupa == 0)
+	   						{
+			 			    for(i=c1;i>=(c1-n+1);i--)  
+	      						{
+	    					mat[f1][i]=n;
+	    					barcojug++;
+	      						}
+							}
+						}
+					}						
+				}
+				if(c1==c2)
+				{
+					if((f1>f2)&&((f1+1-f2)==n))  //direccion arriba
+					{
+					  if(f1 >= (n-1))
+  						{ 
+	  					for(i=f1;i>=(f1-n+1);i--)  
+	      					{
+	      				if(mat[i][c1]!=0)
+	    					{
+	    					okupa++;
+							}
+	      				}
+	    			if(okupa == 0)
+	  				 {
+  	  				for(i=f1;i>=(f1-n+1);i--)  
+	      					{
+	    				mat[i][c1]=n;
+	    				barcojug++;
+	   				}
+				}
+					}
+					if((f1<f2)&&((f2+1-f1)==n)) //direccion abajo
+					{
+					if(fila + n <= 6)
+  						{ 
+				    for(i=f1;i<=f1+n-1;i++)
+						{
+	    			if(mat[i][c1]!=0)
+	    				{
+	    			okupa++;
+						}
+	   	 	   			}
+	  		  if(okupa == 0)
+	   			{
+  	  			for(i=f1;i<=f1+n-1;i++)  
+	      			{
+	    		mat[i][c1]=n;
+	    		barcojug++;
+	      			}
+	   			}
+						}
+					}
+				}
+}
+}
+int comprobarformatocoord(char coord[2])
+{
+	if (coord[0]=='a'||coord[0]=='A')
+			fila=0;
+		else{
+			if (coord[0]=='b'||coord[0]=='B')
+			fila=1;
+			else{
+				if (coord[0]=='c'||coord[0]=='C')
+				fila=2;
+				else{
+					if (coord[0]=='d'||coord[0]=='D')
+					fila=3;
+					else{
+						if (coord[0]=='e'||coord[0]=='E')
+						fila=4;
+						else{
+							if (coord[0]=='f'||coord[0]=='F')
+							fila=5;	
+							else{
+									return 0;
+								}
+							}
+						}	
+					}
+				}
+			}
+
+		if ((coord[1]-1)>='0' && (coord[1]-1)<='5')
+		{
+			columna=coord[1]-'1';
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	
+}
 int generarbarco(int n, int mat[6][6], int barco)
 {
 	int fila, colum, dir, exito = 0, okupa, i;
@@ -510,15 +744,42 @@ if(dir==4)							//direccion izquierda
 }
 int imprimematriz(int mat[6][6])
 {
-    int i,j;
+    int i;
+    printf("   ");
+    for(i=1;i<=6;i++)
+		printf("   %i ",i);
+	printf("\n\n");
+	printf(" A ");
 	for(i=0;i<6;i++)  
 	      {
-	      	for(j=0;j<6;j++)
-	      	{
-	      		printf("%i ",mat[i][j]);
-			  }
-			    printf("\n",i);
-	      }	
+	      	printf("   %i ",mat[0][i]);
+	      }
+	printf("\n\n B ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %i ",mat[1][i]);
+	      }
+	printf("\n\n C ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %i ",mat[2][i]);
+	      }
+	printf("\n\n D ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %i ",mat[3][i]);
+	      }
+	printf("\n\n E ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %i ",mat[4][i]);
+	      }
+	printf("\n\n F ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %i ",mat[5][i]);
+	      }
+	      	
 }
 
 //FUNCIONES TRIVIAL:
@@ -583,5 +844,3 @@ void ComprobacionPregunta(int numpreg[],int dado[],int i,int iz,int der)
 		}
 	}
 }
-
-
