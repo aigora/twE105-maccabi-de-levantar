@@ -83,40 +83,59 @@ void main ()
 
 void cifrasyletras()
 {
-	//VARIABLES Y FUNCIONES:
-	char eleccion;
-	
+char eleccion,instr;
+int i,numaleat,numobj;
 	//JUEGO:
-	system("cls");
 	//Introduccion del juego
+	system("cls");
 	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez",1,0);
-	imprime("Instrucciones:",1,0);
-	imprime("El juego consiste en elegir Cifras (pulsa c) o Letras (pulsa l).",1,2);
-	//Instrucciones juego de cifras
-	imprime("El juego de cifras consiste en generar 6 cifras al azar y hallar un numero (o un numero lo mas aproximado posible a ese numero) tambien generado al azar con operaciones. Pero ojo, hay ciertas normas:",1,5);
-	imprime("-No puedes repetir ninguna de las 6 cifras",1,5);
-	imprime("-Solo puedes usar las operaciones:'+','*','-','/'.",1,5);
-	imprime("-Tienes 45 segundos para pensar tu respuesta",1,5);
-	imprime("-Tienes que escribir las operaciones correspondientes acompañados del resultado final para ver si no has hecho trampas o has cometido algun error",1,5);
-	imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
-	//Instrucciones juego de letras
-	imprime("El juego de letras consiste en general 10 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:",1,5);
-	imprime("-No puede repetir ninguna letra, aunque las letras si se pueden repetir a la hora de salir al azar.",1,5);
-	imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no serán considerados como validos",1,5);
-	imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
-	imprime("-El usuario tendra 45 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
-	imprime("-¡Sobre todo disfrutar y pasar un buen rato!",2,0);
+	imprime("Si desea leer las instrucciones pulse 'I', en caso contrario presione cualquier otra tecla",1,0);
+	scanf(" %c", &instr);
+	system("cls");
+	//Eleccion de querer o no las instrucciones
+	if (instr=='i'||instr=='I'){
+		imprime("Instrucciones:",1,0);
+		imprime("El juego consiste en elegir Cifras (pulsa c) o Letras (pulsa l).",1,2);
+		//Instrucciones juego de cifras
+		imprime("El juego de cifras consiste en generar 6 cifras al azar y hallar un numero (o un numero lo mas aproximado posible a ese numero) tambien generado al azar con operaciones. Pero ojo, hay ciertas normas:",1,5);
+		imprime("-No puedes repetir ninguna de las 6 cifras",1,5);
+		imprime("-Solo puedes usar las operaciones:'+','*','-','/'.",1,5);
+		imprime("-Tienes 45 segundos para pensar tu respuesta",1,5);
+		imprime("-Tienes que escribir las operaciones correspondientes acompañados del resultado final para ver si no has hecho trampas o has cometido algun error",1,5);
+		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
+		//Instrucciones juego de letras
+		imprime("El juego de letras consiste en general 10 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:",1,5);
+		imprime("-No puede repetir ninguna letra, aunque las letras si se pueden repetir a la hora de salir al azar.",1,5);
+		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no serán considerados como validos",1,5);
+		imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
+		imprime("-El usuario tendra 45 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
+		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",2,0);
+	}
 	//Elección de cifras o letras
 	imprime("Pulse C para jugar cifras o pulse L si quiere jugar letras",1,0);
 	scanf(" %c",&eleccion);
-	switch (eleccion)
-{
+	switch (eleccion){
+	//Codigo de cifras
 	case 'C':
 	case 'c':
 		{
 			system("cls");
 			imprime("Bienvenido amante de los numeros. Has elegido cifras.",1,0);
+			imprime("Los numeros con los que tienes que jugar son: ",1,0);
+			//genero 6 numeros aleatorios para hallar el objetivo
+			for(i=0;i<6;i++){
+				numaleat= rand()%20 +1;
+				printf("%i\n",numaleat);
+			
+			}
+			//Hallo el numero objetivo
+			numobj= numal(120,500);
+			imprime("El numero que tienes que hallar con las operaciones es: ",1,0);
+			printf("%i\n",numobj);
+			imprime("Al terminar este mensaje comienzan los 45 segundos. Escribe a continuacion todas las operaciones. Suerte",1,0);
+			//Acciones durante los proximos 45 segundos.
 			break;
+			
 		}
 	case 'L':
 	case'l':
