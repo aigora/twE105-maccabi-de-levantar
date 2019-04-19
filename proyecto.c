@@ -122,6 +122,7 @@ int i,numaleat,numobj;
 			system("cls");
 			imprime("Bienvenido amante de los numeros. Has elegido cifras.",1,0);
 			imprime("Los numeros con los que tienes que jugar son: ",1,0);
+			semilla();
 			//genero 6 numeros aleatorios para hallar el objetivo
 			for(i=0;i<6;i++){
 				numaleat= rand()%20 +1;
