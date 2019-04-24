@@ -17,8 +17,9 @@ typedef struct
 int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
 int numal(int num1,int num2); //Genera numeros aleatorios 
 void semilla(); //Genera semilla
-int salida = 0;
-char juego = '0';
+int instrucciones();
+int salida=0;
+char juego = '0',basura;
   
 void main ()
 {
@@ -36,6 +37,7 @@ void main ()
   	 imprime("3: Para jugar al Trivial",2,3);
   	 imprime("4: Para salir del programa",2,3);
      scanf(" %c", &juego);
+     scanf("%c",&basura);
      
   switch (juego)
   {
@@ -87,16 +89,15 @@ void cifrasyletras()
 char eleccion,instr,op;
 int i,numaleatorio,numobj,cos1,cos2,res1,res2;
 int numaleat[6];
-int flag=0;
+int flag=0,turra;
 	//JUEGO:
 	//Introduccion del juego
 	system("cls");
-	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez",1,0);
-	imprime("Si desea leer las instrucciones pulse 'I', en caso contrario presione cualquier otra tecla",1,0);
-	scanf(" %c", &instr);
-	system("cls");
+	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez",2,0);
+	turra=instrucciones();
+	imprime("",1,0);
 	//Eleccion de querer o no las instrucciones
-	if (instr=='i'||instr=='I'){
+	if (turra==0){
 		imprime("Instrucciones:",1,0);
 		imprime("El juego consiste en elegir Cifras (pulsa c) o Letras (pulsa l).",1,2);
 		//Instrucciones juego de cifras
@@ -113,6 +114,9 @@ int flag=0;
 		imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
 		imprime("-El usuario tendra 45 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",2,0);
+		imprime("Presione cualquier tecla para continuar...",1,0);
+        getch();
+		system("cls");
 	}
 	//Elección de cifras o letras
 	imprime("Pulse C para jugar cifras o pulse L si quiere jugar letras",1,0);
@@ -185,7 +189,7 @@ int barcojug=1;
 void hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
-	int i,j;
+	int i,j,turra;
 	int colocacionjug=0;
 	int formatocoord=1,formatocoord2=1;
 	char coordport[2];
@@ -199,8 +203,11 @@ void hundirlaflota()
 	//JUEGO:
 	system("cls");
     //Instrucciones
-    imprime("",1,3);
-    imprime("Bienvenido almirante, la flota espera sus ordenes",2,4);
+    imprime("Bienvenido almirante, la flota espera sus ordenes",2,0);
+    turra=instrucciones();
+    imprime("",1,0);
+    if(turra==0)
+    {
 	imprime("Instrucciones:",2,3);
 	imprime("-El objetivo consiste en acabar con los 4 barcos enemigos (portaviones, destructor, bombardero y submarino)",1,3);
     imprime("-Los barcos del enemigo se generan aleatoriamente",1,3);
@@ -208,6 +215,7 @@ void hundirlaflota()
     imprime("Presione cualquier tecla para continuar...",1,0);
     getch();
     system("cls");
+    }   
 //llenar de 0 las matrices
 	for (i=0; i<6; i++)
 	{
@@ -332,7 +340,7 @@ void trivial()
 	//VARIABLES Y FUNCIONES:
 	void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
 	int comprobarRespuesta(inicio tabla[],int pos,int posicion);	
-	int i,j,dado[6],numpreg[6],puntuacion=0,salida=0,vuelta=0;
+	int i,j,dado[6],numpreg[6],puntuacion=0,salida=0,vuelta=0,turra;
 	char solucion[20],tirar,basura,decision[3];
 	inicio geografia[]={{"Que pais está entre Peru y Colombia?","ECUADOR"},{"Cual es la capital de Marruecos?","RABAT"},{"Cual es el pais mas visitado del mundo","FRANCIA"},{"En que pais se encuentra el rio Po","ITALIA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual es el oceano que bana las aguas de Sri Lanka?","INDIC"},{"Que nombre recibe un cowboy argentino?","GAUCHO"},{"Cual es la montaña más alta del mundo?","EVEREST"},{"Cual es el idioma mas hablado en Suiza?","ALEMAN"},{"En que hemisferio se encuentra Jamaica?","NORTE"}};
 	inicio historia[]={{"De que pais europeo fue colonia Mozambique?","PORTUGAL"},{"Quienes conquistaron Constantinopla (fin del Imperio Bizantino) en 1453?","TURCOS"},{"De que pais se independizo Eslovenia?","YUGOSLAVIA"},{"Que moneda se usaba en España antes de la llegada del euro?","PESETA"},{"En que pais se encuentra la peninsula de Yucatan?","MEXICO"},{"Cual era la ciudad hogar de Marco Polo?","VENECIA"},{"Quien fue el primer presidente de los Estados Unidos?","GEORGE WASHINGTON"},{"Como se llamaba el famoso dictador italiano?","MUSSOLINI"},{"Que pais fue llamado la Galia por los romanos?","FRANCIA"},{"En que ciudad española se realizo el famoso bombardeo de La Legion Condor?","GUERNICA"}};
@@ -348,11 +356,14 @@ void trivial()
     int Solucion(inicio tabla[],int pos,int posicion);
     
     //JUEGO:
-    scanf("%c",&basura);
     system ("cls");
-    /*imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,0);
+    imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,0);
     imprime("Para ello, deberas responder un conjunto de de 6 preguntas (+1 plus) y obtener la maxima puntuacion posible.\n\nSeras capaz de conseguir la casi inalcanzable puntuacion de 100 puntos?",2,0);
-	imprime("Adelante y buena suerte",2,4);
+	imprime("Adelante y buena suerte",2,0);
+	turra=instrucciones();
+	imprime("",1,0);
+	if(turra==0)
+	{
 	imprime("Instrucciones:",2,3);
 	imprime("-Antes de cada pregunta lanzaras un dado pulsando enter para elegir aleatoriamente el tema de la pregunta",1,4);
 	imprime("+El numero 1 corresponde a la categoria de Geografia",1,4);
@@ -375,9 +386,10 @@ void trivial()
 	imprime("-La racha de 4 respuestas acertadas le suma un bonus de 6 puntos",1,4);
 	imprime("-La racha de 5 respuestas acertadas le suma un bonus de 8 puntos",1,4);
 	imprime("-La racha de 6 respuestas acertadas le suma un bonus de 10 puntos",3,5);
+    }
     imprime("Presione cualquier tecla para comenzar el juego...",1,0);
     getch();
-    system("cls");*/
+    system("cls");
     imprime("Bienvenido concursante.",2,0);
     for(i=0;i<6;i++)
     {
@@ -542,6 +554,30 @@ i= 0;
  	int numero;
  	numero= rand() % (num2-num1+1) + num1;
  	return numero;
+ }
+ // Pregunta al jugador si quiere leer las instrucciones
+ int instrucciones()
+ {
+ 	char turra[3];
+ 	int fallo=0;
+ 	while(fallo==0)
+ 	{
+ 	imprime("Desea leer las instrucciones?. Escriba si o no",1,0);
+ 	gets(turra);
+ 	_strupr(turra); //Pasamos la respuesta a mayusuculas para que de igual si el concursante a puesto la respuesta en mayusuculas o minusculas
+ 	if(strcmp(turra,"SI")==0)
+ 	{
+ 		fallo=1;
+ 		return 0;
+	}
+	else if(strcmp(turra,"NO")==0)
+	{
+		fallo=1;
+		return 1;
+	}
+	else
+	    imprime("Recuerda que tienes que escribir si o no",2,0);
+    }     	
  }
 
 //FUNCIONES CIFRAS Y LETRAS:
