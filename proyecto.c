@@ -83,8 +83,11 @@ void main ()
 
 void cifrasyletras()
 {
-char eleccion,instr;
-int i,numaleat,numobj;
+	//Variables
+char eleccion,instr,op;
+int i,numaleatorio,numobj,cos1,cos2,res1,res2;
+int numaleat[6];
+int flag=0;
 	//JUEGO:
 	//Introduccion del juego
 	system("cls");
@@ -125,8 +128,8 @@ int i,numaleat,numobj;
 			semilla();
 			//genero 6 numeros aleatorios para hallar el objetivo
 			for(i=0;i<6;i++){
-				numaleat= rand()%20 +1;
-				printf("%i\n",numaleat);
+				numaleat[i]= rand()%20 +1;
+				printf("%i\n",numaleat[i]);
 			
 			}
 			//Hallo el numero objetivo
@@ -134,9 +137,26 @@ int i,numaleat,numobj;
 			imprime("El numero que tienes que hallar con las operaciones es: ",1,0);
 			printf("%i\n",numobj);
 			imprime("Al terminar este mensaje comienzan los 45 segundos. Escribe a continuacion todas las operaciones. Suerte",1,0);
-			//Acciones durante los proximos 45 segundos.
+			//Durante los 45 segundos escribimos las operaciones que realice el usuario
+			//Primera operacion
+				//Compruebo si el primer numero esta en el vector de numeros aleatorios
+			scanf(" %i",&cos1);
+			res1 = compraleat(numaleat,cos1);
+			if (res1 ==0){
+				imprime("El numero introducido no es valido",1,0);
+			}
+				//Compruebo si el operador es de los 4 validos
+			scanf(" %c",&op);
+			if(op!='+'&&op!='-'&&op!='*'&&op!='/'){
+				imprime("El operador introducido no es valido",1,0);
+			}
+				//Compruebo si el segundo numero esta en el vector de numeros aleatorios
+			scanf("%i",&cos2);
+			res2 = compraleat(numaleat,cos2);
+			if (res2==0){
+				imprime("El numero introducido no es valido",1,0);
+			}
 			break;
-			
 		}
 	case 'L':
 	case'l':
@@ -525,6 +545,17 @@ i= 0;
  }
 
 //FUNCIONES CIFRAS Y LETRAS:
+	//Funcion que comprueba si los numeros introducidos con el scanf coinciden con los numeros aleatorios.
+int compraleat(int v[],int num){
+	int flag=0;
+	int i;
+	for(i=0;i<6;i++){
+		if (v[i]==num){
+			flag=1;
+		}
+	}
+	return flag;
+}
  
 //FUNCIONES HUNDIR LA FLOTA:
 int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
