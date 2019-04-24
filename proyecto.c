@@ -380,12 +380,6 @@ void trivial()
 	imprime("-Cada respuesta acertada sumara un total de 10 puntos",1,3);
 	imprime("-Cada respuesta incorrecta restara un total de 5 puntos",1,3);
 	imprime("-Cada respuesta no contestada ni sumara ni restara puntos",1,3);
-	imprime("BONUS: Por cada racha de preguntas acertadas que consigas se le sumara una pequena cantidad de puntos a tu respuesta",1,4);
-	imprime("-La racha de 2 respuestas acertadas le suma un bonus de 2 puntos",1,4);
-	imprime("-La racha de 3 respuestas acertadas le suma un bonus de 4 puntos",1,4);
-	imprime("-La racha de 4 respuestas acertadas le suma un bonus de 6 puntos",1,4);
-	imprime("-La racha de 5 respuestas acertadas le suma un bonus de 8 puntos",1,4);
-	imprime("-La racha de 6 respuestas acertadas le suma un bonus de 10 puntos",3,5);
     }
     imprime("Presione cualquier tecla para comenzar el juego...",1,0);
     getch();
