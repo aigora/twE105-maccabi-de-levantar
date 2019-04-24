@@ -38,31 +38,31 @@ void main ()
      scanf(" %c", &juego);
      
   switch (juego)
-{
+  {
 	
 	case '1': //JUEGO 1
 {
 	do
-		{
-            cifrasyletras();
-		}while(salida==0);
+	{
+        cifrasyletras();
+	}while(salida==0);
     break;
 }
 
     case '2' : //JUEGO HUNDIR LA FLOTA
 {
     do
-		{
-            hundirlaflota();
-   		}while(salida==0);
+	{
+        hundirlaflota();
+   	}while(salida==0);
 	break;
 }
     case '3': //JUEGO TRIVIAL
 {	
     do
-		{
-            trivial();
-		}while(salida==0);
+	{
+        trivial();
+	}while(salida==0);
     break;
 }
    
@@ -77,8 +77,8 @@ void main ()
     Sleep(700);
     system("cls");
     break;
-   }
-}
+  }
+ }
 }
 
 void cifrasyletras()
@@ -210,13 +210,13 @@ void hundirlaflota()
     system("cls");
 //llenar de 0 las matrices
 	for (i=0; i<6; i++)
+	{
+		for (j=0; j<6; j++)
 		{
-			for (j=0; j<6; j++)
-				{
-				matrizcons[i][j] = 0; 
-				matrizjug[i][j] = 0;
-				}
+			matrizcons[i][j] = 0; 
+			matrizjug[i][j] = 0;
 		}
+	}
 	srand (time(NULL)); 
 //Generar barcos consola 	
 	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 portaviones
@@ -379,7 +379,7 @@ void trivial()
     getch();
     system("cls");*/
     imprime("Bienvenido concursante.",2,0);
-    /*for(i=0;i<6;i++)
+    for(i=0;i<6;i++)
     {
     	semilla(); // Generamos una semilla para los numeros aleatorios que vamos a utlizar
     	imprime("Pregunta ",0,0);
@@ -443,8 +443,8 @@ void trivial()
 	}
 	imprime("Tu puntuacion final es de: ",0,0);
 	printf("%d",puntuacion);
-	imprime(" puntos",3,0);*/
-	puntuacion=60;
+	imprime(" puntos",3,0);
+	//puntuacion=60;
 	if(puntuacion==60)
 	{
 		imprime("Has conseguido la extraordinaria puntuacion de 60 puntos, increible jugador!",2,0);
