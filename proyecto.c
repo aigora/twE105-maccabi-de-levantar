@@ -90,8 +90,6 @@ int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los nume
 int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
 int comprop( char oper);//Comprueba si el operador es correcto
 int calculadora(int num1,char cop,int num2);
-int salida = 0;
-char juego = '0';
 char eleccion,instr,op;
 int i,j,numaleatorio,numobj,cos1,cos2,cos3,compr1,compr2,compr3,res1,ganad,resop;
 int numaleat[6],auxnumaleat[5];
