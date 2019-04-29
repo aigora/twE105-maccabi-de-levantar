@@ -85,10 +85,16 @@ void main ()
 
 void cifrasyletras()
 {
-	//Variables
+	//Variables cifras y letras
+int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
+int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
+int comprop( char oper);//Comprueba si el operador es correcto
+int calculadora(int num1,char cop,int num2);
+int salida = 0;
+char juego = '0';
 char eleccion,instr,op;
-int i,numaleatorio,numobj,cos1,cos2,res1,res2;
-int numaleat[6];
+int i,j,numaleatorio,numobj,cos1,cos2,cos3,compr1,compr2,compr3,res1,ganad,resop;
+int numaleat[6],auxnumaleat[5];
 int flag=0,turra;
 	//JUEGO:
 	//Introduccion del juego
@@ -144,22 +150,43 @@ int flag=0,turra;
 			//Durante los 45 segundos escribimos las operaciones que realice el usuario
 			//Primera operacion
 				//Compruebo si el primer numero esta en el vector de numeros aleatorios
-			scanf(" %i",&cos1);
-			res1 = compraleat(numaleat,cos1);
-			if (res1 ==0){
-				imprime("El numero introducido no es valido",1,0);
-			}
+			do{
+				scanf(" %i",&cos1);
+			}while(compraleat(numaleat,cos1)==0);
 				//Compruebo si el operador es de los 4 validos
-			scanf(" %c",&op);
-			if(op!='+'&&op!='-'&&op!='*'&&op!='/'){
-				imprime("El operador introducido no es valido",1,0);
-			}
+			do{
+				scanf(" %c",&op);
+				resop= comprop(op);
+			}while(resop==0);
 				//Compruebo si el segundo numero esta en el vector de numeros aleatorios
-			scanf("%i",&cos2);
-			res2 = compraleat(numaleat,cos2);
-			if (res2==0){
-				imprime("El numero introducido no es valido",1,0);
+			do{
+				scanf("%i",&cos2);
+			}while(compraleat(numaleat,cos2)==0);
+			//Hallo resultado de la operacion que hace el usuario y
+			//Compruebo si el numero es el que buscamos
+			res1=calculadora(cos1,op,cos2);
+			ganad = comprganador(numobj,res1);
+			if(ganad==1){
+				imprime("Enhorabuena, has conseguido obtener el numero",1,0);
 			}
+			//Si no gana actualizamos el vector de numeros aleatorios y se sigue pidiendo numeros y operaciones.
+			for(i=0,j=0;i<6;i++){
+				if(numaleat[i]!=cos1&&numaleat[i]!=cos2){
+				auxnumaleat[j]=numaleat[i];
+				j++;
+				}	
+				}
+			auxnumaleat[j]=res1;
+			//Una vez actualizado el vector, escribo el final del primer turno y vuelvo a pedir numero
+			imprime("Los numeros que puedes usar ahora son:",1,0);
+			for(i=0;i<5;i++){
+				printf(" %i",auxnumaleat[i]);
+			}
+			printf("\n");
+			
+			do{
+				scanf(" %i",&cos3);
+			}while(compraleat(numaleat,cos3)==0);
 			break;
 		}
 	case 'L':
@@ -576,16 +603,57 @@ i= 0;
 
 //FUNCIONES CIFRAS Y LETRAS:
 	//Funcion que comprueba si los numeros introducidos con el scanf coinciden con los numeros aleatorios.
-int compraleat(int v[],int num){
-	int flag=0;
-	int i;
-	for(i=0;i<6;i++){
+	int compraleat(int v[],int num){
+		int flag=0;
+		int i;
+		for(i=0;i<6;i++){
 		if (v[i]==num){
 			flag=1;
 		}
 	}
-	return flag;
-}
+	if(flag==0){
+		imprime("El numero introducido no es valido",1,0);
+	}
+		return flag;
+}	
+	//Funcion para introducir un operador correcto	
+	int comprop( char oper){
+		int boolop=1;
+		if(oper!='+'&&oper!='-'&&oper!='*'&&oper!='/'){
+				imprime("El operador introducido no es valido",1,0);
+				boolop=0;
+				}
+		return boolop;
+		}
+	//Funcion calculadora
+	int calculadora(int num1,char cop,int num2){
+		int res1;
+		switch (cop){
+				case'+':
+					res1=num1+num2;
+					break;
+				case'-':
+					res1=num1-num2;
+					break;
+				case'*':
+					res1=num1*num2;
+					break;
+				default:
+					res1=num1/num2;
+					break;	
+			}
+		printf("%i\n", res1);
+		return res1;
+	}		
+	//Funcion que comprueba si el numero obtenido es el ganador
+	int comprganador(int obj,int candid){
+		 int flaganar=0;
+		 if(candid==obj){
+		 	flaganar=1;
+		 }
+		 return flaganar;
+	}
+	//Funcion actualizo numeros de opciones
  
 //FUNCIONES HUNDIR LA FLOTA:
 int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
