@@ -26,8 +26,9 @@ void main ()
 	void cifrasyletras();
 	void hundirlaflota();
 	void trivial();
+	void tienda();
 
-  while (juego != '1' && juego != '2' && juego != '3' && juego != '4') //preguntar al jugador a que juego quiere jugar
+  while (juego != '1' && juego != '2' && juego != '3' && juego != '4' && juego!='5') //preguntar al jugador a que juego quiere jugar
   {
   	 imprime("",1,2);
   	 imprime("BIENVENIDO JUGADOR!",3,3);
@@ -35,7 +36,8 @@ void main ()
   	 imprime("1: Para jugar a Cifras y Letras",2,3);
   	 imprime("2: Para jugar a Hundir La Flota",2,3);
   	 imprime("3: Para jugar al Trivial",2,3);
-  	 imprime("4: Para salir del programa",2,3);
+  	 imprime("4: Para abrir la tienda",2,3);
+  	 imprime("5: Para salir del programa",2,3);
      scanf(" %c", &juego);
      scanf("%c",&basura);
      
@@ -45,30 +47,35 @@ void main ()
 	case '1': //JUEGO 1
 {
 	do
-		{
-            cifrasyletras();
-		}while(salida==0);
+	{
+        cifrasyletras();
+	}while(salida==0);
     break;
 }
 
     case '2' : //JUEGO HUNDIR LA FLOTA
 {
     do
-		{
-            hundirlaflota();
-   		}while(salida==0);
+	{
+        hundirlaflota();
+   	}while(salida==0);
 	break;
 }
     case '3': //JUEGO TRIVIAL
 {	
     do
-		{
-            trivial();
-		}while(salida==0);
+	{
+        trivial();
+	}while(salida==0);
+    break;
+}
+    case '4': //TIENDA
+{	
+    tienda();
     break;
 }
    
-   case '4':
+    case '5':
    	imprime("",2,3);
 	imprime("Has cerrado el programa, hasta la proxima!",1,0);
     break;
@@ -601,7 +608,70 @@ void trivial()
 	system("cls");
 	
 }
-
+void tienda()
+{
+	void AbrirTienda();
+	FILE *pf;
+	int puntos;
+	int puntuacion=1200,encontrado;
+	char premio[20],eleccion[20],seguro[2],basura;
+	system("cls");
+	AbrirTienda();
+	printf("\n\nUsted tiene %d puntos. ",puntuacion);
+	printf("\n\nIndique el nombre del premio (ponga \"FIN\" cuando no  quiera mas premios): ");
+	gets(eleccion);
+	_strupr(eleccion);
+	while(strcmp(eleccion,"FIN")!=0 && puntuacion>0)
+	{
+	encontrado=0;
+	pf = fopen("tienda.txt", "r");
+	while(fscanf(pf,"%[^;];%d",premio,&puntos )!=EOF&&encontrado==0)
+	{
+		if(strcmp(premio,eleccion)==0)
+		{
+			encontrado=1;
+			printf("El premio %s son %d puntos\n\n",premio, puntos);
+			printf("Esta seguro de que quiere comprar el premio?\n");
+			scanf("%s",seguro);
+			_strupr(seguro); 
+			while(strcmp(seguro,"SI")!=0 && strcmp(seguro,"NO")!=0)
+			{	
+			printf("No me has contestado a la pregunta\n\n");
+			printf("El premio %s son %d puntos\n\n",premio, puntos);
+			printf("Esta seguro de que quiere comprar el premio?\n\n");
+			scanf("%s",seguro);
+			_strupr(seguro); 
+			}
+			if(strcmp(seguro,"SI")==0)
+			{
+				if(puntuacion>=puntos)
+			    {
+				puntuacion=puntuacion-puntos;
+				printf("Ya tiene su %s,enhorabuena!",premio, puntuacion);
+			    }
+			    else
+			    printf("Lo siento, no tiene suficientes puntos. Tienes %d puntos\n\n",puntuacion);	
+			}
+		}                              
+	}
+	fclose(pf);
+	if(encontrado==0)
+	printf("Lo siento, no tenemos %s como premio posible",eleccion);
+	printf("\n\nLe queda %d puntos. ",puntuacion);
+	Sleep(3000);
+	system("cls");
+	AbrirTienda();
+	printf("\n\nIndique el nombre del premio (ponga \"FIN\" cuando no  quiera mas premios): ");
+	if(encontrado!=0)
+	scanf("%c",&basura);
+	gets(eleccion);
+	_strupr(eleccion);
+	imprime("",3,0);
+	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir de la tienda",2,0);
+	scanf(" %d",&salida);
+    system("cls");
+	}
+}
 //FUNCIONES GLOBALES
 
   //Imprime una frase letra por letra con un delay entre ellas
@@ -619,7 +689,25 @@ i= 0;
 	for (i=0;i<e;i++) 
      printf(" ");
 }
-
+// Abre el catalogo de la tienda
+void AbrirTienda()
+{
+	FILE *pf;
+	char premio[20];
+	int puntos;
+	pf = fopen("tienda.txt", "r");
+	if (pf == NULL) 
+	{
+	// Si el resultado es NULL mensaje de error 
+	printf("Error al abrir el fichero.\n");  
+	} 
+	printf("Vamos a visualizar la tienda de premios: ");
+	while(fscanf(pf, "%[^;];%d",premio,&puntos )!=EOF)
+	{
+		printf("\n\tPREMIO %s, PUNTOS: %d",premio,puntos);
+	}
+	fclose(pf);
+}
 
  // Genera una semilla para generar un numero aleatorio
  void semilla()
