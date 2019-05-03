@@ -17,65 +17,65 @@ typedef struct
 int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
 int numal(int num1,int num2); //Genera numeros aleatorios 
 void semilla(); //Genera semilla
+int cifrasyletras();
+int hundirlaflota();
+int trivial();
+int tienda();
 int instrucciones();
-int salida=0;
-char juego = '0',basura;
   
 void main ()
 {
-	void cifrasyletras();
-	void hundirlaflota();
-	void trivial();
-	void tienda();
+int salida=0,juego=0;
+char basura;
 
-  while (juego != '1' && juego != '2' && juego != '3' && juego != '4' && juego!='5') //preguntar al jugador a que juego quiere jugar
-  {
-  	 imprime("",1,2);
-  	 imprime("BIENVENIDO JUGADOR!",3,3);
-  	 imprime("Pulsa:",2,3);
-  	 imprime("1: Para jugar a Cifras y Letras",2,3);
-  	 imprime("2: Para jugar a Hundir La Flota",2,3);
-  	 imprime("3: Para jugar al Trivial",2,3);
-  	 imprime("4: Para abrir la tienda",2,3);
-  	 imprime("5: Para salir del programa",2,3);
-     scanf(" %c", &juego);
-     scanf("%c",&basura);
+while (juego!=5) //preguntar al jugador a que juego quiere jugar
+{
+  	imprime("",1,2);
+  	imprime("BIENVENIDO JUGADOR!",3,3);
+  	imprime("Pulsa:",2,3);
+  	imprime("1: Para jugar a Cifras y Letras",2,3);
+  	imprime("2: Para jugar a Hundir La Flota",2,3);
+  	imprime("3: Para jugar al Trivial",2,3);
+  	imprime("4: Para abrir la tienda",2,3);
+  	imprime("5: Para salir del programa",2,3);
+    scanf(" %d", &juego);
+    scanf("%c",&basura);
      
   switch (juego)
 {
 	
-	case '1': //JUEGO 1
+	case 1: //JUEGO 1
 {
 	do
 	{
-        cifrasyletras();
+        salida=cifrasyletras();
 	}while(salida==0);
     break;
 }
 
-    case '2' : //JUEGO HUNDIR LA FLOTA
+    case 2: //JUEGO HUNDIR LA FLOTA
 {
     do
 	{
-        hundirlaflota();
+        salida=hundirlaflota();
    	}while(salida==0);
 	break;
 }
-    case '3': //JUEGO TRIVIAL
+    case 3: //JUEGO TRIVIAL
 {	
     do
 	{
-        trivial();
+        salida=trivial();
 	}while(salida==0);
     break;
 }
-    case '4': //TIENDA
+    case 4: //TIENDA
 {	
-    tienda();
+    salida=tienda();
     break;
 }
    
-    case '5':
+    case 5:
    	imprime("",2,3);
 	imprime("Has cerrado el programa, hasta la proxima!",1,0);
     break;
@@ -90,7 +90,7 @@ void main ()
 }
 }
 
-void cifrasyletras()
+int cifrasyletras()
 {
 	//Variables cifras y letras
 int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
@@ -98,7 +98,7 @@ int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganad
 int comprop( char oper);//Comprueba si el operador es correcto
 int calculadora(int num1,char cop,int num2);
 char eleccion,instr,op;
-int i,j,numaleatorio,numobj,cos1,cos2,cos3,compr1,compr2,compr3,res1,ganad,resop;
+int i,j,numaleatorio,numobj,cos1,cos2,cos3,compr1,compr2,compr3,res1,ganad,resop,salida=0;
 int numaleat[6],auxnumaleat[5];
 int flag=0,turra;
 	//JUEGO:
@@ -212,16 +212,16 @@ int flag=0,turra;
     imprime("Pulsa 0 para volver a jugar o pulsa cualquier otro numero para salir del juego",2,0);
 	scanf("%d",&salida);
     system("cls");
+    return salida;
 }
 
-int fila,columna;
-int fila1, fila2, columna1, columna2;
-int barcojug=1;
-
-void hundirlaflota()
+    int fila,columna;
+    int fila1, fila2, columna1, columna2;
+    int barcojug=1;
+int hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
-	int i,j;
+	int i,j,salida=0;
 	int colocacionjug=0;
 	int ganador=0, barcoscons=4, barcosjug=4;
 	int formatocoord=1,formatocoord2=1;
@@ -424,9 +424,10 @@ void hundirlaflota()
 	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir del juego",2,0);
 	scanf(" %d",&salida);
     system("cls");
+    return salida;
 }
 
-void trivial()
+int trivial()
 {
 	//VARIABLES Y FUNCIONES:
 	void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
@@ -571,9 +572,6 @@ void trivial()
 			    vuelta=1;
 		        imprime("",2,0);
 		        imprime("No pasa nada concursante, todos a veces hemos tenido un poco de miedo, aun asi has conseguido\nla gran puntuacion de 60 puntos, enhorabuena",2,0);
-		        imprime("Pulsa 0 para volver a jugar",2,0);
-		        imprime("Pulsa cualquier otra numero para salir del juego",2,0);
-		        scanf("%d",&salida);
 		    }
 		    else
 		    {
@@ -606,19 +604,22 @@ void trivial()
 		scanf("%d",&salida);
 	}
 	system("cls");
-	
+	return salida;
 }
-void tienda()
+int tienda()
 {
 	void AbrirTienda();
 	FILE *pf;
-	int puntos;
+	int puntos,salida=0;
 	int puntuacion=1200,encontrado;
 	char premio[20],eleccion[20],seguro[2],basura;
 	system("cls");
 	AbrirTienda();
-	printf("\n\nUsted tiene %d puntos. ",puntuacion);
-	printf("\n\nIndique el nombre del premio (ponga \"FIN\" cuando no  quiera mas premios): ");
+	imprime("",2,0);
+	imprime("Usted tiene ",0,0); 
+	printf("%d ",puntuacion);
+	imprime("puntos",2,0);
+	imprime("Indique el nombre del premio (ponga \"FIN\" cuando no quiera mas premios): ",0,0);
 	gets(eleccion);
 	_strupr(eleccion);
 	while(strcmp(eleccion,"FIN")!=0 && puntuacion>0)
@@ -630,15 +631,23 @@ void tienda()
 		if(strcmp(premio,eleccion)==0)
 		{
 			encontrado=1;
-			printf("El premio %s son %d puntos\n\n",premio, puntos);
-			printf("Esta seguro de que quiere comprar el premio?\n");
+	        imprime("El premio ",0,0); 
+	        printf("%s ",premio);
+	        imprime("son ",0,0);
+	        printf("%d ",puntos);
+	        imprime("puntos",2,0);
+			imprime("Esta seguro de que quiere comprar el premio?",1,0);
 			scanf("%s",seguro);
 			_strupr(seguro); 
 			while(strcmp(seguro,"SI")!=0 && strcmp(seguro,"NO")!=0)
 			{	
-			printf("No me has contestado a la pregunta\n\n");
-			printf("El premio %s son %d puntos\n\n",premio, puntos);
-			printf("Esta seguro de que quiere comprar el premio?\n\n");
+			imprime("No me has contestado a la pregunta",2,0);
+			imprime("El premio ",0,0); 
+	        printf("%s ",premio);
+	        imprime("son ",0,0);
+	        printf("%d ",puntos);
+	        imprime("puntos",2,0);
+			imprime("Esta seguro de que quiere comprar el premio?",2,0);
 			scanf("%s",seguro);
 			_strupr(seguro); 
 			}
@@ -647,29 +656,41 @@ void tienda()
 				if(puntuacion>=puntos)
 			    {
 				puntuacion=puntuacion-puntos;
-				printf("Ya tiene su %s,enhorabuena!",premio, puntuacion);
+	            imprime("Ya tiene su ",0,0); 
+	            printf("%s",premio);
+	            imprime(",enhorabuena!",2,0);
 			    }
 			    else
-			    printf("Lo siento, no tiene suficientes puntos. Tienes %d puntos\n\n",puntuacion);	
+			    {
+	            imprime("Lo siento, no tiene suficientes puntos. Tienes ",0,0); 
+	            printf("%d ",puntuacion);
+	            imprime("puntos",2,0);	
+	            }
 			}
 		}                              
 	}
 	fclose(pf);
 	if(encontrado==0)
-	printf("Lo siento, no tenemos %s como premio posible",eleccion);
-	printf("\n\nLe queda %d puntos. ",puntuacion);
+	imprime("Lo siento, no tenemos ",0,0); 
+	printf("%s ",eleccion);
+	imprime("como premio posible",2,0);
+	imprime("Le queda ",0,0); 
+	printf("%d ",puntuacion);
+	imprime("puntos",2,0);
 	Sleep(3000);
 	system("cls");
 	AbrirTienda();
-	printf("\n\nIndique el nombre del premio (ponga \"FIN\" cuando no  quiera mas premios): ");
+	imprime("",2,0);
+	imprime("Indique el nombre del premio (ponga \"FIN\" cuando no quiera mas premios): ",0,0);
 	if(encontrado!=0)
 	scanf("%c",&basura);
 	gets(eleccion);
 	_strupr(eleccion);
-	imprime("",3,0);
-	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir de la tienda",2,0);
-	scanf(" %d",&salida);
-    system("cls");
+	//imprime("",3,0);
+	//imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir de la tienda",2,0);
+	//scanf(" %d",&salida);
+	//return salida;
+    //system("cls");
 	}
 }
 //FUNCIONES GLOBALES
