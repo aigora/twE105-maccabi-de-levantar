@@ -71,6 +71,7 @@ while (juego!=5) //preguntar al jugador a que juego quiere jugar
 }
     case 4: //TIENDA
 {	
+printf("holal");
     salida=tienda();
     break;
 }
