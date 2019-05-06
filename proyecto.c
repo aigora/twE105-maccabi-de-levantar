@@ -20,7 +20,7 @@ void semilla(); //Genera semilla
 int cifrasyletras();
 int hundirlaflota();
 int trivial();
-int tienda();
+void tienda();
 int instrucciones();
   
 void main ()
@@ -71,8 +71,7 @@ while (juego!=5) //preguntar al jugador a que juego quiere jugar
 }
     case 4: //TIENDA
 {	
-printf("holal");
-    salida=tienda();
+    tienda();
     break;
 }
    
@@ -740,7 +739,7 @@ int trivial()
 	system("cls");
 	return salida;
 }
-int tienda()
+void tienda()
 {
 	void AbrirTienda();
 	FILE *pf;
@@ -820,11 +819,6 @@ int tienda()
 	scanf("%c",&basura);
 	gets(eleccion);
 	_strupr(eleccion);
-	//imprime("",3,0);
-	//imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir de la tienda",2,0);
-	//scanf(" %d",&salida);
-	//return salida;
-    //system("cls");
 	}
 }
 //FUNCIONES GLOBALES
