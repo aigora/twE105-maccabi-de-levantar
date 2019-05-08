@@ -25,10 +25,57 @@ int instrucciones();
   
 void main ()
 {
-int salida=0,juego=0;
-char basura;
+int salida=0,juego=0,administrador=0;
+char basura,admin[14];
 
-while (juego!=5) //preguntar al jugador a que juego quiere jugar
+imprime("",1,2);
+imprime("Por favor, indica si eres jugador o administrador:",1,2);
+scanf("%s",admin);
+_strupr(admin);
+system("cls");
+while(strcmp(admin,"ADMINISTRADOR")!=0 && strcmp(admin,"JUGADOR")!=0)
+{
+	imprime("",1,2);
+	imprime("Recuerda que tienes que escribir administrador o jugador",1,2);
+	scanf("%s",admin);
+	_strupr(admin);
+	system("cls");
+}
+if(strcmp(admin,"ADMINISTRADOR")==0)
+{
+	while(administrador!=3)
+	{
+	imprime("",1,2);
+  	imprime("BIENVENIDO ADMINISTRADOR",3,3);
+  	imprime("Pulsa:",2,3);
+  	imprime("1: Para aceder a la tienda",2,3);
+  	imprime("2: Para acceder a la lista de animales",2,3);
+  	imprime("3: Para salir del programa",2,3);
+  	scanf(" %d", &administrador);
+    scanf("%c",&basura);
+    
+    switch(administrador)
+    {
+    	case 1:
+    	
+    	case 2:
+    	
+    	case 3:
+    		imprime("",2,3);
+	        imprime("Has cerrado el programa, hasta la proxima!",1,0);
+            break;
+        default:
+   	        imprime("",2,6);
+            imprime("ERROR: PROGRAMA NO VALIDO",1,0);
+            Sleep(700);
+            system("cls");
+            break;
+	}
+    }
+}
+else if(strcmp(admin,"JUGADOR")==0)
+{
+    while (juego!=5) //preguntar al jugador a que juego quiere jugar
 {
   	imprime("",1,2);
   	imprime("BIENVENIDO JUGADOR!",3,3);
@@ -45,30 +92,26 @@ while (juego!=5) //preguntar al jugador a que juego quiere jugar
 {
 	
 	case 1: //JUEGO 1
-{
 	do
 	{
         salida=cifrasyletras();
 	}while(salida==0);
     break;
-}
 
     case 2: //JUEGO HUNDIR LA FLOTA
-{
     do
 	{
         salida=hundirlaflota();
    	}while(salida==0);
 	break;
-}
+
     case 3: //JUEGO TRIVIAL
-{	
     do
 	{
         salida=trivial();
 	}while(salida==0);
     break;
-}
+    
     case 4: //TIENDA
 {	
     tienda();
@@ -86,10 +129,10 @@ while (juego!=5) //preguntar al jugador a que juego quiere jugar
     Sleep(700);
     system("cls");
     break;
-   }
 }
 }
-
+}
+}
 int cifrasyletras()
 {
 	//Variables cifras y letras
@@ -610,7 +653,7 @@ int trivial()
     getch();
     system("cls");
     imprime("Bienvenido concursante.",2,0);
-    /*for(i=0;i<6;i++)
+    for(i=0;i<6;i++)
     {
     	semilla(); // Generamos una semilla para los numeros aleatorios que vamos a utlizar
     	imprime("Pregunta ",0,0);
@@ -674,7 +717,7 @@ int trivial()
 	}
 	imprime("Tu puntuacion final es de: ",0,0);
 	printf("%d",puntuacion);
-	imprime(" puntos",3,0);*/
+	imprime(" puntos",3,0);
 	puntuacion=60;
 	if(puntuacion==60)
 	{
@@ -755,6 +798,8 @@ void tienda()
 	imprime("Indique el nombre del premio (ponga \"FIN\" cuando no quiera mas premios): ",0,0);
 	gets(eleccion);
 	_strupr(eleccion);
+	if(strcmp(eleccion,"FIN")==0)
+	system("cls");
 	while(strcmp(eleccion,"FIN")!=0 && puntuacion>0)
 	{
 	encontrado=0;
@@ -819,6 +864,8 @@ void tienda()
 	scanf("%c",&basura);
 	gets(eleccion);
 	_strupr(eleccion);
+	if(strcmp(eleccion,"FIN")==0)
+	system("cls");
 	}
 }
 //FUNCIONES GLOBALES
