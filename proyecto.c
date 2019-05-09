@@ -182,14 +182,14 @@ while(fscanf(us,"%[^;];%d",nombre,&punt)!=EOF)
 		 printf("%d %s",puntuacion,usuario);
 		 if(bandera==0)
 		fprintf(aux,"%s;%d",usuario,puntuacion);
-		 fclose(us);
-		 fclose(aux);
-		 if(remove("usuarios.txt")==0) // Eliminamos el archivo
+		fclose(us);
+	    fclose(aux);
+		if(remove("usuarios.txt")==0) // Eliminamos el archivo
         printf("El archivo fue eliminado satisfactoriamente\n");
         else
         printf("No se pudo eliminar el archivo\n");
         
-         if(rename("auxiliar.txt","usuarios.txt")==0)// Renombramos el archivo
+        if(rename("auxiliar.txt","usuarios.txt")==0)// Renombramos el archivo
         printf("El archivo se renombro satisfactoriamente\n");
         else
         printf("No se pudo renombrar el archivo\n");
