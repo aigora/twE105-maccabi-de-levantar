@@ -19,7 +19,7 @@ int main()
 	while(strcmp(animal, "fin")!=0)
 	{
 	_strupr(animal);
-	fprintf(sac, "%s",animal); 
+	fprintf(sac, "%s;",animal); 
 	cont++;
 	printf("Inserte el animal %d: ", cont);
 	gets(animal);
