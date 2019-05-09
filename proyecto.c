@@ -25,8 +25,9 @@ int instrucciones();
   
 void main ()
 {
-int salida=0,juego=0,administrador=0;
-char basura,admin[14];
+FILE *us,*aux;
+int salida=0,juego=0,administrador=0,puntuacion,punt,bandera;
+char basura,admin[14],usuario[25],nombre[25];
 
 imprime("",1,2);
 imprime("Por favor, indica si eres jugador o administrador:",1,2);
@@ -66,7 +67,7 @@ if(strcmp(admin,"ADMINISTRADOR")==0)
             break;
         default:
    	        imprime("",2,6);
-            imprime("ERROR: PROGRAMA NO VALIDO",1,0);
+            imprime("ERROR: OPCION NO VALIDA",1,0);
             Sleep(700);
             system("cls");
             break;
@@ -75,8 +76,41 @@ if(strcmp(admin,"ADMINISTRADOR")==0)
 }
 else if(strcmp(admin,"JUGADOR")==0)
 {
+	imprime("Como te llamas?",2,0);
+	scanf("%c",&basura);
+	gets(usuario);
+	us = fopen("usuarios.txt", "r"); 
+	if (us == NULL) { 
+	us = fopen("usuarios.txt", "w");
+	fclose(us); 
+	 } 
+	 else
+	 {
+	 	bandera=1;
+	 	while(bandera==1&&fscanf(us,"%[^;];%d",nombre,&puntuacion)!=EOF)
+	 	{
+	 		if(strcmp(nombre,usuario)==0)
+	 		{
+	 			bandera=0;
+	 			
+			 }
+		 }
+		 fclose(us);
+		 if(bandera==1)
+		 {
+		 	imprime("Es un nuevo usuario, bienvenido",2,0);
+		 	imprime("Tu nueva puntuacion es 0",2,0);
+		 	puntuacion=0;
+		 }
+		 else
+		 {
+		 	imprime("Bienvenido de nuevo nosequien, su puntuacion es 14d",2,0);
+		 }
+	 }
+
     while (juego!=5) //preguntar al jugador a que juego quiere jugar
 {
+	system("cls");
   	imprime("",1,2);
   	imprime("BIENVENIDO JUGADOR!",3,3);
   	imprime("Pulsa:",2,3);
@@ -95,6 +129,7 @@ else if(strcmp(admin,"JUGADOR")==0)
 	do
 	{
         salida=cifrasyletras();
+        
 	}while(salida==0);
     break;
 
@@ -131,6 +166,33 @@ else if(strcmp(admin,"JUGADOR")==0)
     break;
 }
 }
+us = fopen("usuarios.txt", "r"); 
+aux= fopen("auxiliar.txt", "w");
+puntuacion=60;
+bandera=0;
+while(fscanf(us,"%[^;];%d",nombre,&punt)!=EOF)
+	 	{
+	 		if(strcmp(nombre,usuario)==0)
+	 		{
+	 			bandera=1;
+	 			punt=puntuacion;
+			}
+			fprintf(aux,"%s;%d",nombre,punt);
+		 }
+		 printf("%d %s",puntuacion,usuario);
+		 if(bandera==0)
+		fprintf(aux,"%s;%d",usuario,puntuacion);
+		 fclose(us);
+		 fclose(aux);
+		 if(remove("usuarios.txt")==0) // Eliminamos el archivo
+        printf("El archivo fue eliminado satisfactoriamente\n");
+        else
+        printf("No se pudo eliminar el archivo\n");
+        
+         if(rename("auxiliar.txt","usuarios.txt")==0)// Renombramos el archivo
+        printf("El archivo se renombro satisfactoriamente\n");
+        else
+        printf("No se pudo renombrar el archivo\n");
 }
 }
 int cifrasyletras()
@@ -756,6 +818,7 @@ int trivial()
 	    }
 	}
 	system("cls");
+	
 	if(puntuacion<30)
 	{
 		imprime("Has perdido, lo siento...",2,0);
