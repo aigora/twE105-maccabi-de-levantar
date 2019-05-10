@@ -22,6 +22,8 @@ int hundirlaflota();
 int trivial();
 void tienda();
 int instrucciones();
+void listanimales();
+void listatienda();
   
 void main ()
 {
@@ -58,9 +60,9 @@ if(strcmp(admin,"ADMINISTRADOR")==0)
     switch(administrador)
     {
     	case 1:
-    	
+    	    listatienda();
     	case 2:
-    	
+    	    listanimales();
     	case 3:
     		imprime("",2,3);
 	        imprime("Has cerrado el programa, hasta la proxima!",1,0);
@@ -1004,6 +1006,57 @@ void AbrirTienda()
 	    imprime("Recuerda que tienes que escribir si o no",2,0);
     }     	
  }
+void listanimales()
+{
+	FILE *sac;
+	int puntos,cont=1;
+	char animal[40];
+	sac = fopen("animales.txt", "w");
+	if (sac == NULL) 
+	{
+	// Si el resultado es NULL mensaje de error 
+	printf("Error al abrir el fichero.\n");  
+	} 
+	//Empiezo a meter nombres de animales
+	printf("Inserte el animal %d: ", cont);
+	gets(animal);
+	//Creo bucle para repetir la operacion, cuando quiera acabar escribo fin
+	while(strcmp(animal, "fin")!=0)
+	{
+	_strupr(animal);
+	fprintf(sac, "%s;",animal); 
+	cont++;
+	printf("Inserte el animal %d: ", cont);
+	gets(animal);
+	}
+	fclose(sac);
+}
+void listatienda()
+{
+	FILE *pf;
+	int puntos,cont=1;
+	char premio[40],basura;
+	pf = fopen("tienda.txt", "w");
+	if (pf == NULL) 
+	{
+	// Si el resultado es NULL mensaje de error 
+	printf("Error al abrir el fichero.\n"); 
+	} 
+	printf("Inserte el premio %d: ", cont);
+	gets(premio);
+	while(strcmp(premio, "fin")!=0)
+	{
+	printf("Indique los puntos necesarios para conseguir %s: ",premio);
+	scanf("%d",&puntos);
+	scanf("%c",&basura);
+	_strupr(premio);
+	fprintf(pf, "%s;%d",premio, puntos); 
+	cont++;
+	printf("Inserte el premio %d: ", cont);
+	gets(premio);
+	}
+	fclose(pf);
+}
 
 //FUNCIONES CIFRAS Y LETRAS:	
 	//Funcion para introducir un operador correcto	
