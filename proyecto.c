@@ -29,7 +29,7 @@ void main ()
 {
 FILE *us,*aux;
 int salida=0,juego=0,administrador=0,puntuacion,punt,bandera;
-char basura,admin[14],usuario[25],nombre[25];
+char basura,admin[14],usuario[25],nombre[25],kudu[3];
 
 imprime("",1,2);
 imprime("Por favor, indica si eres jugador o administrador:",1,2);
@@ -61,11 +61,33 @@ if(strcmp(admin,"ADMINISTRADOR")==0)
     {
     	case 1:
     		system("cls");
-    	    listatienda();
+    		imprime("Al meterte en esta opcion, se borrara la informacion almacenada previamente, estas seguro?",1,0);
+			scanf("%s",kudu);
+			_strupr(kudu);
+			while(strcmp(kudu,"SI")!=0 && strcmp(kudu,"NO")!=0)
+			{	
+				imprime("No me has contestado a la pregunta",2,0);
+				imprime("Al meterte en esta opcion, se borrara la informacion almacenada previamente, estas seguro?",1,0);
+				scanf("%s",kudu);
+			}
+			if(strcmp(kudu,"SI")==0){
+    	    	listatienda();
+    			}	
     	    break;
     	case 2:
     		system("cls");
-    	    listanimales();
+    		imprime("Al meterte en esta opcion, se borrara la informacion almacenada previamente, estas seguro?",1,0);
+			scanf("%s",kudu);
+			_strupr(kudu);
+			while(strcmp(kudu,"SI")!=0 && strcmp(kudu,"NO")!=0)
+			{	
+			imprime("No me has contestado a la pregunta",2,0);
+			imprime("Al meterte en esta opcion, se borrara la informacion almacenada previamente, estas seguro?",1,0);
+			scanf("%s",kudu);
+			}
+			if(strcmp(kudu,"SI")==0){
+    	    	listanimales();
+    		}
     	    break;
     	case 3:
     		imprime("",2,3);
@@ -98,9 +120,8 @@ else if(strcmp(admin,"JUGADOR")==0)
 	 	{
 	 		if(strcmp(nombre,usuario)==0)
 	 		{
-	 			bandera=0;
-	 			
-			 }
+	 			bandera=0;	
+			}
 		 }
 		 fclose(us);
 		 if(bandera==1)
@@ -111,7 +132,7 @@ else if(strcmp(admin,"JUGADOR")==0)
 		 }
 		 else
 		 {
-		 	imprime("Bienvenido de nuevo",0,0);
+		 	imprime("Bienvenido de nuevo ",0,0);
 		 	printf("%s",usuario);
 		 	imprime(",su puntuacion es",0,0);
 		 	printf("%d\n\n",puntuacion);
@@ -902,6 +923,7 @@ void tienda()
 			scanf("%s",seguro);
 			_strupr(seguro); 
 			}
+			
 			if(strcmp(seguro,"SI")==0)
 			{
 				if(puntuacion>=puntos)
