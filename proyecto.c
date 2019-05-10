@@ -60,9 +60,13 @@ if(strcmp(admin,"ADMINISTRADOR")==0)
     switch(administrador)
     {
     	case 1:
+    		system("cls");
     	    listatienda();
+    	    break;
     	case 2:
+    		system("cls");
     	    listanimales();
+    	    break;
     	case 3:
     		imprime("",2,3);
 	        imprime("Has cerrado el programa, hasta la proxima!",1,0);
