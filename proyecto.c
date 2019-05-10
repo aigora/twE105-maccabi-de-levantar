@@ -232,10 +232,16 @@ int cifrasyletras()
 int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
 int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
 int comprop( char oper);//Comprueba si el operador es correcto
-int calculadora(int num1,char cop,int num2);
-char eleccion,instr,op;
-int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,contador=0,salida=0;
-int numaleat[6],auxnumaleat[5],auxnumaleat2[4],auxnumaleat3[3],auxnumaleat4[2],auxnumaleat5[1];
+int calculadora(int num1,char cop,int num2);//Opera
+int puntucifr(int obj,int candidato);//Calcula la puntuacion obtenida en cifras
+int puntuletr(char respuesta[]); //Calcula la puntuacion obtenida en letras
+char consonante();//Genera consonante al azar
+char vocal();//Genera vocal al azar
+int animales();//Comprueba si el animal es correcto
+char eleccion,instr,op,eleccletra,letrasaleat[10],solucion[15],defin,basura;
+int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,horainicio,horafinal,cons,vocl,valid,puntls,contador=0,salida=0;
+const int segundos=60;
+int numaleat[6],auxnumaleat[5],auxnumaleat2[4],auxnumaleat3[3],auxnumaleat4[2],auxnumaleat5[1],letras[15];
 int flag=0,turra;
 	//JUEGO:
 	//Introduccion del juego
@@ -287,6 +293,7 @@ int flag=0,turra;
 			imprime("El numero que tienes que hallar con las operaciones es: ",1,0);
 			printf("%i\n",numobj);
 			imprime("Al terminar este mensaje comienzan los 45 segundos. Escribe a continuacion todas las operaciones. Suerte",1,0);
+			horainicio=time(NULL);
 			//Durante los 45 segundos escribimos las operaciones que realice el usuario
 			//Primera operacion
 				//Compruebo si el primer numero esta en el vector de numeros aleatorios
@@ -458,16 +465,73 @@ int flag=0,turra;
 						}
 				}
 		}
-			punts=puntuacion(numobj,resdef);
+			horafinal=time(NULL);
+			punts=puntucifr(numobj,resdef);
+			if((horafinal-horainicio)>segundos){
+				imprime("Te has quedado sin tiempo, tu respuesta no es valida",1,0);
+				punts=0;
+			}
 			imprime("La puntuación que has obtenido es:",1,0);
 			printf("%i",punts);
-			break;
+	break;					
 		}
 	case 'L':
 	case'l':
 		{
 			system("cls");
 			imprime("Bienvenido fan de la palabra. Has elegido letras.",1,0);
+			imprime("Puedes elegir entre consonante (presionando c) o vocal (presionando v), tienes un total de 15 letras",1,0);
+			//Elige entre consonante y vocal 12 veces y meto las letras en una cadena de caracteres 
+			do{
+				imprime("consonante o vocal?",1,0);
+				scanf(" %c",&eleccletra);
+				if(eleccletra=='C'||eleccletra=='c'){
+					scanf("%c",&basura);
+					cons=consonante();
+					printf("%c\n",cons);
+					letras[contador]=cons;
+					contador++;
+				}else if(eleccletra=='V'||eleccletra=='v'){
+					scanf("%c",&basura);
+					vocl=vocal();
+					printf("%c\n",vocl);
+					letras[contador]=vocl;
+					contador++;
+				}else{
+					imprime("Introduce bien la letra",1,0);
+				}
+			}while(contador<15);
+			system("cls");
+			imprime("Tienes 60 segundos para escribir el nombre de un animal (lo mas largo posible) con las siguientes letras:",1,0);
+			for(i=0;i<=15;i++){
+				printf("%c\n",letras[i]);
+			}
+			imprime("Cuando termine este mensaje empiezan los 60 segundos,solo tienes una  UNICA posible respuesta,buena suerte!",1,0);
+				//Creo boton de terminado
+			imprime("Si te rindes o crees que ya has acabado, pulsa el boton w",1,0);
+			horainicio=time(NULL);
+			//Una vez que tenemos la cadena de caracteres, dejamos tiempo para que el usuario piense.
+			//Que el usuario escriba la respuesta y que coincida con las palabras del fichero de animales.
+			do{
+			valid=animales();
+			if(valid==0){
+				imprime("Ese animal no es correcto, pero sigue intentandolo!",1,0);
+			}
+			}while(valid==0);
+			horafinal=time(NULL);
+			if(valid==1){
+					imprime("Enhorabuena, has encontrado un animal correcto",1,0);
+					horafinal=time(NULL);
+					puntls=puntuletr(solucion);
+					}else if (valid==2){
+						imprime("Te has rendido GG, suerte la proxima vez!",1,0);
+					}
+				
+		if(horafinal-horainicio>segundos){
+			puntls=0;
+		}
+			imprime("Tu puntuación es: ",0,0);
+				printf("%i",puntls);
 			break;
 		}
 	default:
@@ -1140,10 +1204,12 @@ void listatienda()
 		 }
 		 return flaganar;
 	}
-	//Funcion que otorga la puntuacion
-	int puntuacion(int obj,int candidato){
+	//Funcion que otorga la puntuacion en cifras
+	int puntucifr(int obj,int candidato){
 		int puntos,dif;
-		dif=fabs(obj-candidato);
+		dif=obj-candidato;
+		if(dif<0)
+		dif=-dif;
 		if(dif==0){
 			puntos=100;
 			}else if(dif>0&&dif<=20){
@@ -1154,6 +1220,69 @@ void listatienda()
 						puntos=0;
 						}
 			return puntos;
+	}
+	//Funcion que otorga la puntuacion en letras
+	int puntuletr (char respuesta[]){
+		 int contador=0,puntitos,i=0;
+		while( respuesta[i] !='\0'){
+			contador++;
+			i++;
+		}
+		if(contador==2||contador==3){
+			puntitos=10;
+		}else if(contador==4){
+				puntitos=25;
+			}else if(contador==5){
+					puntitos=50;
+				}else if(contador==6){
+						puntitos=75;
+					}else if(contador>=7){
+						puntitos=100;
+					}
+	return puntitos;
+	}
+	//Funcion que da una consonante al azar
+	char consonante(){
+		char letrazar;
+		int i;
+		int consonante[21]={'b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z'};
+		semilla();
+		i=numal(0,20);
+		letrazar=consonante[i];
+		return letrazar;
+	}
+	//Funcion que da una vocal al azar
+	char vocal(){
+		char vocalazar;
+		int i;
+		int vocal[5]={'a','e','i','o','u'};
+		semilla();
+		i=numal(0,4);
+		vocalazar=vocal[i];
+		return vocalazar;
+	}
+	//Funcion que comprueba en letras si el animal es valido
+	int animales(){
+		FILE *sac;
+		char animal[30],respuesta[30],basura;
+		int bandera;
+		gets(respuesta);
+		_strupr(respuesta);
+		sac=fopen("animales.txt","r");
+		if(strcmp(respuesta, "W")==0){
+			bandera=2;
+			}else{
+		bandera=0;
+		while(bandera==0&&fscanf(sac,"%[^;];",animal)!=EOF)
+		{
+			if(strcmp(animal,respuesta)==0)
+			{
+				bandera=1;
+			}
+		}
+	}
+		fclose(sac);
+		return bandera;
 	}
  
 //FUNCIONES HUNDIR LA FLOTA:
