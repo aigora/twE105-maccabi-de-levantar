@@ -85,6 +85,7 @@ else if(strcmp(admin,"JUGADOR")==0)
 	imprime("Como te llamas?",2,0);
 	scanf("%c",&basura);
 	gets(usuario);
+	_strupr(usuario);
 	us = fopen("usuarios.txt", "r"); 
 	if (us == NULL) { 
 	us = fopen("usuarios.txt", "w");
@@ -110,7 +111,10 @@ else if(strcmp(admin,"JUGADOR")==0)
 		 }
 		 else
 		 {
-		 	imprime("Bienvenido de nuevo nosequien, su puntuacion es 14d",2,0);
+		 	imprime("Bienvenido de nuevo",0,0);
+		 	printf("%s",usuario);
+		 	imprime(",su puntuacion es",0,0);
+		 	printf("%d\n\n",puntuacion);
 		 }
 	 }
 
