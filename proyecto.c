@@ -36,6 +36,8 @@ imprime("Por favor, indica si eres jugador o administrador:",1,2);
 scanf("%s",admin);
 _strupr(admin);
 system("cls");
+
+
 while(strcmp(admin,"ADMINISTRADOR")!=0 && strcmp(admin,"JUGADOR")!=0)
 {
 	imprime("",1,2);
@@ -238,9 +240,9 @@ int puntuletr(char respuesta[]); //Calcula la puntuacion obtenida en letras
 char consonante();//Genera consonante al azar
 char vocal();//Genera vocal al azar
 int animales();//Comprueba si el animal es correcto
-char eleccion,instr,op,eleccletra,letrasaleat[10],solucion[15],defin,basura;
+char eleccion,instr,op,eleccletra,letrasaleat[10],solucion[15],defin,basura,def[3];
 int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,horainicio,horafinal,cons,vocl,valid,puntls,contador=0,salida=0;
-const int segundos=60;
+const int segundos=75;
 int numaleat[6],auxnumaleat[5],auxnumaleat2[4],auxnumaleat3[3],auxnumaleat4[2],auxnumaleat5[1],letras[15];
 int flag=0,turra;
 	//JUEGO:
@@ -286,8 +288,12 @@ int flag=0,turra;
 			semilla();
 			for(i=0;i<6;i++){
 				numaleat[i]=rand()%20 +1;
+				if((numaleat[i]!=numaleat[i-1])&&(numaleat[i]!=numaleat[i-2])&&(numaleat[i]!=numaleat[i-3])&&(numaleat[i]!=numaleat[i-4])&&(numaleat[i]!=numaleat[i-5])&&(numaleat[i]!=numaleat[i-6])){
 				printf("%i\n",numaleat[i]);
+				}else{
+					i--;
 			}
+		}
 			//Hallo el numero objetivo
 			numobj= numal(120,500);
 			imprime("El numero que tienes que hallar con las operaciones es: ",1,0);
@@ -312,11 +318,18 @@ int flag=0,turra;
 			//Hallo resultado de la operacion que hace el usuario y
 			//Compruebo si el numero es el que buscamos
 			res1=calculadora(cos1,op,cos2);
-			ganad = comprganador(numobj,res1);
-			if(ganad==1){
-				imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-				res1=resdef;
+			imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+			scanf(" %s", def);
+			if(def[0]=='s'&&def[1]=='i'){
+				resdef=res1;
+				ganad = comprganador(numobj,resdef);
+				if(ganad==1){
+					imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+				}
 			}else{
+				system("cls");
+				imprime("Recuerde que el numero que buscamos es el: ",1,0);
+				printf("%i\n",numobj);
 				//Si no gana actualizamos el vector de numeros aleatorios y se sigue pidiendo numeros y operaciones.
 				for(i=0,j=0;i<6;i++){
 					if(numaleat[i]!=cos1&&numaleat[i]!=cos2){
@@ -345,11 +358,18 @@ int flag=0,turra;
 				}while(compraleat(auxnumaleat,cos4)==0);
 				//Compruebo si es el numero que buscamos
 				res2=calculadora(cos3,op,cos4);
-				ganad = comprganador(numobj,res2);
-				if(ganad==1){
-					imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-					res2=resdef;
+				imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+				scanf(" %s", def);
+				if(def[0]=='s'&&def[1]=='i'){
+					resdef=res2;
+					ganad = comprganador(numobj,resdef);
+					if(ganad==1){
+						imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+					}
 				}else{
+					system("cls");
+					imprime("Recuerde que el numero que buscamos es el: ",1,0);
+					printf("%i\n",numobj);
 					//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 					for(i=0,j=0;i<5;i++){
 					if(auxnumaleat[i]!=cos3&&auxnumaleat[i]!=cos4){
@@ -378,12 +398,19 @@ int flag=0,turra;
 					}while(compraleat(auxnumaleat2,cos6)==0);
 					//Compruebo si el numero es el que buscamos
 					res3=calculadora(cos5,op,cos6);
-					ganad = comprganador(numobj,res3);
-					if(ganad==1){
-						imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-						res3=resdef;
+					imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+					scanf(" %s", def);
+					if(def[0]=='s'&&def[1]=='i'){
+						resdef=res3;
+						ganad = comprganador(numobj,resdef);
+						if(ganad==1){
+							imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+						}
 					}else{
-							//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
+						system("cls");
+						imprime("Recuerde que el numero que buscamos es el: ",1,0);
+						printf("%i\n",numobj);
+						//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 							for(i=0,j=0;i<4;i++){
 								if(auxnumaleat2[i]!=cos5&&auxnumaleat2[i]!=cos6){
 								auxnumaleat3[j]=auxnumaleat2[i];
@@ -411,11 +438,18 @@ int flag=0,turra;
 							}while(compraleat(auxnumaleat3,cos8)==0);
 							//Compruebo si es el numero que buscamos
 							res4=calculadora(cos7,op,cos8);
-							ganad = comprganador(numobj,res4);
-							if(ganad==1){
-							imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-							res4=resdef;
+							imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+							scanf(" %s", def);
+							if(def[0]=='s'&&def[1]=='i'){
+								resdef=res4;
+								ganad = comprganador(numobj,resdef);
+								if(ganad==1){
+									imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+								}
 							}else{	
+									system("cls");
+									imprime("Recuerde que el numero que buscamos es el: ",1,0);
+									printf("%i\n",numobj);
 									//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 									for(i=0,j=0;i<3;i++){
 										if(auxnumaleat3[i]!=cos7&&auxnumaleat3[i]!=cos8){
@@ -444,11 +478,11 @@ int flag=0,turra;
 									}while(compraleat(auxnumaleat4,cos10)==0);
 									//Compruebo si es el numero que buscamos
 									res5=calculadora(cos9,op,cos10);
-									ganad = comprganador(numobj,res5);
-									res5=resdef;
-									if(ganad==1){
-									imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-									}else{
+										resdef=res5;
+										ganad = comprganador(numobj,resdef);
+										if(ganad==1){
+											imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+										}else{
 										//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 										for(i=0,j=0;i<3;i++){
 											if(auxnumaleat4[i]!=cos9&&auxnumaleat4[i]!=cos10){
@@ -457,14 +491,16 @@ int flag=0,turra;
 											}	
 										}
 										auxnumaleat5[j]=res5;
-										//Como ya es el ultimo turno, nos quedamos con ese numero.
-										imprime("Se han acabado las operaciones posibles, el numero final obtenido es:",1,0);
-										printf(" %i\n",res5);
 										}
 								}
 						}
 				}
 		}
+			system("cls");
+			imprime("El numero que buscabamos era el: ",1,0);
+			printf("%i\n",numobj);
+			imprime("Finalmente el resultado final es: ",1,0);
+			printf("%i\n",resdef);
 			horafinal=time(NULL);
 			punts=puntucifr(numobj,resdef);
 			if((horafinal-horainicio)>segundos){
