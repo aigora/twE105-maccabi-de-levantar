@@ -265,7 +265,7 @@ int flag=0,turra;
 		imprime("-Si consigues hallar el numero objetivo, conseguiras 100 puntos. Si te alejas en 20 cifras, conseguiras 50 puntos. Si te alejas en 50 cifras, conseguiras 20 puntos. Si te alejas mas, obtendras una puntuacion de 0",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
 		//Instrucciones juego de letras
-		imprime("El juego de letras consiste en general 12 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:",1,5);
+		imprime("El juego de letras consiste en general 12 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 12 letras. Pero ojo, hay ciertas normas:",1,5);
 		imprime("-Puedes repetir las letras, siempre y cuando esten dentro de la lista de letras posibles.",1,5);
 		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no seran considerados como validos",1,5);
 		imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
@@ -510,7 +510,7 @@ int flag=0,turra;
 				imprime("Te has quedado sin tiempo, tu respuesta no es valida",1,0);
 				punts=0;
 			}
-			imprime("La puntuación que has obtenido es:",1,0);
+			imprime("La puntuacion que has obtenido es:",1,0);
 			printf("%i",punts);
 	break;					
 		}
@@ -578,7 +578,7 @@ int flag=0,turra;
 		if(horafinal-horainicio>segundos){
 			puntls=0;
 		}
-			imprime("Tu puntuación es: ",0,0);
+			imprime("Tu puntuacion es: ",0,0);
 				printf("%i",puntls);
 			break;
 		}
