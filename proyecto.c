@@ -241,8 +241,8 @@ char consonante();//Genera consonante al azar
 char vocal();//Genera vocal al azar
 int animales(char respuesta[]);//Comprueba si el animal es correcto
 int comprcaract(char azar[],char cand []);//Comprueba si el animal esta construido correctamente
-char eleccion,instr,op,eleccletra,letras[16],solucion[16],defin,basura,def[3];
-int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,horainicio,horafinal,cons,vocl,valid,puntls,contador=0,salida=0,permis;
+char eleccion,instr,op,eleccletra,letras[13],solucion[30],defin,basura,def[3];
+int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,horainicio,horafinal,cons,vocl,valid,puntls,contador=0,salida=0,permis,band;
 const int segundos=75;
 int numaleat[6],auxnumaleat[5],auxnumaleat2[4],auxnumaleat3[3],auxnumaleat4[2],auxnumaleat5[1];
 int flag=0,turra;
@@ -265,11 +265,11 @@ int flag=0,turra;
 		imprime("-Si consigues hallar el numero objetivo, conseguiras 100 puntos. Si te alejas en 20 cifras, conseguiras 50 puntos. Si te alejas en 50 cifras, conseguiras 20 puntos. Si te alejas mas, obtendras una puntuacion de 0",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
 		//Instrucciones juego de letras
-		imprime("El juego de letras consiste en general 15 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 15 letras. Pero ojo, hay ciertas normas:",1,5);
-		imprime("-No puede repetir ninguna letra, aunque las letras si se pueden repetir a la hora de salir al azar.",1,5);
-		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no serán considerados como validos",1,5);
+		imprime("El juego de letras consiste en general 12 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:",1,5);
+		imprime("-Puedes repetir las letras, siempre y cuando esten dentro de la lista de letras posibles.",1,5);
+		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no seran considerados como validos",1,5);
 		imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
-		imprime("-Si encuentras un animal con 2 o 3 letras obtendras 10 puntos. Si encuentras un animal con 4 letras obtendras 25 puntos. Si encuentras un animal con 5 letras obtendras 50 puntos. Si encuentras un animal con 6 letras obtendras 75 puntos. Si encuentras un animal con 7 letras o mas, obtendras 100 puntos",1,0);
+		imprime("-Si encuentras un animal con 2 o 3 letras obtendras 10 puntos. Si encuentras un animal con 4 letras obtendras 20 puntos. Si encuentras un animal con 5 letras obtendras 40 puntos. Si encuentras un animal con 6 letras obtendras 60 puntos. Si encuentras un animal con 7 letras, obtendras 80 puntos. Si encuentras un animal con 8 letras o mas, obtendras 100 puntos",1,5);
 		imprime("-El usuario tendra 75 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",2,0);
 		imprime("Presione cualquier tecla para continuar...",1,0);
@@ -519,7 +519,7 @@ int flag=0,turra;
 		{
 			system("cls");
 			imprime("Bienvenido fan de la palabra. Has elegido letras.",1,0);
-			imprime("Puedes elegir entre consonante (presionando c) o vocal (presionando v), tienes un total de 15 letras",1,0);
+			imprime("Puedes elegir entre consonante (presionando c) o vocal (presionando v), tienes un total de 12 letras",1,0);
 			//Elige entre consonante y vocal 12 veces y meto las letras en una cadena de caracteres 
 			do{
 				imprime("consonante o vocal?",1,0);
@@ -539,13 +539,13 @@ int flag=0,turra;
 				}else{
 					imprime("Introduce bien la letra",1,0);
 				}
-			}while(contador<15);
+			}while(contador<12);
 			system("cls");
-			imprime("Tienes 60 segundos para escribir el nombre de un animal (lo mas largo posible) con las siguientes letras:",1,0);
-			for(i=0;i<=15;i++){
+			imprime("Tienes 75 segundos para escribir el nombre de un animal (lo mas largo posible) con las siguientes letras:",1,0);
+			for(i=0;i<12;i++){
 				printf("%c\n",letras[i]);
 			}
-			imprime("Cuando termine este mensaje empiezan los 60 segundos,solo tienes una  UNICA posible respuesta,buena suerte!",1,0);
+			imprime("Cuando termine este mensaje empiezan los 75 segundos,si escribes un animal existente no podras volver a escribir otro mas largo, asique piensalo bien!.Buena suerte!",1,0);
 				//Creo boton de terminado
 			imprime("Si te rindes o crees que ya has acabado, pulsa el boton w",1,0);
 			horainicio=time(NULL);
@@ -553,25 +553,27 @@ int flag=0,turra;
 			//Que el usuario escriba la respuesta y que coincida con las palabras del fichero de animales.
 			do{
 				gets(solucion);
-				printf("quedices\n");
-				permis=comprcaract(letras,solucion);
-				printf("casibro\n");
-				if(permis==0){
-					imprime("Recuerda, que las letras tienen que estar en la lista",1,0);
+				if(strcmp(solucion,"w")==0){
+					imprime("Te has rendido GG, suerte la proxima vez!",1,0);
+					band=0;
 				}else{
-			valid=animales(solucion);
+						permis=comprcaract(letras,solucion);
+						if(permis==0){
+							imprime("Recuerda, que las letras tienen que estar en la lista",1,0);
+						}else if(permis==1){
+					valid=animales(solucion);
+					
+					if(valid==0){
+						imprime("Ese animal no es correcto, pero sigue intentandolo!",1,0);
+					}
+				}
 			}
-			if(valid==0){
-				imprime("Ese animal no es correcto, pero sigue intentandolo!",1,0);
-			}
-			}while(valid==0);
+			}while(((valid==0)||(permis==0))&&(band!=0));
 			horafinal=time(NULL);
 			if(valid==1){
 					imprime("Enhorabuena, has encontrado un animal correcto",1,0);
 					horafinal=time(NULL);
 					puntls=puntuletr(solucion);
-					}else if (valid==2){
-						imprime("Te has rendido GG, suerte la proxima vez!",1,0);
 					}
 		if(horafinal-horainicio>segundos){
 			puntls=0;
@@ -1277,14 +1279,16 @@ void listatienda()
 		if(contador==2||contador==3){
 			puntitos=10;
 		}else if(contador==4){
-				puntitos=25;
+				puntitos=20;
 			}else if(contador==5){
-					puntitos=50;
+					puntitos=40;
 				}else if(contador==6){
-						puntitos=75;
-					}else if(contador>=7){
-						puntitos=100;
-					}
+						puntitos=60;
+					}else if(contador==7){
+						puntitos=80;
+						}else if(contador>=8){
+							puntitos=100;
+						}	
 	return puntitos;
 	}
 	//Funcion que da una consonante al azar
@@ -1314,9 +1318,6 @@ void listatienda()
 		int bandera;
 		_strupr(respuesta);
 		sac=fopen("animales.txt","r");
-		if(strcmp(respuesta, "W")==0){
-			bandera=2;
-			}else{
 		bandera=0;
 		while(bandera==0&&fscanf(sac,"%[^;];",animal)!=EOF)
 		{
@@ -1325,25 +1326,24 @@ void listatienda()
 				bandera=1;
 			}
 		}
-	}
 		fclose(sac);
 		return bandera;
 	}
 	//Funcion que comprueba que los caracteres introducidos pertenecen al vector de letras al azar
 	int comprcaract(char azar[],char cand []){
-		int coinc,i=0,j=0;
-		while((azar[j]!='\0')&&(coinc==1)){
-			coinc=0;
-			if(cand[i]==azar[j]){
+		int band=1,i=0,j=0;
+		while((cand[i]!='\0')&&(band!=0)){
+			if(cand[i]!=azar[j]){
+				j++;
+				if(azar[j]=='\0'){
+					band=0;
+				}
+			}else if(cand[i]==azar[j]){
 				i++;
 				j=0;
-				coinc=1;
-			}else{
-				j++;
 			}
 		}
-		
-		return coinc;
+		return band;
 	}
 //FUNCIONES HUNDIR LA FLOTA:
 int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
