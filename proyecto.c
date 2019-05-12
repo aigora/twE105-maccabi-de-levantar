@@ -13,7 +13,7 @@ typedef struct
 	char respuesta[25];
 }inicio;
 
-//VARIABLES Y FUNCIONES GLOBALES:
+//FUNCIONES GLOBALES:
 int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
 int numal(int num1,int num2); //Genera numeros aleatorios 
 void semilla(); //Genera semilla
@@ -599,6 +599,9 @@ int flag=0,turra;
     int fila,columna;
     int fila1, fila2, columna1, columna2;
     int barcojug=1;
+    int tablerojug[6][6];
+    int matrizcons[6][6];//matriz que representa los barcos del cpu
+	int matrizjug[6][6];//matriz que representa los barcos del jugador
 int hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
@@ -608,6 +611,7 @@ int hundirlaflota()
 	int formatocoord=1,formatocoord2=1;
 	char coordport[2];
 	char coordport2[2];
+	
 	int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n);
 	int imprimematriz(int mat[6][6]);	
 	int generarbarco(int n, int mat[6][6], int barco);
@@ -635,12 +639,20 @@ int hundirlaflota()
 				matrizjug[i][j] = 0;
 				}
 		}
+//Llenar de "-" el tablero de disparos del jugador
+	for (i=0; i<6; i++)
+		{
+			for (j=0; j<6; j++)
+				tablerojug[i][j] = '-'; 
+		}
 	srand (time(NULL)); 
 //Generar barcos consola 	
 	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 portaviones
 	generarbarco(4, matrizcons, 4);	//destructor rellena la matriz de 4
 	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
   	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
+
+/*
 //Colocacion de barcos por parte del jugador
 	do{
 	
@@ -764,20 +776,20 @@ int hundirlaflota()
 	}
 	
     }while(colocacionjug==0);
-    
+ 
     system("cls");
 	imprime("",2,3);	
 	imprime("Magnifica estrategia almirante, pero ahora empieza lo divertido.",2,3);
 	imprime("Tomaremos ventaja sobre nuestro adversario, le sorprenderemos atacando primero",2,3);
-/*	while(ganador==0)
+	while(ganador==0)
 	{
 		disparojug();  //Disparo de jugador
 		if (disparojug==0)
 			agua();
-		if (disparojug==1)
+		if (disparojug==1) //Si el jugador toca un barco enemigo
 		{
 			tocado();
-			if(barcoscons==0)
+			if(barcoscons==0) //Si ya no le quedan barcos a la consola
 			{
 				ganador=1;
 				break;
@@ -787,19 +799,25 @@ int hundirlaflota()
 		disparocons(); //Disparo de consola
 		if (disparocons==0)
 			aguacons();
-		if(disparocons==1)
+		if(disparocons==1) //Si la consola toca un barco del jugador
 		{
 			tocadocons();
-			if(barcoscons==0)
+			if(barcoscons==0) //Si la consola hunde todos los barcos del jugador
 			{
 				ganador=2;
 				break;
 			}
 		}
 	}
+	if(ganador==1) //Si gana el jugador
+	{
+	}
+	if(ganador==2) //Si gana la consola
+	{
+	}
 */
-	
-	
+imprimematrizchar(tablerojug);	
+disparojug();
 //Salir del juego
  	imprime("",3,0);
 	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir del juego",2,0);
@@ -1346,8 +1364,7 @@ void listatienda()
 		return band;
 	}
 //FUNCIONES HUNDIR LA FLOTA:
-int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
-{
+int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n){
 	int okupa=0, i;
 	okupa=0;
 	if(f1==f2)
@@ -1428,8 +1445,7 @@ int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
 				
 }
 }
-int comprobarformatocoord(char coord[2])
-{
+int comprobarformatocoord(char coord[2]){
 	if (coord[0]=='a'||coord[0]=='A')
 			fila=0;
 		else{
@@ -1467,8 +1483,7 @@ int comprobarformatocoord(char coord[2])
 		}
 	
 }
-int generarbarco(int n, int mat[6][6], int barco)
-{
+int generarbarco(int n, int mat[6][6], int barco){
 	int fila, colum, dir, exito = 0, okupa, i;
 	
 while(exito==0)
@@ -1568,8 +1583,7 @@ if(dir==4)							//direccion izquierda
 }
 
 }
-int imprimematriz(int mat[6][6])
-{
+int imprimematriz(int mat[6][6]){
     int i;
     printf("   ");
     for(i=1;i<=6;i++)
@@ -1606,6 +1620,77 @@ int imprimematriz(int mat[6][6])
 	      	printf("   %i ",mat[5][i]);
 	      }
 	      	
+}
+int imprimematrizchar(int mat[6][6]){
+    int i;
+    printf("   ");
+    for(i=1;i<=6;i++)
+		printf("   %i ",i);
+	printf("\n\n");
+	printf(" A ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[0][i]);
+	      }
+	printf("\n\n B ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[1][i]);
+	      }
+	printf("\n\n C ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[2][i]);
+	      }
+	printf("\n\n D ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[3][i]);
+	      }
+	printf("\n\n E ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[4][i]);
+	      }
+	printf("\n\n F ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[5][i]);
+	      }
+	      	
+}
+
+
+int disparojug(){
+	char coorddisp[2];
+	int disparo=0;
+	
+	while(disparo==0){
+	imprime("Almirante, introduzca las coordenadas del blanco",2,2);
+	scanf(" %s", coorddisp);
+	comprobarformatocoord(coorddisp);
+	if (comprobarformatocoord(coorddisp)=='1')
+	{
+		if (matrizcons[fila][columna] != 0)
+		{
+			return 1;
+			//disparo=1;
+			imprime("tocado",2,2);
+			break;
+		}
+		else
+		{
+			return 0;
+		//	disparo=1;
+			imprime("agua",2,2);
+			break;
+		
+		}
+		
+	}
+	if (comprobarformatocoord==0)
+		imprime("Formato de coordenada no valido",2,2);
+	}
 }
 
 //FUNCIONES TRIVIAL:
