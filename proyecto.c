@@ -484,25 +484,34 @@ int flag=0,turra;
     return salida;
 }
 
+
     int fila,columna;
     int fila1, fila2, columna1, columna2;
     int barcojug=1;
+    int tablerojug[6][6];
+    int tablerocons[6][6];
+    int matrizcons[6][6];//matriz que representa los barcos del cpu
+	int matrizjug[6][6];//matriz que representa los barcos del jugador
 int hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
 	int i,j,salida=0;
 	int colocacionjug=0;
 	int ganador=0, barcoscons=4, barcosjug=4;
+	int submarinocons=2, acorazadocons=3, destructorcons=4, portavionescons=5;
+	int submarinojug=2,  acorazadojug=3, destructorjug=4, portavionesjug=5;
+	int tocadojug, tocadocons;
+	int numdisparosjug=0;
 	int formatocoord=1,formatocoord2=1;
 	char coordport[2];
 	char coordport2[2];
+	
 	int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n);
 	int imprimematriz(int mat[6][6]);	
 	int generarbarco(int n, int mat[6][6], int barco);
-	int matrizcons[6][6];//matriz que representa los barcos del cpu
-	int matrizjug[6][6];//matriz que representa los barcos del jugador
 	
 	//JUEGO:
+	
 	system("cls");
     //Instrucciones
     imprime("",1,3);
@@ -523,12 +532,20 @@ int hundirlaflota()
 				matrizjug[i][j] = 0;
 				}
 		}
+//Llenar de "-" el tablero de disparos del jugador
+	for (i=0; i<6; i++)
+		{
+			for (j=0; j<6; j++)
+				tablerojug[i][j] = '-'; 
+		}
 	srand (time(NULL)); 
 //Generar barcos consola 	
 	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 portaviones
 	generarbarco(4, matrizcons, 4);	//destructor rellena la matriz de 4
 	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
   	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
+
+
 //Colocacion de barcos por parte del jugador
 	do{
 	
@@ -652,42 +669,111 @@ int hundirlaflota()
 	}
 	
     }while(colocacionjug==0);
-    
+
     system("cls");
 	imprime("",2,3);	
 	imprime("Magnifica estrategia almirante, pero ahora empieza lo divertido.",2,3);
-	imprime("Tomaremos ventaja sobre nuestro adversario, le sorprenderemos atacando primero",2,3);
-/*	while(ganador==0)
+	imprime("Tomaremos ventaja sobre nuestro adversario, le sorprenderemos atacando primero",2,0);
+	while(ganador==0)
 	{
-		disparojug();  //Disparo de jugador
-		if (disparojug==0)
-			agua();
-		if (disparojug==1)
-		{
-			tocado();
-			if(barcoscons==0)
+		imprimematrizchar(tablerojug);
+		tocadojug=disparojug();  //Disparo de jugador
+		numdisparosjug++;
+		
+		if(tocadojug==2)
 			{
-				ganador=1;
-				break;
+				submarinocons--;
+				if(submarinocons==0)
+				{
+					imprime("ENHORABUENA, SUBMARINO ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+					barcoscons--;
+				}
 			}
+		if(tocadojug==3)
+			{
+				acorazadocons--;
+				if(acorazadocons==0)
+				{
+					imprime("ENHORABUENA, ACORAZADO ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+					barcoscons--;
+				}
+			}
+		if(tocadojug==4)
+			{
+				destructorcons--;
+				if(destructorcons==0)
+				{
+					imprime("ENHORABUENA, DESTRUCTOR ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+					barcoscons--;
+				}
+			}
+		if(tocadojug==3)
+			{
+				portavionescons--;
+				if(portavionescons==0)
+				{
+					imprime("ENHORABUENA, PORTAVIONES ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+					barcoscons--;
+				}
+			}
+		if(barcoscons==0)
+		{
+			enhorabuenajug(numdisparosjug);
+			ganador++;
+			break;
 		}
 		
-		disparocons(); //Disparo de consola
-		if (disparocons==0)
-			aguacons();
-		if(disparocons==1)
-		{
-			tocadocons();
-			if(barcoscons==0)
+
+		imprime("\n\nTurno del enemigo:",2,0);
+		tocadocons=disparocons();
+		
+		if(tocadocons==2)
 			{
-				ganador=2;
-				break;
+				submarinojug--;
+				if(submarinojug==0)
+				{
+					imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO SUBMARINO!",2,0);
+					barcosjug--;
+				}
 			}
+		if(tocadocons==3)
+			{
+				acorazadojug--;
+				if(acorazadojug==0)
+				{
+					imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO ACORAZADO!",2,0);
+					barcosjug--;
+				}
+			}
+		if(tocadocons==4)
+			{
+				destructorjug--;
+				if(destructorjug==0)
+				{
+					imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO DESTRUCTOR!",2,0);
+					barcosjug--;
+				}
+			}
+		if(tocadocons==5)
+			{
+				portavionesjug--;
+				if(portavionesjug==0)
+				{
+					imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO PORTAVIONES!",2,0);
+					barcosjug--;
+				}
+			}
+		if(barcosjug==0)
+		{
+			hasperdido();
+			ganador++;
+			break;
 		}
 	}
-*/
 	
-	
+
+
+
 //Salir del juego
  	imprime("",3,0);
 	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir del juego",2,0);
@@ -1157,8 +1243,23 @@ void listatienda()
 	}
  
 //FUNCIONES HUNDIR LA FLOTA:
-int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
-{
+//FUNCIONES HUNDIR LA FLOTA:
+void animaciondisparo(){
+	int i,j;
+	printf("\n");
+	for(i=3;i>0;i--)
+	{
+	printf("%i",i);
+	Sleep(400);
+		for (j=3;j>0;j--)
+		{
+		printf(" . ");
+		Sleep(200);
+		}
+	}
+	imprime("FUEGO!!",3,0);
+}
+int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n){
 	int okupa=0, i;
 	okupa=0;
 	if(f1==f2)
@@ -1239,8 +1340,7 @@ int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
 				
 }
 }
-int comprobarformatocoord(char coord[2])
-{
+int comprobarformatocoord(char coord[2]){
 	if (coord[0]=='a'||coord[0]=='A')
 			fila=0;
 		else{
@@ -1278,8 +1378,7 @@ int comprobarformatocoord(char coord[2])
 		}
 	
 }
-int generarbarco(int n, int mat[6][6], int barco)
-{
+int generarbarco(int n, int mat[6][6], int barco){
 	int fila, colum, dir, exito = 0, okupa, i;
 	
 while(exito==0)
@@ -1379,8 +1478,7 @@ if(dir==4)							//direccion izquierda
 }
 
 }
-int imprimematriz(int mat[6][6])
-{
+int imprimematriz(int mat[6][6]){
     int i;
     printf("   ");
     for(i=1;i<=6;i++)
@@ -1418,6 +1516,169 @@ int imprimematriz(int mat[6][6])
 	      }
 	      	
 }
+int imprimematrizchar(int mat[6][6]){
+    int i;
+    printf("   ");
+    for(i=1;i<=6;i++)
+		printf("   %i ",i);
+	printf("\n\n");
+	printf(" A ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[0][i]);
+	      }
+	printf("\n\n B ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[1][i]);
+	      }
+	printf("\n\n C ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[2][i]);
+	      }
+	printf("\n\n D ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[3][i]);
+	      }
+	printf("\n\n E ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[4][i]);
+	      }
+	printf("\n\n F ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[5][i]);
+	      }
+	      	
+}
+int disparojug(){
+	char coorddisp[2];
+	int disparo=0;
+
+	while(disparo==0){
+	imprime("\n\n  Almirante, introduzca las coordenadas del blanco",2,2);
+	scanf(" %s", coorddisp);
+	comprobarformatocoord(coorddisp);
+	if (comprobarformatocoord(coorddisp)==1)
+	{
+		if (tablerojug[fila][columna]!='-')
+			imprime("\n  Ya has disparado en esa posicion!",1,0);
+		
+		else{
+		if (matrizcons[fila][columna] == 0)
+		{
+			system("cls");
+			animaciondisparo();
+			tablerojug[fila][columna]='~';
+			imprime("AGUA!",2,0);
+			return 0;
+		}
+		else
+		{
+			if (matrizcons[fila][columna] == 2)
+			{
+				system("cls");
+				animaciondisparo();
+				imprime("ESO ES!, has tocado el submarino",2,0);
+				tablerojug[fila][columna]='2';
+				return 2;
+			}
+			if (matrizcons[fila][columna] == 3)
+			{
+				system("cls");
+				animaciondisparo();
+				imprime("ESO ES!, has tocado el acorazado",2,0);
+				tablerojug[fila][columna]='3';
+				return 3;
+			}
+			if (matrizcons[fila][columna] == 4)
+			{
+				system("cls");
+				animaciondisparo();
+				imprime("ESO ES!, has tocado el destructor",2,0);
+				tablerojug[fila][columna]='4';
+				return 4;
+			}
+			if (matrizcons[fila][columna] == 5)
+			{
+				system("cls");
+				animaciondisparo();
+				imprime("ESO ES!, has tocado el portaviones",2,0);
+				tablerojug[fila][columna]='5';
+				return 5;
+			}
+	
+		}
+	}
+	}
+
+	}
+}
+int disparocons(){
+	int f,c;
+	int disparo=0;
+
+	while(disparo==0)
+	{
+		f = rand() % (5+1);
+		c = rand() % (5+1);
+		if(tablerocons[f][c]!='-')
+		{			
+			if (matrizjug[f][c] == 0)
+		{
+			tablerocons[f][c]='~';
+			animaciondisparo();
+			imprime("Tuvimos suerte almirante!, el enemigo fallo el disparo",3,0);
+			return 0;
+		}
+		else
+		{
+			if (matrizjug[f][c] == 2)
+			{
+				animaciondisparo();
+				imprime("Malas noticias, el enemigo ha tocado nuestro submarino",3,0);
+				tablerocons[f][c]='2';
+				return 2;
+			}
+			if (matrizjug[f][c] == 3)
+			{
+				animaciondisparo();
+				imprime("Malas noticias, el enemigo ha tocado nuestro acorazado",3,0);
+				tablerocons[f][c]='3';
+				return 3;
+			}
+			if (matrizjug[f][c] == 4)
+			{
+				animaciondisparo();
+				imprime("Malas noticias, el enemigo ha tocado nuestro destructor",3,0);
+				tablerocons[f][c]='4';
+				return 4;
+			}
+			if (matrizjug[f][c] == 5)
+			{
+				animaciondisparo();
+				imprime("Malas noticias, el enemigo ha tocado nuestro portaviones",3,0);
+				tablerocons[f][c]='5';
+				return 5;
+			}
+	
+		}
+		}
+	}
+}
+int enhorabuenajug(int numdisparos)
+{
+	imprime("ENHORABUENA CAPITAN, HAS CONSEGUIDO ELIMINAR A TODA LA FLOTA ENEMIGA EN TAN SOLO ",2,0);	
+	printf("%i",numdisparos);
+	imprime(" DISPAROS!!",2,0);
+}
+int hasperdido(){
+	imprime("Hoy es un dia triste, el enemigo se ha hecho con toda nuestra flota.",2,0);
+}
+
 
 //FUNCIONES TRIVIAL:
 int Solucion(inicio tabla[],int pos,int puntuacion)
