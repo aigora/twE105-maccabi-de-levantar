@@ -17,10 +17,10 @@ typedef struct
 int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
 int numal(int num1,int num2); //Genera numeros aleatorios 
 void semilla(); //Genera semilla
-int cifrasyletras();
-int hundirlaflota();
-int trivial();
-void tienda();
+int cifrasyletras(int *tickets);
+int hundirlaflota(int *tickets);
+int trivial(int *tickets);
+void tienda(int *tickets);
 int instrucciones();
 void listanimales();
 void listatienda();
@@ -28,7 +28,7 @@ void listatienda();
 void main ()
 {
 FILE *us,*aux;
-int salida=0,juego=0,administrador=0,puntuacion,punt,bandera;
+int salida=0,juego=0,administrador=0,tickets,punt,bandera;
 char basura,admin[14],usuario[25],nombre[25],kudu[3];
 
 imprime("",1,2);
@@ -109,14 +109,15 @@ else if(strcmp(admin,"JUGADOR")==0)
 	gets(usuario);
 	_strupr(usuario);
 	us = fopen("usuarios.txt", "r"); 
-	if (us == NULL) { 
+	if (us == NULL) 
+	{ 
 	us = fopen("usuarios.txt", "w");
 	fclose(us); 
-	 } 
+	} 
 	 else
 	 {
 	 	bandera=1;
-	 	while(bandera==1&&fscanf(us,"%[^;];%d",nombre,&puntuacion)!=EOF)
+	 	while(bandera==1&&fscanf(us,"%[^;];%d",nombre,&tickets)!=EOF)
 	 	{
 	 		if(strcmp(nombre,usuario)==0)
 	 		{
@@ -128,14 +129,14 @@ else if(strcmp(admin,"JUGADOR")==0)
 		 {
 		 	imprime("Es un nuevo usuario, bienvenido",2,0);
 		 	imprime("Tu nueva puntuacion es 0",2,0);
-		 	puntuacion=0;
+		 	tickets=0;
 		 }
 		 else
 		 {
 		 	imprime("Bienvenido de nuevo ",0,0);
 		 	printf("%s",usuario);
 		 	imprime(",su puntuacion es",0,0);
-		 	printf("%d\n\n",puntuacion);
+		 	printf("%d\n\n",tickets);
 		 }
 	 }
 
@@ -143,7 +144,9 @@ else if(strcmp(admin,"JUGADOR")==0)
 {
 	system("cls");
   	imprime("",1,2);
-  	imprime("BIENVENIDO JUGADOR!",3,3);
+  	imprime("BIENVENIDO ",3,3);
+  	printf("%s!",usuario);
+  	imprime("",3,3);
   	imprime("Pulsa:",2,3);
   	imprime("1: Para jugar a Cifras y Letras",2,3);
   	imprime("2: Para jugar a Hundir La Flota",2,3);
@@ -159,7 +162,7 @@ else if(strcmp(admin,"JUGADOR")==0)
 	case 1: //JUEGO 1
 	do
 	{
-        salida=cifrasyletras();
+        salida=cifrasyletras(&tickets);
         
 	}while(salida==0);
     break;
@@ -167,22 +170,20 @@ else if(strcmp(admin,"JUGADOR")==0)
     case 2: //JUEGO HUNDIR LA FLOTA
     do
 	{
-        salida=hundirlaflota();
+        salida=hundirlaflota(&tickets);
    	}while(salida==0);
 	break;
 
     case 3: //JUEGO TRIVIAL
     do
 	{
-        salida=trivial();
+        salida=trivial(&tickets);
 	}while(salida==0);
     break;
     
     case 4: //TIENDA
-{	
-    tienda();
+    tienda(&tickets);
     break;
-}
    
     case 5:
    	imprime("",2,3);
@@ -199,27 +200,25 @@ else if(strcmp(admin,"JUGADOR")==0)
 }
 us = fopen("usuarios.txt", "r"); 
 aux= fopen("auxiliar.txt", "w");
-puntuacion=60;
 bandera=0;
 while(fscanf(us,"%[^;];%d",nombre,&punt)!=EOF)
 {
 	if(strcmp(nombre,usuario)==0)
 	{
 	 	bandera=1;
-	 	punt=puntuacion;
+	 	punt=tickets;
 	}
 	fprintf(aux,"%s;%d",nombre,punt);
 }
-printf("%d %s",puntuacion,usuario);
 if(bandera==0)
-fprintf(aux,"%s;%d",usuario,puntuacion);
+fprintf(aux,"%s;%d",usuario,tickets);
 fclose(us);
 fclose(aux);
 remove("usuarios.txt"); // Eliminamos el archivo
 rename("auxiliar.txt","usuarios.txt");// Renombramos el archivo
 }
 }
-int cifrasyletras()
+int cifrasyletras(int *tickets)
 {
 	//Variables cifras y letras
 int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
@@ -497,6 +496,7 @@ int flag=0,turra;
 			printf("%i\n",resdef);
 			horafinal=time(NULL);
 			punts=puntucifr(numobj,resdef);
+			*tickets+=punts;
 			if((horafinal-horainicio)>segundos){
 				imprime("Te has quedado sin tiempo, tu respuesta no es valida",1,0);
 				punts=0;
@@ -580,6 +580,7 @@ int flag=0,turra;
 		}	
 	
 }
+    *tickets+=puntls;
 	imprime("",3,0);
     imprime("Pulsa 0 para volver a jugar o pulsa cualquier otro numero para salir del juego",2,0);
 	scanf("%d",&salida);
@@ -589,7 +590,7 @@ int flag=0,turra;
 
 //------------------------------------HUNDIR LA FLOTA: JUEGO 2------------------------------------------------------------------------------------	
 
-int hundirlaflota()
+int hundirlaflota(int *tickets)
 {
 //-----------------------VARIABLES-----------------------------------------------------------------
 	int fila,columna;//dependiendo del momento, estas variables se referiran a un punto en una determinada matriz
@@ -1261,6 +1262,7 @@ int disparocons()//disparo de la consola aleatorio
 	}
 	
 //Salir del juego
+    *tickets+=punts;
  	imprime("",3,0);
 	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir del juego",2,0);
 	scanf(" %d",&salida);
@@ -1268,7 +1270,7 @@ int disparocons()//disparo de la consola aleatorio
     return salida;
 }
 
-int trivial()
+int trivial(int *tickets)
 {
 	//VARIABLES Y FUNCIONES:
 	void comprobaSiHaSalidoPregunta(int numpreg[],int i,int iz,int der);
@@ -1383,7 +1385,6 @@ int trivial()
 	imprime("Tu puntuacion final es de: ",0,0);
 	printf("%d",puntuacion);
 	imprime(" puntos",3,0);
-	puntuacion=60;
 	if(puntuacion==60)
 	{
 		imprime("Has conseguido la extraordinaria puntuacion de 60 puntos, increible jugador!",2,0);
@@ -1445,15 +1446,16 @@ int trivial()
 		imprime("Pulsa cualquier otra numero para salir del juego",2,0);
 		scanf("%d",&salida);
 	}
+	*tickets+=puntuacion;
 	system("cls");
 	return salida;
 }
-void tienda()
+void tienda(int *puntuacion)
 {
 	void AbrirTienda();
 	FILE *pf;
 	int puntos,salida=0;
-	int puntuacion=1200,encontrado;
+	int encontrado;
 	char premio[20],eleccion[20],seguro[2],basura;
 	system("cls");
 	AbrirTienda();
@@ -1498,9 +1500,9 @@ void tienda()
 			
 			if(strcmp(seguro,"SI")==0)
 			{
-				if(puntuacion>=puntos)
+				if(*puntuacion>=puntos)
 			    {
-				puntuacion=puntuacion-puntos;
+				*puntuacion=*puntuacion-puntos;
 	            imprime("Ya tiene su ",0,0); 
 	            printf("%s",premio);
 	            imprime(",enhorabuena!",2,0);
