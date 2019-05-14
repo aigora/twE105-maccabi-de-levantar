@@ -36,6 +36,8 @@ imprime("Por favor, indica si eres jugador o administrador:",1,2);
 scanf("%s",admin);
 _strupr(admin);
 system("cls");
+
+
 while(strcmp(admin,"ADMINISTRADOR")!=0 && strcmp(admin,"JUGADOR")!=0)
 {
 	imprime("",1,2);
@@ -232,7 +234,11 @@ int cifrasyletras()
 int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
 int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
 int comprop( char oper);//Comprueba si el operador es correcto
+<<<<<<< HEAD
 -int calculadora(int num1,char cop,int num2);//Opera
+=======
+int calculadora(int num1,char cop,int num2);//Opera
+>>>>>>> parent of 1d862a5... Update proyecto.c
 int puntucifr(int obj,int candidato);//Calcula la puntuacion obtenida en cifras
 int puntuletr(char respuesta[]); //Calcula la puntuacion obtenida en letras
 char consonante();//Genera consonante al azar
@@ -263,11 +269,12 @@ int flag=0,turra;
 		imprime("-Si consigues hallar el numero objetivo, conseguiras 100 puntos. Si te alejas en 20 cifras, conseguiras 50 puntos. Si te alejas en 50 cifras, conseguiras 20 puntos. Si te alejas mas, obtendras una puntuacion de 0",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
 		//Instrucciones juego de letras
-		imprime("El juego de letras consiste en general 10 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:",1,5);
-		imprime("-No puede repetir ninguna letra, aunque las letras si se pueden repetir a la hora de salir al azar.",1,5);
-		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no serán considerados como validos",1,5);
+		imprime("El juego de letras consiste en general 12 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 12 letras. Pero ojo, hay ciertas normas:",1,5);
+		imprime("-Puedes repetir las letras, siempre y cuando esten dentro de la lista de letras posibles.",1,5);
+		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no seran considerados como validos",1,5);
 		imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
-		imprime("-El usuario tendra 45 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
+		imprime("-Si encuentras un animal con 2 o 3 letras obtendras 10 puntos. Si encuentras un animal con 4 letras obtendras 20 puntos. Si encuentras un animal con 5 letras obtendras 40 puntos. Si encuentras un animal con 6 letras obtendras 60 puntos. Si encuentras un animal con 7 letras, obtendras 80 puntos. Si encuentras un animal con 8 letras o mas, obtendras 100 puntos",1,5);
+		imprime("-El usuario tendra 75 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",2,0);
 		imprime("Presione cualquier tecla para continuar...",1,0);
         getch();
@@ -288,13 +295,18 @@ int flag=0,turra;
 			semilla();
 			for(i=0;i<6;i++){
 				numaleat[i]=rand()%20 +1;
+				if((numaleat[i]!=numaleat[i-1])&&(numaleat[i]!=numaleat[i-2])&&(numaleat[i]!=numaleat[i-3])&&(numaleat[i]!=numaleat[i-4])&&(numaleat[i]!=numaleat[i-5])&&(numaleat[i]!=numaleat[i-6])){
 				printf("%i\n",numaleat[i]);
+				}else{
+					i--;
 			}
+		}
 			//Hallo el numero objetivo
 			numobj= numal(120,500);
 			imprime("El numero que tienes que hallar con las operaciones es: ",1,0);
 			printf("%i\n",numobj);
 			imprime("Al terminar este mensaje comienzan los 45 segundos. Escribe a continuacion todas las operaciones. Suerte",1,0);
+			horainicio=time(NULL);
 			//Durante los 45 segundos escribimos las operaciones que realice el usuario
 			//Primera operacion
 				//Compruebo si el primer numero esta en el vector de numeros aleatorios
@@ -313,11 +325,18 @@ int flag=0,turra;
 			//Hallo resultado de la operacion que hace el usuario y
 			//Compruebo si el numero es el que buscamos
 			res1=calculadora(cos1,op,cos2);
-			ganad = comprganador(numobj,res1);
-			if(ganad==1){
-				imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-				res1=resdef;
+			imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+			scanf(" %s", def);
+			if(def[0]=='s'&&def[1]=='i'){
+				resdef=res1;
+				ganad = comprganador(numobj,resdef);
+				if(ganad==1){
+					imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+				}
 			}else{
+				system("cls");
+				imprime("Recuerde que el numero que buscamos es el: ",1,0);
+				printf("%i\n",numobj);
 				//Si no gana actualizamos el vector de numeros aleatorios y se sigue pidiendo numeros y operaciones.
 				for(i=0,j=0;i<6;i++){
 					if(numaleat[i]!=cos1&&numaleat[i]!=cos2){
@@ -346,11 +365,18 @@ int flag=0,turra;
 				}while(compraleat(auxnumaleat,cos4)==0);
 				//Compruebo si es el numero que buscamos
 				res2=calculadora(cos3,op,cos4);
-				ganad = comprganador(numobj,res2);
-				if(ganad==1){
-					imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-					res2=resdef;
+				imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+				scanf(" %s", def);
+				if(def[0]=='s'&&def[1]=='i'){
+					resdef=res2;
+					ganad = comprganador(numobj,resdef);
+					if(ganad==1){
+						imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+					}
 				}else{
+					system("cls");
+					imprime("Recuerde que el numero que buscamos es el: ",1,0);
+					printf("%i\n",numobj);
 					//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 					for(i=0,j=0;i<5;i++){
 					if(auxnumaleat[i]!=cos3&&auxnumaleat[i]!=cos4){
@@ -379,12 +405,19 @@ int flag=0,turra;
 					}while(compraleat(auxnumaleat2,cos6)==0);
 					//Compruebo si el numero es el que buscamos
 					res3=calculadora(cos5,op,cos6);
-					ganad = comprganador(numobj,res3);
-					if(ganad==1){
-						imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-						res3=resdef;
+					imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+					scanf(" %s", def);
+					if(def[0]=='s'&&def[1]=='i'){
+						resdef=res3;
+						ganad = comprganador(numobj,resdef);
+						if(ganad==1){
+							imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+						}
 					}else{
-							//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
+						system("cls");
+						imprime("Recuerde que el numero que buscamos es el: ",1,0);
+						printf("%i\n",numobj);
+						//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 							for(i=0,j=0;i<4;i++){
 								if(auxnumaleat2[i]!=cos5&&auxnumaleat2[i]!=cos6){
 								auxnumaleat3[j]=auxnumaleat2[i];
@@ -412,11 +445,18 @@ int flag=0,turra;
 							}while(compraleat(auxnumaleat3,cos8)==0);
 							//Compruebo si es el numero que buscamos
 							res4=calculadora(cos7,op,cos8);
-							ganad = comprganador(numobj,res4);
-							if(ganad==1){
-							imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-							res4=resdef;
+							imprime("Si quiere quedarse con este numero como resultado definitivo escriba 'si'.Si quiere seguir operando, pulse otra tecla",1,0);
+							scanf(" %s", def);
+							if(def[0]=='s'&&def[1]=='i'){
+								resdef=res4;
+								ganad = comprganador(numobj,resdef);
+								if(ganad==1){
+									imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+								}
 							}else{	
+									system("cls");
+									imprime("Recuerde que el numero que buscamos es el: ",1,0);
+									printf("%i\n",numobj);
 									//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 									for(i=0,j=0;i<3;i++){
 										if(auxnumaleat3[i]!=cos7&&auxnumaleat3[i]!=cos8){
@@ -445,11 +485,11 @@ int flag=0,turra;
 									}while(compraleat(auxnumaleat4,cos10)==0);
 									//Compruebo si es el numero que buscamos
 									res5=calculadora(cos9,op,cos10);
-									ganad = comprganador(numobj,res5);
-									res5=resdef;
-									if(ganad==1){
-									imprime("Enhorabuena, has conseguido obtener el numero",1,0);
-									}else{
+										resdef=res5;
+										ganad = comprganador(numobj,resdef);
+										if(ganad==1){
+											imprime("Enhorabuena, has conseguido obtener el numero",1,0);
+										}else{
 										//Si no es el numero volvemos a actualizar el vector de numeros aleatorios.
 										for(i=0,j=0;i<3;i++){
 											if(auxnumaleat4[i]!=cos9&&auxnumaleat4[i]!=cos10){
@@ -458,24 +498,92 @@ int flag=0,turra;
 											}	
 										}
 										auxnumaleat5[j]=res5;
-										//Como ya es el ultimo turno, nos quedamos con ese numero.
-										imprime("Se han acabado las operaciones posibles, el numero final obtenido es:",1,0);
-										printf(" %i\n",res5);
 										}
 								}
 						}
 				}
 		}
-			punts=puntuacion(numobj,resdef);
-			imprime("La puntuación que has obtenido es:",1,0);
+			system("cls");
+			imprime("El numero que buscabamos era el: ",1,0);
+			printf("%i\n",numobj);
+			imprime("Finalmente el resultado final es: ",1,0);
+			printf("%i\n",resdef);
+			horafinal=time(NULL);
+			punts=puntucifr(numobj,resdef);
+			if((horafinal-horainicio)>segundos){
+				imprime("Te has quedado sin tiempo, tu respuesta no es valida",1,0);
+				punts=0;
+			}
+			imprime("La puntuacion que has obtenido es:",1,0);
 			printf("%i",punts);
-			break;
+	break;					
 		}
 	case 'L':
 	case'l':
 		{
 			system("cls");
 			imprime("Bienvenido fan de la palabra. Has elegido letras.",1,0);
+			imprime("Puedes elegir entre consonante (presionando c) o vocal (presionando v), tienes un total de 12 letras",1,0);
+			//Elige entre consonante y vocal 12 veces y meto las letras en una cadena de caracteres 
+			do{
+				imprime("consonante o vocal?",1,0);
+				scanf(" %c",&eleccletra);
+				if(eleccletra=='C'||eleccletra=='c'){
+					scanf("%c",&basura);
+					cons=consonante();
+					printf("%c\n",cons);
+					letras[contador]=cons;
+					contador++;
+				}else if(eleccletra=='V'||eleccletra=='v'){
+					scanf("%c",&basura);
+					vocl=vocal();
+					printf("%c\n",vocl);
+					letras[contador]=vocl;
+					contador++;
+				}else{
+					imprime("Introduce bien la letra",1,0);
+				}
+			}while(contador<12);
+			system("cls");
+			imprime("Tienes 75 segundos para escribir el nombre de un animal (lo mas largo posible) con las siguientes letras:",1,0);
+			for(i=0;i<12;i++){
+				printf("%c\n",letras[i]);
+			}
+			imprime("Cuando termine este mensaje empiezan los 75 segundos,si escribes un animal existente no podras volver a escribir otro mas largo, asique piensalo bien!.Buena suerte!",1,0);
+				//Creo boton de terminado
+			imprime("Si te rindes o crees que ya has acabado, pulsa el boton w",1,0);
+			horainicio=time(NULL);
+			//Una vez que tenemos la cadena de caracteres, dejamos tiempo para que el usuario piense.
+			//Que el usuario escriba la respuesta y que coincida con las palabras del fichero de animales.
+			do{
+				gets(solucion);
+				if(strcmp(solucion,"w")==0){
+					imprime("Te has rendido GG, suerte la proxima vez!",1,0);
+					band=0;
+				}else{
+						permis=comprcaract(letras,solucion);
+						if(permis==0){
+							imprime("Recuerda, que las letras tienen que estar en la lista",1,0);
+						}else if(permis==1){
+					valid=animales(solucion);
+					
+					if(valid==0){
+						imprime("Ese animal no es correcto, pero sigue intentandolo!",1,0);
+					}
+				}
+			}
+			}while(((valid==0)||(permis==0))&&(band!=0));
+			horafinal=time(NULL);
+			if(valid==1){
+					imprime("Enhorabuena, has encontrado un animal correcto",1,0);
+					horafinal=time(NULL);
+					puntls=puntuletr(solucion);
+					}
+		if(horafinal-horainicio>segundos){
+			puntls=0;
+		}
+			imprime("Tu puntuacion es: ",0,0);
+				printf("%i",puntls);
 			break;
 		}
 	default:
@@ -495,6 +603,9 @@ int flag=0,turra;
     int fila,columna;
     int fila1, fila2, columna1, columna2;
     int barcojug=1;
+    int tablerojug[6][6];
+    int matrizcons[6][6];//matriz que representa los barcos del cpu
+	int matrizjug[6][6];//matriz que representa los barcos del jugador
 int hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
@@ -504,6 +615,7 @@ int hundirlaflota()
 	int formatocoord=1,formatocoord2=1;
 	char coordport[2];
 	char coordport2[2];
+	
 	int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n);
 	int imprimematriz(int mat[6][6]);	
 	int generarbarco(int n, int mat[6][6], int barco);
@@ -531,12 +643,20 @@ int hundirlaflota()
 				matrizjug[i][j] = 0;
 				}
 		}
+//Llenar de "-" el tablero de disparos del jugador
+	for (i=0; i<6; i++)
+		{
+			for (j=0; j<6; j++)
+				tablerojug[i][j] = '-'; 
+		}
 	srand (time(NULL)); 
 //Generar barcos consola 	
 	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 portaviones
 	generarbarco(4, matrizcons, 4);	//destructor rellena la matriz de 4
 	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
   	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
+
+/*
 //Colocacion de barcos por parte del jugador
 	do{
 	
@@ -660,20 +780,20 @@ int hundirlaflota()
 	}
 	
     }while(colocacionjug==0);
-    
+ 
     system("cls");
 	imprime("",2,3);	
 	imprime("Magnifica estrategia almirante, pero ahora empieza lo divertido.",2,3);
 	imprime("Tomaremos ventaja sobre nuestro adversario, le sorprenderemos atacando primero",2,3);
-/*	while(ganador==0)
+	while(ganador==0)
 	{
 		disparojug();  //Disparo de jugador
 		if (disparojug==0)
 			agua();
-		if (disparojug==1)
+		if (disparojug==1) //Si el jugador toca un barco enemigo
 		{
 			tocado();
-			if(barcoscons==0)
+			if(barcoscons==0) //Si ya no le quedan barcos a la consola
 			{
 				ganador=1;
 				break;
@@ -683,19 +803,25 @@ int hundirlaflota()
 		disparocons(); //Disparo de consola
 		if (disparocons==0)
 			aguacons();
-		if(disparocons==1)
+		if(disparocons==1) //Si la consola toca un barco del jugador
 		{
 			tocadocons();
-			if(barcoscons==0)
+			if(barcoscons==0) //Si la consola hunde todos los barcos del jugador
 			{
 				ganador=2;
 				break;
 			}
 		}
 	}
+	if(ganador==1) //Si gana el jugador
+	{
+	}
+	if(ganador==2) //Si gana la consola
+	{
+	}
 */
-	
-	
+imprimematrizchar(tablerojug);	
+disparojug();
 //Salir del juego
  	imprime("",3,0);
 	imprime("Pulsa 0 para volver a jugar o pulse cualquier otro numero para salir del juego",2,0);
@@ -1148,10 +1274,12 @@ void listatienda()
 		 }
 		 return flaganar;
 	}
-	//Funcion que otorga la puntuacion
-	int puntuacion(int obj,int candidato){
+	//Funcion que otorga la puntuacion en cifras
+	int puntucifr(int obj,int candidato){
 		int puntos,dif;
-		dif=fabs(obj-candidato);
+		dif=obj-candidato;
+		if(dif<0)
+		dif=-dif;
 		if(dif==0){
 			puntos=100;
 			}else if(dif>0&&dif<=20){
@@ -1163,10 +1291,84 @@ void listatienda()
 						}
 			return puntos;
 	}
- 
+	//Funcion que otorga la puntuacion en letras
+	int puntuletr (char respuesta[]){
+		 int contador=0,puntitos,i=0;
+		while( respuesta[i] !='\0'){
+			contador++;
+			i++;
+		}
+		if(contador==2||contador==3){
+			puntitos=10;
+		}else if(contador==4){
+				puntitos=20;
+			}else if(contador==5){
+					puntitos=40;
+				}else if(contador==6){
+						puntitos=60;
+					}else if(contador==7){
+						puntitos=80;
+						}else if(contador>=8){
+							puntitos=100;
+						}	
+	return puntitos;
+	}
+	//Funcion que da una consonante al azar
+	char consonante(){
+		char letrazar;
+		int i;
+		int consonante[21]={'b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z'};
+		semilla();
+		i=numal(0,20);
+		letrazar=consonante[i];
+		return letrazar;
+	}
+	//Funcion que da una vocal al azar
+	char vocal(){
+		char vocalazar;
+		int i;
+		int vocal[5]={'a','e','i','o','u'};
+		semilla();
+		i=numal(0,4);
+		vocalazar=vocal[i];
+		return vocalazar;
+	}
+	//Funcion que comprueba en letras si el animal es valido
+	int animales( char respuesta[]){
+		FILE *sac;
+		char animal[30],basura;
+		int bandera;
+		_strupr(respuesta);
+		sac=fopen("animales.txt","r");
+		bandera=0;
+		while(bandera==0&&fscanf(sac,"%[^;];",animal)!=EOF)
+		{
+			if(strcmp(animal,respuesta)==0)
+			{
+				bandera=1;
+			}
+		}
+		fclose(sac);
+		return bandera;
+	}
+	//Funcion que comprueba que los caracteres introducidos pertenecen al vector de letras al azar
+	int comprcaract(char azar[],char cand []){
+		int band=1,i=0,j=0;
+		while((cand[i]!='\0')&&(band!=0)){
+			if(cand[i]!=azar[j]){
+				j++;
+				if(azar[j]=='\0'){
+					band=0;
+				}
+			}else if(cand[i]==azar[j]){
+				i++;
+				j=0;
+			}
+		}
+		return band;
+	}
 //FUNCIONES HUNDIR LA FLOTA:
-int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
-{
+int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n){
 	int okupa=0, i;
 	okupa=0;
 	if(f1==f2)
@@ -1247,8 +1449,7 @@ int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
 				
 }
 }
-int comprobarformatocoord(char coord[2])
-{
+int comprobarformatocoord(char coord[2]){
 	if (coord[0]=='a'||coord[0]=='A')
 			fila=0;
 		else{
@@ -1286,8 +1487,7 @@ int comprobarformatocoord(char coord[2])
 		}
 	
 }
-int generarbarco(int n, int mat[6][6], int barco)
-{
+int generarbarco(int n, int mat[6][6], int barco){
 	int fila, colum, dir, exito = 0, okupa, i;
 	
 while(exito==0)
@@ -1387,8 +1587,7 @@ if(dir==4)							//direccion izquierda
 }
 
 }
-int imprimematriz(int mat[6][6])
-{
+int imprimematriz(int mat[6][6]){
     int i;
     printf("   ");
     for(i=1;i<=6;i++)
@@ -1425,6 +1624,77 @@ int imprimematriz(int mat[6][6])
 	      	printf("   %i ",mat[5][i]);
 	      }
 	      	
+}
+int imprimematrizchar(int mat[6][6]){
+    int i;
+    printf("   ");
+    for(i=1;i<=6;i++)
+		printf("   %i ",i);
+	printf("\n\n");
+	printf(" A ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[0][i]);
+	      }
+	printf("\n\n B ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[1][i]);
+	      }
+	printf("\n\n C ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[2][i]);
+	      }
+	printf("\n\n D ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[3][i]);
+	      }
+	printf("\n\n E ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[4][i]);
+	      }
+	printf("\n\n F ");
+	for(i=0;i<6;i++)  
+	      {
+	      	printf("   %c ",mat[5][i]);
+	      }
+	      	
+}
+
+
+int disparojug(){
+	char coorddisp[2];
+	int disparo=0;
+	
+	while(disparo==0){
+	imprime("Almirante, introduzca las coordenadas del blanco",2,2);
+	scanf(" %s", coorddisp);
+	comprobarformatocoord(coorddisp);
+	if (comprobarformatocoord(coorddisp)=='1')
+	{
+		if (matrizcons[fila][columna] != 0)
+		{
+			return 1;
+			//disparo=1;
+			imprime("tocado",2,2);
+			break;
+		}
+		else
+		{
+			return 0;
+		//	disparo=1;
+			imprime("agua",2,2);
+			break;
+		
+		}
+		
+	}
+	if (comprobarformatocoord==0)
+		imprime("Formato de coordenada no valido",2,2);
+	}
 }
 
 //FUNCIONES TRIVIAL:
