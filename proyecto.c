@@ -588,6 +588,7 @@ int flag=0,turra;
 	imprime("",3,0);
     imprime("Pulsa 0 para volver a jugar o pulsa cualquier otro numero para salir del juego",2,0);
 	scanf("%d",&salida);
+	scanf("%c",&basura);
     system("cls");
     return salida;
 }
@@ -1206,7 +1207,7 @@ int disparocons()//disparo de la consola aleatorio
 			printf("%i",numdisparos);
 			imprime(" DISPAROS!!",3,3);
 			imprime("DISFRUTA DE TUS ",0,0);
-			printf("%i",punts);
+			printf("%i ",punts);
 			imprime("EN LA TIENDA",3,3);
 			ganador++;
 			break;
