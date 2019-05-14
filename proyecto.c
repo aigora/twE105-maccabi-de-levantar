@@ -36,8 +36,6 @@ imprime("Por favor, indica si eres jugador o administrador:",1,2);
 scanf("%s",admin);
 _strupr(admin);
 system("cls");
-
-
 while(strcmp(admin,"ADMINISTRADOR")!=0 && strcmp(admin,"JUGADOR")!=0)
 {
 	imprime("",1,2);
@@ -204,21 +202,21 @@ aux= fopen("auxiliar.txt", "w");
 puntuacion=60;
 bandera=0;
 while(fscanf(us,"%[^;];%d",nombre,&punt)!=EOF)
-	 	{
-	 		if(strcmp(nombre,usuario)==0)
-	 		{
-	 			bandera=1;
-	 			punt=puntuacion;
-			}
-			fprintf(aux,"%s;%d",nombre,punt);
-		 }
-		 printf("%d %s",puntuacion,usuario);
-		 if(bandera==0)
-		fprintf(aux,"%s;%d",usuario,puntuacion);
-		fclose(us);
-	    fclose(aux);
-		remove("usuarios.txt"); // Eliminamos el archivo
-        rename("auxiliar.txt","usuarios.txt");// Renombramos el archivo
+{
+	if(strcmp(nombre,usuario)==0)
+	{
+	 	bandera=1;
+	 	punt=puntuacion;
+	}
+	fprintf(aux,"%s;%d",nombre,punt);
+}
+printf("%d %s",puntuacion,usuario);
+if(bandera==0)
+fprintf(aux,"%s;%d",usuario,puntuacion);
+fclose(us);
+fclose(aux);
+remove("usuarios.txt"); // Eliminamos el archivo
+rename("auxiliar.txt","usuarios.txt");// Renombramos el archivo
 }
 }
 int cifrasyletras()
@@ -228,7 +226,6 @@ int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los nume
 int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
 int comprop( char oper);//Comprueba si el operador es correcto
 int calculadora(int num1,char cop,int num2);//Opera
->>>>>>> parent of 1d862a5... Update proyecto.c
 int puntucifr(int obj,int candidato);//Calcula la puntuacion obtenida en cifras
 int puntuletr(char respuesta[]); //Calcula la puntuacion obtenida en letras
 char consonante();//Genera consonante al azar
