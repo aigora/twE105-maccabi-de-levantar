@@ -13,7 +13,7 @@ typedef struct
 	char respuesta[25];
 }inicio;
 
-//VARIABLES Y FUNCIONES GLOBALES:
+//FUNCIONES GLOBALES:
 int imprime(char frase[], int s, int e); //funcion imprimir frase con animacion y dar s saltos de linea y e espacios
 int numal(int num1,int num2); //Genera numeros aleatorios 
 void semilla(); //Genera semilla
@@ -232,9 +232,16 @@ int cifrasyletras()
 int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
 int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
 int comprop( char oper);//Comprueba si el operador es correcto
-int calculadora(int num1,char cop,int num2);
-char eleccion,instr,op;
-int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,contador=0,salida=0;
+-int calculadora(int num1,char cop,int num2);//Opera
+int puntucifr(int obj,int candidato);//Calcula la puntuacion obtenida en cifras
+int puntuletr(char respuesta[]); //Calcula la puntuacion obtenida en letras
+char consonante();//Genera consonante al azar
+char vocal();//Genera vocal al azar
+int animales(char respuesta[]);//Comprueba si el animal es correcto
+int comprcaract(char azar[],char cand []);//Comprueba si el animal esta construido correctamente
+char eleccion,instr,op,eleccletra,letras[13],solucion[30],defin,basura,def[3];
+int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,horainicio,horafinal,cons,vocl,valid,puntls,contador=0,salida=0,permis,band;
+const int segundos=75;
 int numaleat[6],auxnumaleat[5],auxnumaleat2[4],auxnumaleat3[3],auxnumaleat4[2],auxnumaleat5[1];
 int flag=0,turra;
 	//JUEGO:
@@ -251,8 +258,9 @@ int flag=0,turra;
 		imprime("El juego de cifras consiste en generar 6 cifras al azar y hallar un numero (o un numero lo mas aproximado posible a ese numero) tambien generado al azar con operaciones. Pero ojo, hay ciertas normas:",1,5);
 		imprime("-No puedes repetir ninguna de las 6 cifras",1,5);
 		imprime("-Solo puedes usar las operaciones:'+','*','-','/'.",1,5);
-		imprime("-Tienes 45 segundos para pensar tu respuesta",1,5);
-		imprime("-Tienes que escribir las operaciones correspondientes acompañados del resultado final para ver si no has hecho trampas o has cometido algun error",1,5);
+		imprime("-Tienes 75 segundos para pensar tu respuesta",1,5);
+		imprime("-Tienes que escribir numero, enter, operacion, enter, numero, enter y el programa se encargara de hacer las operaciones y ver si los numeros son validos",1,5);
+		imprime("-Si consigues hallar el numero objetivo, conseguiras 100 puntos. Si te alejas en 20 cifras, conseguiras 50 puntos. Si te alejas en 50 cifras, conseguiras 20 puntos. Si te alejas mas, obtendras una puntuacion de 0",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
 		//Instrucciones juego de letras
 		imprime("El juego de letras consiste en general 10 letras al azar, aunque el usuario tendra la posibilidad de elegir entre si quiere vocal o consonante, y hallar el nombre de animal mas largo que se puede hacer con esas 10 letras. Pero ojo, hay ciertas normas:",1,5);
