@@ -104,7 +104,8 @@ if(strcmp(admin,"ADMINISTRADOR")==0)
 }
 else if(strcmp(admin,"JUGADOR")==0)
 {
-	imprime("Como te llamas?",2,0);
+	imprime("",1,2);
+	imprime("Como te llamas?",1,2);
 	scanf("%c",&basura);
 	gets(usuario);
 	_strupr(usuario);
@@ -127,16 +128,19 @@ else if(strcmp(admin,"JUGADOR")==0)
 		 fclose(us);
 		 if(bandera==1)
 		 {
-		 	imprime("Es un nuevo usuario, bienvenido",2,0);
-		 	imprime("Tu nueva puntuacion es 0",2,0);
+		 	imprime("Es un nuevo usuario, bienvenido",1,2);
+		 	imprime("Tu nueva puntuacion es 0",1,2);
 		 	tickets=0;
 		 }
 		 else
 		 {
+		 	system("cls");
+		 	imprime("",1,2);
 		 	imprime("Bienvenido de nuevo ",0,0);
 		 	printf("%s",usuario);
-		 	imprime(",su puntuacion es",0,0);
+		 	imprime(",sus tickets son ",0,0);
 		 	printf("%d\n\n",tickets);
+		 	Sleep(2000);
 		 }
 	 }
 
@@ -144,7 +148,7 @@ else if(strcmp(admin,"JUGADOR")==0)
 {
 	system("cls");
   	imprime("",1,2);
-  	imprime("BIENVENIDO ",3,3);
+  	imprime("BIENVENIDO ",0,0);
   	printf("%s!",usuario);
   	imprime("",3,3);
   	imprime("Pulsa:",2,3);
@@ -1461,14 +1465,14 @@ void tienda(int *puntuacion)
 	AbrirTienda();
 	imprime("",2,0);
 	imprime("Usted tiene ",0,0); 
-	printf("%d ",puntuacion);
+	printf("%d ",*puntuacion);
 	imprime("puntos",2,0);
 	imprime("Indique el nombre del premio (ponga \"FIN\" cuando no quiera mas premios): ",0,0);
 	gets(eleccion);
 	_strupr(eleccion);
 	if(strcmp(eleccion,"FIN")==0)
 	system("cls");
-	while(strcmp(eleccion,"FIN")!=0 && puntuacion>0)
+	while(strcmp(eleccion,"FIN")!=0 && *puntuacion>0)
 	{
 	encontrado=0;
 	pf = fopen("tienda.txt", "r");
@@ -1510,7 +1514,7 @@ void tienda(int *puntuacion)
 			    else
 			    {
 	            imprime("Lo siento, no tiene suficientes puntos. Tienes ",0,0); 
-	            printf("%d ",puntuacion);
+	            printf("%d ",*puntuacion);
 	            imprime("puntos",2,0);	
 	            }
 			}
@@ -1522,7 +1526,7 @@ void tienda(int *puntuacion)
 	printf("%s ",eleccion);
 	imprime("como premio posible",2,0);
 	imprime("Le queda ",0,0); 
-	printf("%d ",puntuacion);
+	printf("%d ",*puntuacion);
 	imprime("puntos",2,0);
 	Sleep(3000);
 	system("cls");
