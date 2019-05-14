@@ -544,9 +544,6 @@ int hundirlaflota()
 	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
   	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
 
-		system("cls");
-		imprimematriz(matrizcons);
-		getch();
 //Colocacion de barcos por parte del jugador
 	do
 	{
