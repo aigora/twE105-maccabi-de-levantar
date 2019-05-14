@@ -217,15 +217,8 @@ while(fscanf(us,"%[^;];%d",nombre,&punt)!=EOF)
 		fprintf(aux,"%s;%d",usuario,puntuacion);
 		fclose(us);
 	    fclose(aux);
-		if(remove("usuarios.txt")==0) // Eliminamos el archivo
-        printf("El archivo fue eliminado satisfactoriamente\n");
-        else
-        printf("No se pudo eliminar el archivo\n");
-        
-        if(rename("auxiliar.txt","usuarios.txt")==0)// Renombramos el archivo
-        printf("El archivo se renombro satisfactoriamente\n");
-        else
-        printf("No se pudo renombrar el archivo\n");
+		remove("usuarios.txt"); // Eliminamos el archivo
+        rename("auxiliar.txt","usuarios.txt");// Renombramos el archivo
 }
 }
 int cifrasyletras()
@@ -234,9 +227,6 @@ int cifrasyletras()
 int compraleat(int v[],int num);//Comprueba si los numeros pertenecen a los numeros aleatorios.
 int comprganador(int obj,int candid);//Comprueba si el numero es el numero ganador
 int comprop( char oper);//Comprueba si el operador es correcto
-<<<<<<< HEAD
--int calculadora(int num1,char cop,int num2);//Opera
-=======
 int calculadora(int num1,char cop,int num2);//Opera
 >>>>>>> parent of 1d862a5... Update proyecto.c
 int puntucifr(int obj,int candidato);//Calcula la puntuacion obtenida en cifras
