@@ -1486,34 +1486,22 @@ int imprimematriz(int mat[6][6]){
 	printf("\n\n");
 	printf(" A ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[0][i]);
-	      }
+	    printf("   %i ",mat[0][i]);
 	printf("\n\n B ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[1][i]);
-	      }
+	    printf("   %i ",mat[1][i]);
 	printf("\n\n C ");
 	for(i=0;i<6;i++)  
-	      {
 	      	printf("   %i ",mat[2][i]);
-	      }
 	printf("\n\n D ");
 	for(i=0;i<6;i++)  
-	      {
 	      	printf("   %i ",mat[3][i]);
-	      }
 	printf("\n\n E ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[4][i]);
-	      }
+	   	printf("   %i ",mat[4][i]);
 	printf("\n\n F ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[5][i]);
-	      }
+	    printf("   %i ",mat[5][i]);
 	      	
 }
 int imprimematrizchar(int mat[6][6]){
@@ -1524,34 +1512,22 @@ int imprimematrizchar(int mat[6][6]){
 	printf("\n\n");
 	printf(" A ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %c ",mat[0][i]);
-	      }
+	    printf("   %c ",mat[0][i]);
 	printf("\n\n B ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %c ",mat[1][i]);
-	      }
+	    printf("   %c ",mat[1][i]);
 	printf("\n\n C ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %c ",mat[2][i]);
-	      }
+	    printf("   %c ",mat[2][i]);
 	printf("\n\n D ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %c ",mat[3][i]);
-	      }
+	    printf("   %c ",mat[3][i]);
 	printf("\n\n E ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %c ",mat[4][i]);
-	      }
+	    printf("   %c ",mat[4][i]);
 	printf("\n\n F ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %c ",mat[5][i]);
-	      }
+	    printf("   %c ",mat[5][i]);
 	      	
 }
 int disparojug(){
