@@ -493,24 +493,29 @@ int flag=0,turra;
 }
 
     int fila,columna;
-    int fila1, fila2, columna1, columna2;
-    int barcojug=1;
+    int tablerojug[6][6]; //matriz que representa los disparos efectuados por el jugador
+    int tablerocons[6][6]; //matriz que representa los disparos efectuados por la consola
+    int matrizcons[6][6];//matriz que representa los barcos del cpu
+	int matrizjug[6][6];//matriz que representa los barcos del jugador
+	
 int hundirlaflota()
 {
 	//VARIABLES Y FUNCIONES HUNDIR LA FLOTA:
+	int barcojug=1;
 	int i,j,salida=0;
 	int colocacionjug=0;
+	int fila1, fila2, columna1, columna2;
 	int ganador=0, barcoscons=4, barcosjug=4;
+	int submarinocons=2, acorazadocons=3, destructorcons=4, portavionescons=5;
+	int submarinojug=2,  acorazadojug=3, destructorjug=4, portavionesjug=5;
+	int tocadojug, tocadocons;
+	int numdisparos=0;
 	int formatocoord=1,formatocoord2=1;
 	char coordport[2];
 	char coordport2[2];
-	int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n);
-	int imprimematriz(int mat[6][6]);	
-	int generarbarco(int n, int mat[6][6], int barco);
-	int matrizcons[6][6];//matriz que representa los barcos del cpu
-	int matrizjug[6][6];//matriz que representa los barcos del jugador
 	
 	//JUEGO:
+	
 	system("cls");
     //Instrucciones
     imprime("",1,3);
@@ -518,183 +523,258 @@ int hundirlaflota()
 	imprime("Instrucciones:",2,3);
 	imprime("-El objetivo consiste en acabar con los 4 barcos enemigos (portaviones, destructor, bombardero y submarino)",1,3);
     imprime("-Los barcos del enemigo se generan aleatoriamente",1,3);
-    imprime("-Al jugador se le pide primero la fila (letra), seguido de la columna (numero)",3,5);
+    imprime("-Al jugador se le pide primero la fila (letra), seguido de la columna (numero)",1,3);
+    imprime("-El juego acabara cuando uno de los dos acabe con todos los barcos del enemigo",3,5);
     imprime("Presione cualquier tecla para continuar...",1,0);
+    
     getch();
     system("cls");
 //llenar de 0 las matrices
 	for (i=0; i<6; i++)
-		{
-			for (j=0; j<6; j++)
-				{
+		for (j=0; j<6; j++)
+			{
 				matrizcons[i][j] = 0; 
 				matrizjug[i][j] = 0;
-				}
-		}
+			}		
+//Llenar de "-" el tablero de disparos del jugador
+	for (i=0; i<6; i++)
+			for (j=0; j<6; j++)
+			{
+				tablerojug[i][j] = '-';
+				tablerocons[i][j] = '-';
+			}
+				
 	srand (time(NULL)); 
+	
 //Generar barcos consola 	
-	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 portaviones
+	generarbarco(5, matrizcons, 5);	//portaviones rellena la matriz de 5 
 	generarbarco(4, matrizcons, 4);	//destructor rellena la matriz de 4
 	generarbarco(3, matrizcons, 3);	//acorazado rellena la matriz de 3
   	generarbarco(2, matrizcons, 2);	//submarino rellena la matriz de 2
+
 //Colocacion de barcos por parte del jugador
-	do{
-	
-	if (barcojug==1)
+	do
 	{
-		system("cls");
-		if (formatocoord==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		if (formatocoord2==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		formatocoord=1;
-		formatocoord2=1;
-		imprimematriz(matrizjug);
-		imprime("\n\n  Introduzca el primer punto del portaviones (5 casillas)",2,2);
-		scanf(" %s", coordport);
-		formatocoord = comprobarformatocoord(coordport);
-		fila1=fila;
-		columna1=columna;
-		if (formatocoord==1)
+		if (barcojug==1) //Colocar el primer barco, portaviones
 		{
-			imprime("\n  Introduzca el segundo punto del portaviones:",2,2);
-			scanf(" %s", coordport2);
-			formatocoord2 = comprobarformatocoord(coordport2);
-			fila2=fila;
-			columna2=columna;
-			if (formatocoord2== 1)
+			system("cls");
+			if (formatocoord==0 || formatocoord2==0)//Si alguna de las coordenadas no es valida da error
+				imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
+			imprimematriz(matrizjug);
+			imprime("\n\n  Introduzca el primer punto del portaviones (5 casillas)",2,2);
+			scanf(" %s", coordport);
+			formatocoord = comprobarformatocoord(coordport);
+			fila1=fila;
+			columna1=columna;
+			if (formatocoord==1) //Si la primera coordenada introducida es valida, introduce el segundo punto
 			{
-				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 5);
-			}
-		}
-	}
-	if (barcojug==2)
-	{
-		system("cls");
-		if (formatocoord==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		if (formatocoord2==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		formatocoord=1;
-		formatocoord2=1;
-		imprimematriz(matrizjug);
-		imprime("\n\n  Introduzca el primer punto del destructor (4 casillas)",2,2);
-		scanf(" %s", coordport);
-		formatocoord = comprobarformatocoord(coordport);
-		fila1=fila;
-		columna1=columna;
-		if (formatocoord==1)
-		{
-			imprime("\n  Introduzca el segundo punto del destructor:",2,2);
-			scanf(" %s", coordport2);
-			formatocoord2 = comprobarformatocoord(coordport2);
-			fila2=fila;
-			columna2=columna;
-			if (formatocoord2== 1)
-			{
-				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 4);
-			}
-		}
-	}
-	if (barcojug==3)
-	{
-		system("cls");
-		if (formatocoord==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		if (formatocoord2==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		formatocoord=1;
-		formatocoord2=1;
-		imprimematriz(matrizjug);
-		imprime("\n\n  Introduzca el primer punto del acorazado (3 casillas)",2,2);
-		scanf(" %s", coordport);
-		formatocoord = comprobarformatocoord(coordport);
-		fila1=fila;
-		columna1=columna;
-		if (formatocoord==1)
-		{
-			imprime("\n  Introduzca el segundo punto del acorazado:",2,2);
-			scanf(" %s", coordport2);
-			formatocoord2 = comprobarformatocoord(coordport2);
-			fila2=fila;
-			columna2=columna;
-			if (formatocoord2== 1)
-			{
-				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 3);
-			}
-		}
-	}
-	if (barcojug==4)
-	{
-		system("cls");
-		if (formatocoord==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		if (formatocoord2==0)
-			imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
-		formatocoord=1;
-		formatocoord2=1;
-		imprimematriz(matrizjug);
-		imprime("\n\n  Introduzca el primer punto del submarino (2 casillas)",2,2);
-		scanf(" %s", coordport);
-		formatocoord = comprobarformatocoord(coordport);
-		fila1=fila;
-		columna1=columna;
-		if (formatocoord==1)
-		{
-			imprime("\n  Introduzca el segundo punto del submarino:",2,2);
-			scanf(" %s", coordport2);
-			formatocoord2 = comprobarformatocoord(coordport2);
-			fila2=fila;
-			columna2=columna;
-			if (formatocoord2== 1)
-			{
-				generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 2);
-			}
-		}
-	}
-	
-	if (barcojug==5)
-	{
-		colocacionjug++;
-		break;
-	}
-	
-    }while(colocacionjug==0);
-    
-    system("cls");
-	imprime("",2,3);	
-	imprime("Magnifica estrategia almirante, pero ahora empieza lo divertido.",2,3);
-	imprime("Tomaremos ventaja sobre nuestro adversario, le sorprenderemos atacando primero",2,3);
-/*	while(ganador==0)
-	{
-		disparojug();  //Disparo de jugador
-		if (disparojug==0)
-			agua();
-		if (disparojug==1)
-		{
-			tocado();
-			if(barcoscons==0)
-			{
-				ganador=1;
-				break;
+				imprime("\n  Introduzca el segundo punto del portaviones:",2,2);
+				scanf(" %s", coordport2);
+				formatocoord2 = comprobarformatocoord(coordport2);
+				fila2=fila;
+				columna2=columna;
+				if (formatocoord2== 1)	//Si la segunda coordenada es valida, genera el barco		
+					if (generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 5)==1)
+						barcojug++;			
 			}
 		}
 		
-		disparocons(); //Disparo de consola
-		if (disparocons==0)
-			aguacons();
-		if(disparocons==1)
+		if (barcojug==2)
 		{
-			tocadocons();
-			if(barcoscons==0)
+			system("cls");
+			if (formatocoord==0 || formatocoord2==0)
+				imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
+			imprimematriz(matrizjug);
+			imprime("\n\n  Introduzca el primer punto del destructor (4 casillas)",2,2);
+			scanf(" %s", coordport);
+			formatocoord = comprobarformatocoord(coordport);
+			fila1=fila;
+			columna1=columna;
+			if (formatocoord==1)
 			{
-				ganador=2;
-				break;
+				imprime("\n  Introduzca el segundo punto del destructor:",2,2);
+				scanf(" %s", coordport2);
+				formatocoord2 = comprobarformatocoord(coordport2);
+				fila2=fila;
+				columna2=columna;
+				if (formatocoord2== 1)				
+					if (generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 4)==1)
+						barcojug++;	;				
 			}
 		}
-	}
-*/
+		
+		if (barcojug==3)
+		{
+			system("cls");
+			if (formatocoord==0 || formatocoord2==0)
+				imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
+			imprimematriz(matrizjug);
+			imprime("\n\n  Introduzca el primer punto del acorazado (3 casillas)",2,2);
+			scanf(" %s", coordport);
+			formatocoord = comprobarformatocoord(coordport);
+			fila1=fila;
+			columna1=columna;
+			if (formatocoord==1)
+			{
+				imprime("\n  Introduzca el segundo punto del acorazado:",2,2);
+				scanf(" %s", coordport2);
+				formatocoord2 = comprobarformatocoord(coordport2);
+				fila2=fila;
+				columna2=columna;
+				if (formatocoord2== 1)				
+					if (generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 3)==1)
+						barcojug++;					
+			}
+		}
+		
+		if (barcojug==4)
+		{
+			system("cls");
+			if (formatocoord==0 || formatocoord2==0)
+				imprime("Error: Formato no valido, por favor, introduzca un formato de coordenada valido, como por ejemplo A5 o B4",2,0);
+			imprimematriz(matrizjug);
+			imprime("\n\n  Introduzca el primer punto del submarino (2 casillas)",2,2);
+			scanf(" %s", coordport);
+			formatocoord = comprobarformatocoord(coordport);
+			fila1=fila;
+			columna1=columna;
+			if (formatocoord==1)
+			{
+				imprime("\n  Introduzca el segundo punto del submarino:",2,2);
+				scanf(" %s", coordport2);
+				formatocoord2 = comprobarformatocoord(coordport2);
+				fila2=fila;
+				columna2=columna;
+				if (formatocoord2== 1)				
+					if (generarbarcojug(fila1, fila2, columna1, columna2, matrizjug, 2)==1)
+						barcojug++;				
+			}
+		}
 	
+		if (barcojug==5)
+		{
+			colocacionjug++;
+			break;
+		}
+	
+    }while(colocacionjug==0);
+
+//Una vez colocados los barcos de la consola y del jugador, empiezan los disparos
+    system("cls");
+	imprime("",2,3);	
+	imprime("Magnifica estrategia almirante, pero ahora empieza lo divertido.",2,3);
+	imprime("Tomaremos ventaja sobre nuestro adversario, le sorprenderemos atacando primero",3,0);
+	
+	while(ganador==0)
+	{
+		imprimematrizchar(tablerojug);
+		tocadojug=disparojug();  //Resultado de disparo de jugador
+		numdisparos++;
+		
+		if(tocadojug==2) //Si el jugador toca el submarino
+		{
+			submarinocons--;
+			if(submarinocons==0)
+			{
+				imprime("ENHORABUENA, SUBMARINO ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+				barcoscons--;
+			}
+		}
+		
+		if(tocadojug==3)
+		{
+			acorazadocons--;
+			if(acorazadocons==0)
+			{
+				imprime("ENHORABUENA, ACORAZADO ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+				barcoscons--;
+			}
+		}
+		
+		if(tocadojug==4)
+		{
+			destructorcons--;
+			if(destructorcons==0)
+			{
+				imprime("ENHORABUENA, DESTRUCTOR ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+				barcoscons--;
+			}
+		}
+		
+		if(tocadojug==5)
+		{
+			portavionescons--;
+			if(portavionescons==0)
+			{
+				imprime("ENHORABUENA, PORTAVIONES ENEMIGO TOCADO Y HUNDIDO!!",2,0);
+				barcoscons--;
+			}
+		}
+		
+		if(barcoscons==0)
+		{
+			system("cls");
+			imprime("",3,3);
+			imprime("ENHORABUENA CAPITAN, HAS CONSEGUIDO ELIMINAR A TODA LA FLOTA ENEMIGA EN TAN SOLO ",0,0);	
+			printf("%i",numdisparos);
+			imprime(" DISPAROS!!",2,5);
+			imprime(" DISFRUTA DE TUS 100 PUNTOS EN LA TIENDA",2,0);
+			ganador++;
+			break;
+		}
+		
+		imprime("\n\nTurno del enemigo:",2,0);
+		tocadocons=disparocons(); //Resultado disparo de la consola
+		
+		if(tocadocons==2)
+		{
+			submarinojug--;
+			if(submarinojug==0)
+			{
+				imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO SUBMARINO!",2,0);
+				barcosjug--;
+			}
+		}
+		
+		if(tocadocons==3)
+		{
+			acorazadojug--;
+			if(acorazadojug==0)
+			{
+				imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO ACORAZADO!",2,0);
+				barcosjug--;
+			}
+		}
+		
+		if(tocadocons==4)
+		{
+			destructorjug--;
+			if(destructorjug==0)
+			{
+				imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO DESTRUCTOR!",2,0);
+				barcosjug--;
+			}
+		}
+		
+		if(tocadocons==5)
+		{
+			portavionesjug--;
+			if(portavionesjug==0)
+			{
+				imprime("MALDICION, EL ENEMIGO HA HUNDIDO NUESTRO PORTAVIONES!",2,0);
+				barcosjug--;
+			}
+		}
+		
+		if(barcosjug==0)
+		{
+			system("cls");
+			imprime("",3,3);
+			imprime("Hoy es un dia triste, el enemigo se ha hecho con toda nuestra flota.",2,0);
+			ganador++;
+			break;
+		}
+	}
 	
 //Salir del juego
  	imprime("",3,0);
@@ -1165,230 +1245,230 @@ void listatienda()
 	}
  
 //FUNCIONES HUNDIR LA FLOTA:
+void animaciondisparo()
+{
+	int i,j;
+	printf("\n");
+	
+	for(i=3;i>0;i--)
+	{
+		printf("%i",i);
+		Sleep(400);
+			for (j=3;j>0;j--)
+			{
+				printf(" . ");
+				Sleep(200);
+			}
+	}
+	imprime("FUEGO!!",3,0);
+}
 int generarbarcojug(int f1, int f2, int c1,int c2, int mat[6][6], int n)
 {
-	int okupa=0, i;
+	int okupa=0, tipobarco=0, i;
 	okupa=0;
+	
 	if(f1==f2)
-				{
-					if((c1<c2)&&((c2+1)-c1==n)) //direccion derecha
-					{
-						if(c1 + n <= 6)
-  						{ 
-	  					for(i=c1;i<=(c1+n-1);i++)  
-	      				{
-	      					if(mat[f1][i]!=0)
-	    						okupa++;
-	      				}
-	   					 if(okupa == 0)
-	  						{
-  	  						for(i=c1;i<=(c1+n-1);i++)  
-	    						mat[f1][i]= n;
-	      					barcojug++;
-	  		 				}
-						}	
-					}
+	{
+		if((c1<c2)&&((c2+1)-c1==n)) //direccion derecha		
+			if(c1 + n <= 6)
+  			{ 
+	  			for(i=c1;i<=(c1+n-1);i++)  	      			
+	      				if(mat[f1][i]!=0)
+	    					okupa++;	      			
+	   			if(okupa == 0)
+	  			{
+  	  				for(i=c1;i<=(c1+n-1);i++)  
+	    				mat[f1][i]= n;
+	      			tipobarco++;
+	      			return tipobarco;
+	  		 	}
+			}			
 				
-					if(c1>2&&((c1+1-c2)==n)) //direccion izquierda
-					{
-						if(c1 + 1 >= n)
-  						{ 
-	 					 for(i=c1;i>=(c1-n+1);i--)  
-	      				{
-	      					if(mat[f1][i]!=0)
-	    						okupa++;
-	      				}
-	   					 if(okupa == 0)
-	   						{
-			 			    for(i=c1;i>=(c1-n+1);i--)  
-	    						mat[f1][i]=n;
-	      					barcojug++;
-							}
-						}
-					}						
+		if(c1>2&&((c1+1-c2)==n)) //direccion izquierda		
+			if(c1 + 1 >= n)
+  			{ 
+	 			for(i=c1;i>=(c1-n+1);i--)  	      		
+	      			if(mat[f1][i]!=0)
+	    				okupa++;	      		
+	   			if(okupa == 0)
+	   			{
+					for(i=c1;i>=(c1-n+1);i--)  
+	    				mat[f1][i]=n;
+	      			tipobarco++;
+	      			return tipobarco;
 				}
+			}								
+	}
 				
-				if(c1==c2)
-				{
-					if((f1>f2)&&((f1+1-f2)==n))  //direccion arriba
-					{
-					  if(f1 >= (n-1))
-  						{ 
-	  					for(i=f1;i>=(f1-n+1);i--)  
-	      					{
-	      				if(mat[i][c1]!=0)
-	    					okupa++;
-	      					}
-	    			if(okupa == 0)
-	  				 {
+	if(c1==c2)
+	{
+		if((f1>f2)&&((f1+1-f2)==n))  //direccion arriba		
+			 if(f1 >= (n-1))
+  			{ 
+	  			for(i=f1;i>=(f1-n+1);i--)  	      		
+	      			if(mat[i][c1]!=0)
+	    				okupa++;	      		
+	    		if(okupa == 0)
+	  			{
   	  				for(i=f1;i>=(f1-n+1);i--)  
 	    				mat[i][c1]=n;
-	   				barcojug++;
-					 }
-						}
-					}
-					if((f1<f2)&&((f2-f1+1)==n)) //direccion abajo
-					{
-					if(f1+n<=6)
-  						{ 
-				    for(i=f1;i<=f1+n-1;i++)
-						{
-	    			if(mat[i][c1]!=0)
+	   				tipobarco++;
+	      			return tipobarco;
+				}
+			}
+		if((f1<f2)&&((f2-f1+1)==n)) //direccion abajo		
+			if(f1+n<=6)
+  			{ 
+				for(i=f1;i<=f1+n-1;i++)
+					if(mat[i][c1]!=0)
 	    				okupa++;
-	   	 	   			}
-	  				  if(okupa == 0)
-	   					{
+	  			if(okupa == 0)
+	   			{
   	  				for(i=f1;i<=f1+n-1;i++)  
 	    				mat[i][c1]=n;
-	      			barcojug++;
-	   				}
-						}
-					}
-				
-}
+	      			tipobarco++;
+	      			return tipobarco;
+	   			}
+			}		
+	}
 }
 int comprobarformatocoord(char coord[2])
 {
 	if (coord[0]=='a'||coord[0]=='A')
-			fila=0;
-		else{
-			if (coord[0]=='b'||coord[0]=='B')
+		fila=0;
+	else
+	{
+		if (coord[0]=='b'||coord[0]=='B')
 			fila=1;
-			else{
-				if (coord[0]=='c'||coord[0]=='C')
-				fila=2;
-				else{
-					if (coord[0]=='d'||coord[0]=='D')
-					fila=3;
-					else{
-						if (coord[0]=='e'||coord[0]=='E')
-						fila=4;
-						else{
-							if (coord[0]=='f'||coord[0]=='F')
-							fila=5;	
-							else{
-									return 0;
-								}
-							}
-						}	
-					}
-				}
-			}
-
-		if ((coord[1]-1)>='0' && (coord[1]-1)<='5')
-		{
-			columna=coord[1]-'1';
-			return 1;
-		}
 		else
 		{
-			return 0;
+			if (coord[0]=='c'||coord[0]=='C')
+				fila=2;
+			else
+			{
+				if (coord[0]=='d'||coord[0]=='D')
+					fila=3;
+				else
+				{
+					if (coord[0]=='e'||coord[0]=='E')
+						fila=4;
+					else
+					{
+						if (coord[0]=='f'||coord[0]=='F')
+							fila=5;	
+						else
+							return 0;
+					}
+				}	
+			}
 		}
-	
+	}
+
+	if ((coord[1]-1)>='0' && (coord[1]-1)<='5')
+	{
+		columna=coord[1]-'1';
+		return 1;
+	}
+	else
+		return 0;
 }
+
 int generarbarco(int n, int mat[6][6], int barco)
 {
 	int fila, colum, dir, exito = 0, okupa, i;
 	
-while(exito==0)
-{
-	fila = rand() % (5+1);
-	colum = rand() % (5+1);
-	dir = rand () % (4-1+1) + 1;
-	okupa=0;
+	while(exito==0)
+	{
+		fila = rand() % (5+1);
+		colum = rand() % (5+1);
+		dir = rand () % (4-1+1) + 1;
+		okupa=0;
  
-if(dir==1)							//direccion arriba
-{
-  if(fila >= (n-1))
-  	{ 
-	  for(i=fila;i>=(fila-n+1);i--)  
-	      	{
-	      	if(mat[i][colum]!=0)
-	    		{
-	    		okupa++;
-				}
-	      	}
-	    if(okupa == 0)
-	   {
-  	  		for(i=fila;i>=(fila-n+1);i--)  
-	      		{
-	    		mat[i][colum]=barco;
-	      		}
-	   		exito++;
-	   }
-	}
-}
-
-if(dir==2)							//direccion derecha
-{
-  if(colum + n <= 6)
-  	{ 
-	  for(i=colum;i<=(colum+n-1);i++)  
-	      	{
-	      	if(mat[fila][i]!=0)
-	    		{
-	    		okupa++;
-				}
-	      	}
-	    if(okupa == 0)
-	   {
-  	  		for(i=colum;i<=(colum+n-1);i++)  
-	      		{
-	    		mat[fila][i]=barco;
-	      		}
-	   		exito++;
-	   }
-	}
-}
-	  
-if(dir==3)							//direccion abajo
-{
-  if(fila + n <= 6)
-  	{ 
-	  for(i=fila;i<=fila+n-1;i++)  
-			{
-	    	if(mat[i][colum]!=0)
-	    		{
-	    		okupa++;
-				}
-	   	    }
-	    if(okupa == 0)
+	if(dir==1)							//direccion arriba	
+  		if(fila >= (n-1))
+  		{ 
+			for(i=fila;i>=(fila-n+1);i--)  	      	
+	      		if(mat[i][colum]!=0)	    		
+	    			okupa++;					      	
+	    	if(okupa == 0)
 	   		{
-  	  		for(i=fila;i<=fila+n-1;i++)  
-	      		{
-	    		mat[i][colum]=barco;
-	      		}
-	   		exito++;
+  	  			for(i=fila;i>=(fila-n+1);i--)  
+	      			mat[i][colum]=barco;
+	      		exito++;
 	   		}
-	}
-}
+		}
 
-if(dir==4)							//direccion izquierda
-{
-  if(colum + 1 >= n)
-  	{ 
-	  for(i=colum;i>=(colum-n+1);i--)  
-	      	{
-	      		if(mat[fila][i]!=0)
-	    			{
-	    				okupa++;
-					}
-	      	}
-	    if(okupa == 0)
+	if(dir==2)							//direccion derecha
+		if(colum + n <= 6)
+  		{ 
+	 		for(i=colum;i<=(colum+n-1);i++)  	      	
+	      		if(mat[fila][i]!=0)	    	
+	    			okupa++;					      	
+	   		if(okupa == 0)
 	   		{
-			   for(i=colum;i>=(colum-n+1);i--)  
-	      			{
-	    			mat[fila][i]=barco;
-	      			}
+  	  			for(i=colum;i<=(colum+n-1);i++)  	      		
+	    			mat[fila][i]=barco;	      		
+	   			exito++;
+	    	}
+		}
+
+	if(dir==3)							//direccion abajo
+		if(fila + n <= 6)
+  		{ 
+	    	for(i=fila;i<=fila+n-1;i++)  			
+	    		if(mat[i][colum]!=0)	    		
+	    			okupa++;					   	    
+	    	if(okupa == 0)
+	   		{
+  	  			for(i=fila;i<=fila+n-1;i++)  	      		
+	    			mat[i][colum]=barco;	      		
 	   			exito++;
 	   		}
-	}
-}
-}
+		}
 
+	if(dir==4)							//direccion izquierda
+		if(colum + 1 >= n)
+  		{ 
+	  		for(i=colum;i>=(colum-n+1);i--)  	      	
+	      		if(mat[fila][i]!=0)	    			
+	    			okupa++;						      	
+	    if(okupa == 0)
+	   		{
+				for(i=colum;i>=(colum-n+1);i--)  	      			
+	    			mat[fila][i]=barco;	      			
+	   			exito++;
+	   		}
+		}
+	}
 }
 int imprimematriz(int mat[6][6])
 {
+    int i;
+    
+    printf("   ");
+    for(i=1;i<=6;i++)
+		printf("   %i ",i);
+	printf("\n\n");
+	printf(" A ");
+	for(i=0;i<6;i++)  
+	    printf("   %i ",mat[0][i]);
+	printf("\n\n B ");
+	for(i=0;i<6;i++)  
+	    printf("   %i ",mat[1][i]);
+	printf("\n\n C ");
+	for(i=0;i<6;i++)  
+	   	printf("   %i ",mat[2][i]);
+	printf("\n\n D ");
+	for(i=0;i<6;i++)  
+	   	printf("   %i ",mat[3][i]);
+	printf("\n\n E ");
+	for(i=0;i<6;i++)  
+	   	printf("   %i ",mat[4][i]);
+	printf("\n\n F ");
+	for(i=0;i<6;i++)  
+	    printf("   %i ",mat[5][i]);
+}
+int imprimematrizchar(int mat[6][6]){
     int i;
     printf("   ");
     for(i=1;i<=6;i++)
@@ -1396,36 +1476,135 @@ int imprimematriz(int mat[6][6])
 	printf("\n\n");
 	printf(" A ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[0][i]);
-	      }
+	    printf("   %c ",mat[0][i]);
 	printf("\n\n B ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[1][i]);
-	      }
+	    printf("   %c ",mat[1][i]);
 	printf("\n\n C ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[2][i]);
-	      }
+	    printf("   %c ",mat[2][i]);
 	printf("\n\n D ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[3][i]);
-	      }
+	    printf("   %c ",mat[3][i]);
 	printf("\n\n E ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[4][i]);
-	      }
+	    printf("   %c ",mat[4][i]);
 	printf("\n\n F ");
 	for(i=0;i<6;i++)  
-	      {
-	      	printf("   %i ",mat[5][i]);
-	      }
+	    printf("   %c ",mat[5][i]);
 	      	
 }
+int disparojug()
+{
+	char coorddisp[2];
+	int disparo=0;
+
+	while(disparo==0)
+	{
+		imprime("\n\n  Almirante, introduzca las coordenadas del blanco",2,2);
+		scanf(" %s", coorddisp);
+		comprobarformatocoord(coorddisp);
+		if (comprobarformatocoord(coorddisp)==1)
+			if (tablerojug[fila][columna]!='-')
+				imprime("\n  Ya has disparado en esa posicion!",1,0);
+			else
+			{
+				if (matrizcons[fila][columna] == 0)
+				{
+					system("cls");
+					animaciondisparo();
+					tablerojug[fila][columna]='~';
+					imprime("AGUA!",2,0);
+					return 0;
+				}
+				if (matrizcons[fila][columna] == 2)
+				{
+					system("cls");
+					animaciondisparo();
+					imprime("ESO ES!, has tocado el submarino",2,0);
+					tablerojug[fila][columna]='2';
+					return 2;
+				}
+				if (matrizcons[fila][columna] == 3)
+				{
+					system("cls");
+					animaciondisparo();
+					imprime("ESO ES!, has tocado el acorazado",2,0);
+					tablerojug[fila][columna]='3';
+					return 3;
+				}
+				if (matrizcons[fila][columna] == 4)
+				{
+					system("cls");
+					animaciondisparo();
+					imprime("ESO ES!, has tocado el destructor",2,0);
+					tablerojug[fila][columna]='4';
+					return 4;
+				}
+				if (matrizcons[fila][columna] == 5)
+				{
+					system("cls");
+					animaciondisparo();
+					imprime("ESO ES!, has tocado el portaviones",2,0);
+					tablerojug[fila][columna]='5';
+					return 5;
+				}
+			}
+	}
+}
+
+int disparocons()
+{
+	int f,c;
+	int disparo=0;
+
+	while(disparo==0)
+	{
+		f = rand() % (5+1);
+		c = rand() % (5+1);
+		if(tablerocons[f][c]=='-')					
+			if (matrizjug[f][c] == 0)
+			{
+				tablerocons[f][c]='~';
+				animaciondisparo();
+				imprime("Tuvimos suerte almirante!, el enemigo fallo el disparo",3,0);
+				return 0;
+			}
+			else
+			{
+				if (matrizjug[f][c] == 2)
+				{
+					animaciondisparo();
+					imprime("Malas noticias, el enemigo ha tocado nuestro submarino",3,0);
+					tablerocons[f][c]='2';
+					return 2;
+				}
+				if (matrizjug[f][c] == 3)
+				{
+					animaciondisparo();
+					imprime("Malas noticias, el enemigo ha tocado nuestro acorazado",3,0);
+					tablerocons[f][c]='3';
+					return 3;
+				}
+				if (matrizjug[f][c] == 4)
+				{
+					animaciondisparo();
+					imprime("Malas noticias, el enemigo ha tocado nuestro destructor",3,0);
+					tablerocons[f][c]='4';
+					return 4;
+				}
+				if (matrizjug[f][c] == 5)
+				{
+					animaciondisparo();
+					imprime("Malas noticias, el enemigo ha tocado nuestro portaviones",3,0);
+					tablerocons[f][c]='5';
+					return 5;
+				}	
+			}		
+	}
+}
+
+
 
 //FUNCIONES TRIVIAL:
 int Solucion(inicio tabla[],int pos,int puntuacion)
