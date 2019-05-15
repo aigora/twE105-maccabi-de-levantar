@@ -237,7 +237,7 @@ int animales(char respuesta[]);//Comprueba si el animal es correcto
 int comprcaract(char azar[],char cand []);//Comprueba si el animal esta construido correctamente
 char eleccion,instr,op,eleccletra,letras[13],solucion[30],defin,basura,def[3];
 int i,j,numaleatorio,numobj,cos1,cos2,cos3,cos4,cos5,cos6,cos7,cos8,cos9,cos10,compr1,compr2,compr3,res1,res2,res3,res4,res5,resdef,ganad,resop,punts,horainicio,horafinal,cons,vocl,valid,puntls,contador=0,salida=0,permis,band;
-const int segundos=75;
+const int segundos=90;
 int numaleat[6],auxnumaleat[5],auxnumaleat2[4],auxnumaleat3[3],auxnumaleat4[2],auxnumaleat5[1];
 int flag=0,turra;
 	//JUEGO:
@@ -254,7 +254,7 @@ int flag=0,turra;
 		imprime("El juego de cifras consiste en generar 6 cifras al azar y hallar un numero (o un numero lo mas aproximado posible a ese numero) tambien generado al azar con operaciones. Pero ojo, hay ciertas normas:",1,5);
 		imprime("-No puedes repetir ninguna de las 6 cifras",1,5);
 		imprime("-Solo puedes usar las operaciones:'+','*','-','/'.",1,5);
-		imprime("-Tienes 75 segundos para pensar tu respuesta",1,5);
+		imprime("-Tienes 90 segundos para pensar tu respuesta",1,5);
 		imprime("-Tienes que escribir numero, enter, operacion, enter, numero, enter y el programa se encargara de hacer las operaciones y ver si los numeros son validos",1,5);
 		imprime("-Si consigues hallar el numero objetivo, conseguiras 100 puntos. Si te alejas en 20 cifras, conseguiras 50 puntos. Si te alejas en 50 cifras, conseguiras 20 puntos. Si te alejas mas, obtendras una puntuacion de 0",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",3,2);
@@ -264,7 +264,7 @@ int flag=0,turra;
 		imprime("-Todos los nombres de animales que el usuario consiga, tienen que ser reales y conocidos, ya que si el usuario se los inventa no seran considerados como validos",1,5);
 		imprime("-Puede escribir en mayusculas o en minusculas indiferentemente",1,5);
 		imprime("-Si encuentras un animal con 2 o 3 letras obtendras 10 puntos. Si encuentras un animal con 4 letras obtendras 20 puntos. Si encuentras un animal con 5 letras obtendras 40 puntos. Si encuentras un animal con 6 letras obtendras 60 puntos. Si encuentras un animal con 7 letras, obtendras 80 puntos. Si encuentras un animal con 8 letras o mas, obtendras 100 puntos",1,5);
-		imprime("-El usuario tendra 75 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
+		imprime("-El usuario tendra 90 segundos, para escribir el nombre del animal. Si no da una respuesta valida en ese intervalo de tiempo, no conseguira ningun punto y perdera",1,5);
 		imprime("-¡Sobre todo disfrutar y pasar un buen rato!",2,0);
 		imprime("Presione cualquier tecla para continuar...",1,0);
         getch();
