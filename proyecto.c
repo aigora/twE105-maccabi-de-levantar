@@ -243,11 +243,13 @@ int flag=0,turra;
 	//JUEGO:
 	//Introduccion del juego
 	system("cls");
-	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez",2,0);
+	imprime("",2,3);
+	imprime("Bienvenido a Cifras y letras. El juego en el que tendras que combinar ingenio y rapidez",2,3);
 	turra=instrucciones();
 	imprime("",1,0);
 	//Eleccion de querer o no las instrucciones
 	if (turra==0){
+		system("cls");
 		imprime("Instrucciones:",1,0);
 		imprime("El juego consiste en elegir Cifras (pulsa c) o Letras (pulsa l).",1,2);
 		//Instrucciones juego de cifras
@@ -615,7 +617,7 @@ int hundirlaflota(int *tickets)
 	int numdisparos=0;//contador de numero de disparos que realiza el jugador
 	int formatocoord=1,formatocoord2=1;//variable auxiliar para comprobar que las coordenadas introducidas tienen un formato correcto
 	char coordport[2], coordport2[2];//vectores para las coordenadas de los barcos
-	int punts;//obtiene la puntuacion para gastar en la tienda
+	int punts,turra;//obtiene la puntuacion para gastar en la tienda 
 	
 //-----------------------------------------------FUNCIONES-------------------------------------------------------------------------------------------------------	
 //Nota:en este juego las funciones modifican muchos datos entre en si, por lo que para optimizar codigo se colocan todas en hundirlaflota()
@@ -1003,15 +1005,18 @@ int disparocons()//disparo de la consola aleatorio
 	
     //Instrucciones
     imprime("",1,3);
-    imprime("Bienvenido almirante, la flota espera sus ordenes",2,4);
+    imprime("Bienvenido almirante, la flota espera sus ordenes",2,3);
+    turra=instrucciones();
+    if(turra==0)
+    {
+    system("cls");
 	imprime("Instrucciones:",2,3);
 	imprime("-El objetivo consiste en acabar con los 4 barcos enemigos (portaviones, destructor, bombardero y submarino)",1,3);
     imprime("-Los barcos del enemigo se generan aleatoriamente",1,3);
     imprime("-Al jugador se le pide primero la fila (letra), seguido de la columna (numero)",1,3);
     imprime("-El juego acabara cuando uno de los dos acabe con todos los barcos del enemigo",3,5);
     imprime("Presione cualquier tecla para continuar...",1,0);
-    
-    getch();
+    }
     system("cls");
     
 //llenar de 0 las matrices
@@ -1297,13 +1302,15 @@ int trivial(int *tickets)
     
     //JUEGO:
     system ("cls");
-    imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,0);
-    imprime("Para ello, deberas responder un conjunto de de 6 preguntas (+1 plus) y obtener la maxima puntuacion posible.\n\nSeras capaz de conseguir la casi inalcanzable puntuacion de 100 puntos?",2,0);
-	imprime("Adelante y buena suerte",2,0);
+    imprime("",2,3);
+    imprime("Bienvenido concursante, le doy la bienvenida a Trivial, el juego en el que tendras que responder una serie \nde preguntas relacionadas con tematicas como Historia, Geografia, Arte y Literatura, Entretenimiento, \nCiencia y Literatura y Deportes para hacerte con la victoria.",2,3);
+    imprime("Para ello, deberas responder un conjunto de de 6 preguntas (+1 plus) y obtener la maxima puntuacion posible.\n\nSeras capaz de conseguir la casi inalcanzable puntuacion de 100 puntos?",2,3);
+	imprime("Adelante y buena suerte",2,3);
 	turra=instrucciones();
 	imprime("",1,0);
 	if(turra==0)
 	{
+	system("cls");
 	imprime("Instrucciones:",2,3);
 	imprime("-Antes de cada pregunta lanzaras un dado pulsando enter para elegir aleatoriamente el tema de la pregunta",1,4);
 	imprime("+El numero 1 corresponde a la categoria de Geografia",1,4);
@@ -1598,7 +1605,7 @@ void AbrirTienda()
  	int fallo=0;
  	while(fallo==0)
  	{
- 	imprime("Desea leer las instrucciones?. Escriba si o no",1,0);
+ 	imprime("Desea leer las instrucciones?. Escriba si o no",2,3);
  	gets(turra);
  	_strupr(turra); //Pasamos la respuesta a mayusuculas para que de igual si el concursante a puesto la respuesta en mayusuculas o minusculas
  	if(strcmp(turra,"SI")==0)
