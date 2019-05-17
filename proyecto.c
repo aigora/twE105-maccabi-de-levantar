@@ -297,7 +297,7 @@ int flag=0,turra;
 			numobj= numal(120,500);
 			imprime("El numero que tienes que hallar con las operaciones es: ",1,0);
 			printf("%i\n",numobj);
-			imprime("Al terminar este mensaje comienzan los 45 segundos. Escribe a continuacion todas las operaciones. Suerte",1,0);
+			imprime("Al terminar este mensaje comienzan los 90 segundos. Escribe a continuacion todas las operaciones. Suerte",1,0);
 			horainicio=time(NULL);
 			//Durante los 45 segundos escribimos las operaciones que realice el usuario
 			//Primera operacion
@@ -538,11 +538,11 @@ int flag=0,turra;
 				}
 			}while(contador<12);
 			system("cls");
-			imprime("Tienes 75 segundos para escribir el nombre de un animal (lo mas largo posible) con las siguientes letras:",1,0);
+			imprime("Tienes 90 segundos para escribir el nombre de un animal (lo mas largo posible) con las siguientes letras:",1,0);
 			for(i=0;i<12;i++){
 				printf("%c\n",letras[i]);
 			}
-			imprime("Cuando termine este mensaje empiezan los 75 segundos,si escribes un animal existente no podras volver a escribir otro mas largo, asique piensalo bien!.Buena suerte!",1,0);
+			imprime("Cuando termine este mensaje empiezan los 90 segundos,si escribes un animal existente no podras volver a escribir otro mas largo, asique piensalo bien!.Buena suerte!",1,0);
 				//Creo boton de terminado
 			imprime("Si te rindes o crees que ya has acabado, pulsa el boton w",1,0);
 			horainicio=time(NULL);
@@ -589,7 +589,7 @@ int flag=0,turra;
     *tickets+=puntls;
 	imprime("",3,0);
     imprime("Pulsa 0 para volver a jugar o pulsa cualquier otro numero para salir del juego",2,0);
-	scanf("%d",&salida);
+	scanf(" %d",&salida);
 	scanf("%c",&basura);
     system("cls");
     return salida;
